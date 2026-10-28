@@ -2,10 +2,13 @@ import { useState } from "react";
 import { Link } from "@/lib/next-shim";
 import { site } from "@/data/site";
 
-type Status = "idle" | "sending" | "sent" | "ready" | "error";
+type Status = "idle" | "sending" | "sent" | "failed" | "error";
 
 /** Alan bazlı doğrulama hataları — WCAG 3.3.1 (hata tanımı) ve 3.3.3 (öneri). */
 type FieldErrors = Partial<Record<"name" | "email" | "message", string>>;
+
+/** Sunucu yanıtından üretilen başarısızlık bilgisi. */
+type Failure = { status: number; code: string };
 
 function validate(fields: Record<string, string>): FieldErrors {
   const e: FieldErrors = {};
@@ -42,9 +45,56 @@ function buildMailto(fields: Record<string, string>) {
   )}&body=${encodeURIComponent(body)}`;
 }
 
+/**
+ * Başarısızlık nedenini kullanıcıya anlamlı biçimde çevirir.
+ * Ziyaretçiye sakin bir açıklama, site sahibine ise kök nedeni gösteren
+ * kısa bir teknik satır döner — böylece sorun sessizce "çalışıyor gibi"
+ * görünmez.
+ */
+function explain(f: Failure): { body: string; tech: string } {
+  switch (f.code) {
+    case "not_configured":
+      return {
+        body: "Mesajınızı otomatik ileten servis henüz yapılandırılmamış. Aşağıdaki bağlantıyla e-posta gönderebilir ya da bizi doğrudan arayabilirsiniz.",
+        tech: "not_configured — e-posta sağlayıcısı ortam değişkenleri eksik",
+      };
+    case "provider_failed":
+      return {
+        body: "Mesajınız e-posta sağlayıcısına iletilemedi. Lütfen aşağıdaki bağlantıyı kullanın ya da bizi arayın; sorunu en kısa sürede gideriyoruz.",
+        tech: "provider_failed — e-posta sağlayıcısı isteği reddetti",
+      };
+    case "rate_limited":
+      return {
+        body: "Kısa sürede fazla deneme yapıldı. Lütfen birkaç dakika sonra tekrar deneyin ya da bizi doğrudan arayın.",
+        tech: "rate_limited — 10 dakikada 5 istek sınırı aşıldı",
+      };
+    case "validation_failed":
+      return {
+        body: "Formdaki bazı bilgiler eksik görünüyor. Alanları kontrol edip yeniden gönderin.",
+        tech: "validation_failed — sunucu tarafı doğrulama",
+      };
+    default:
+      if (f.status === 404 || f.status === 405)
+        return {
+          body: "Mesajınızı ileten servis şu anda erişilebilir değil. Aşağıdaki bağlantıyla e-posta gönderebilir ya da bizi doğrudan arayabilirsiniz.",
+          tech: `${f.status} — /api/contact yanıt vermedi (Pages Function dağıtılmamış olabilir)`,
+        };
+      if (f.status === 0)
+        return {
+          body: "İnternet bağlantınızda bir sorun oluştu. Bağlantınızı kontrol edip yeniden deneyin ya da bizi doğrudan arayın.",
+          tech: "ağ hatası — istek sunucuya ulaşmadı",
+        };
+      return {
+        body: "Mesajınız beklenmeyen bir nedenle iletilemedi. Aşağıdaki bağlantıyla e-posta gönderebilir ya da bizi doğrudan arayabilirsiniz.",
+        tech: `HTTP ${f.status}${f.code ? ` — ${f.code}` : ""}`,
+      };
+  }
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [failure, setFailure] = useState<Failure | null>(null);
   const [mailto, setMailto] = useState(site.contact.emailHref);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -55,7 +105,7 @@ export function ContactForm() {
     // Bot tuzağı dolduysa işlemi sessizce sonlandır.
     if (String(data.get("bot-field") ?? "")) {
       form.reset();
-      setStatus("ready");
+      setStatus("sent");
       return;
     }
 
@@ -79,8 +129,13 @@ export function ContactForm() {
     }
 
     setStatus("sending");
+    setFailure(null);
 
     // Cloudflare Pages Function (/api/contact) sunucu tarafında gönderir.
+    // Başarısız olursa e-posta istemcisi OTOMATİK AÇILMAZ: kullanıcıya ne
+    // olduğu anlatılır ve mailto açık bir seçenek olarak sunulur. Böylece
+    // bir yapılandırma hatası "çalışıyor gibi" görünmez.
+    let fail: Failure;
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -92,18 +147,24 @@ export function ContactForm() {
         setStatus("sent");
         return;
       }
-      // 503 (sağlayıcı yapılandırılmadı) veya diğer hatalar → mailto yedeği.
+      let code = "";
+      try {
+        const payload = (await res.json()) as { error?: string };
+        code = String(payload?.error ?? "");
+      } catch {
+        /* gövde JSON değilse kod boş kalır */
+      }
+      fail = { status: res.status, code };
     } catch {
-      // Ağ hatası (ör. işlev dağıtılmamış) → mailto yedeği.
+      fail = { status: 0, code: "" };
     }
 
-    const href = buildMailto(fields);
-    setMailto(href);
-
-    // Yedek yol: yerleşik e-posta istemcisini açar.
-    window.location.href = href;
-    window.setTimeout(() => setStatus("ready"), 700);
+    setMailto(buildMailto(fields));
+    setFailure(fail);
+    setStatus("failed");
   }
+
+  const info = failure ? explain(failure) : null;
 
   if (status === "sent") {
     return (
@@ -137,22 +198,29 @@ export function ContactForm() {
     );
   }
 
-  if (status === "ready") {
+  if (status === "failed" && info) {
     return (
-      <div className="border border-line bg-bg-2 p-8">
-        <p className="font-display text-2xl">E-posta uygulamanız açıldı.</p>
-        <p className="mt-3 text-sm leading-relaxed text-muted">
-          Talebiniz, tarafımıza iletilmek üzere e-posta uygulamanızda hazır
-          hâle getirildi. Uygulama açılmadıysa veya gönderemediyseniz, aşağıdaki
-          bağlantıyı kullanarak aynı içeriği yeniden gönderebilir ya da bizi
-          doğrudan arayabilirsiniz.
+      <div className="border border-line bg-bg-2 p-8" role="alert">
+        <p className="flex items-start gap-3 font-display text-2xl leading-snug">
+          <svg viewBox="0 0 20 20" className="mt-1 h-6 w-6 shrink-0 text-accent-warm" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7">
+            <path d="M10 2.6 18.4 17H1.6z" strokeLinejoin="round" />
+            <path d="M10 8v4.2" strokeLinecap="square" />
+            <path d="M10 14.4v.1" strokeLinecap="square" />
+          </svg>
+          Mesajınız otomatik iletilemedi.
         </p>
+        <p className="mt-3 text-sm leading-relaxed text-muted">{info.body}</p>
+
         <div className="mt-6 flex flex-wrap gap-3">
           <a
             href={mailto}
-            className="inline-flex items-center bg-ink px-5 py-2.5 text-sm font-medium text-bg transition-colors hover:bg-ink-hover"
+            className="inline-flex items-center gap-2.5 bg-accent-warm px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-warm-hover"
           >
-            E-postayı tekrar aç
+            <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <rect x="2.4" y="4.4" width="15.2" height="11.2" />
+              <path d="m3 5.2 7 5.3 7-5.3" />
+            </svg>
+            E-posta ile gönder
           </a>
           <a
             href={site.contact.phoneHref}
@@ -162,12 +230,16 @@ export function ContactForm() {
           </a>
           <button
             type="button"
-            onClick={() => { setErrors({}); setStatus("idle"); }}
+            onClick={() => { setErrors({}); setFailure(null); setStatus("idle"); }}
             className="inline-flex items-center px-5 py-2.5 text-sm text-ink underline-offset-4 hover:underline"
           >
-            Yeni talep oluştur
+            Forma dön
           </button>
         </div>
+
+        <p className="mt-6 border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-muted/70">
+          Teknik ayrıntı: {info.tech}
+        </p>
       </div>
     );
   }
@@ -267,9 +339,9 @@ export function ContactForm() {
 
       <p className="text-xs leading-relaxed text-muted">
         “Talebi gönder” düğmesine bastığınızda mesajınız doğrudan tarafımıza
-        iletilir; iletim başarısız olursa yedek olarak tarayıcınızın e-posta
-        uygulaması açılır. Paylaştığınız bilgiler yalnızca talebinizin
-        değerlendirilmesi amacıyla işlenir. Ayrıntılar için{" "}
+        iletilir; iletim başarısız olursa size ne olduğu bildirilir ve mesajı
+        e-posta ile gönderme seçeneği sunulur. Paylaştığınız bilgiler yalnızca
+        talebinizin değerlendirilmesi amacıyla işlenir. Ayrıntılar için{" "}
         <Link href="/gizlilik" className="underline underline-offset-2 hover:text-ink">
           Gizlilik ve KVKK Aydınlatma Metni
         </Link>

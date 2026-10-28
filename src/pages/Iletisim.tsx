@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { InteriorHero } from "@/components/ui/InteriorHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { SocialLinks } from "@/components/brand/Social";
@@ -8,25 +9,14 @@ import { site } from "@/data/site";
 export default function IletisimPage() {
   return (
     <>
-      <section className="py-20 md:py-28">
-        <Container>
-          <Reveal variant="left">
-            <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-              <span className="h-px w-10 bg-accent-warm" /> İletişim
-            </p>
-            <h1 className="mt-6 max-w-3xl text-[clamp(2.4rem,5vw,4.2rem)]">
-              Bize <em className="text-accent">ulaşın.</em>
-            </h1>
-            <p className="mt-6 max-w-xl leading-relaxed text-muted">
-              Kocaeli ve çevresindeki inşaat, mühendislik ve proje
-              ihtiyaçlarınız için aşağıdaki formu doldurabilir veya doğrudan e-posta
-              gönderebilirsiniz. En kısa sürede size dönüş yaparız.
-            </p>
-          </Reveal>
-        </Container>
-      </section>
+      <InteriorHero
+        page="iletisim"
+        label="İletişim"
+        title={<>Bize <span className="text-accent-soft">ulaşın.</span></>}
+        description="Kocaeli ve çevresindeki inşaat, mühendislik ve proje ihtiyaçlarınız için aşağıdaki formu doldurabilir veya doğrudan e-posta gönderebilirsiniz. En kısa sürede size dönüş yaparız."
+      />
 
-      <section className="pb-24">
+      <section className="pb-24 pt-16 md:pt-24">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">

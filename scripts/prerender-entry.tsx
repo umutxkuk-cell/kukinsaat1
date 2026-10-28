@@ -7,7 +7,7 @@
  */
 import { renderToString } from "react-dom/server";
 import App from "@/App";
-import { allPrerenderPaths, metaFor, type RouteMeta } from "@/lib/metadata";
+import { allPrerenderPaths, canonicalUrl, metaFor, type RouteMeta } from "@/lib/metadata";
 
 export function render(path: string): string {
   (globalThis as { __KUK_PRERENDER_PATH__?: string }).__KUK_PRERENDER_PATH__ = path;
@@ -17,5 +17,9 @@ export function render(path: string): string {
 export function getMeta(path: string): RouteMeta {
   return metaFor(path);
 }
+
+// prerender.mjs, canonical/og:url/sitemap için aynı üreticiyi kullanır;
+// böylece istemci tarafı (App.tsx) ile ham HTML asla ayrışmaz.
+export { canonicalUrl };
 
 export const paths: string[] = allPrerenderPaths();

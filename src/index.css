@@ -217,6 +217,27 @@ em,
 .ken-burns { animation: ken-burns 7s var(--ease-out) both; }
 .scroll-dot { animation: scroll-dot 2.2s ease-in-out infinite; }
 
+/* Shared treatment for the abstract interior-page backgrounds. */
+.interior-hero-scrim {
+  background:
+    linear-gradient(90deg, rgba(18, 28, 35, 0.5) 0%, rgba(18, 28, 35, 0.25) 45%, rgba(18, 28, 35, 0.05) 100%),
+    linear-gradient(0deg, rgba(18, 28, 35, 0.18), transparent 70%);
+}
+@media (max-width: 767px) {
+  .interior-hero-scrim {
+    background:
+      linear-gradient(90deg, rgba(18, 28, 35, 0.62) 0%, rgba(18, 28, 35, 0.4) 100%),
+      linear-gradient(0deg, rgba(18, 28, 35, 0.25), transparent 75%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .interior-hero-art { animation: interior-art-enter 1100ms var(--ease-out) both; }
+  @keyframes interior-art-enter {
+    from { opacity: 0.55; transform: translateX(16px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
 /* Line-by-line mask text reveal */
 .line-mask { overflow: hidden; display: block; }
 .line-mask-inner {
@@ -296,8 +317,19 @@ em,
 .logo-draw.is-visible path:nth-child(4) { animation-delay: 0.7s; }
 .logo-draw.is-visible path:nth-child(5) { animation-delay: 0.9s; }
 
-/* Kinetic slogan band */
-
+/* Footer imzası yalnızca görünür alana girdiğinde hareket eder. */
+@media (prefers-reduced-motion: no-preference) {
+  .company-signature.is-visible .company-signature-brand {
+    animation: company-signature-rise 650ms var(--ease-out) both;
+  }
+  .company-signature.is-visible .company-signature-name {
+    animation: company-signature-rise 650ms var(--ease-out) 100ms both;
+  }
+  @keyframes company-signature-rise {
+    from { opacity: 0.35; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+}
 
 /* Magnetic button wrapper */
 .magnetic { transition: transform var(--t-ctl) var(--ease-out); }
@@ -520,6 +552,7 @@ header.text-ink .link-sweep[data-active="true"] { color: var(--color-accent-warm
 
   /* Çerez barı: anında görünür; kenar ışığı ve geçişler kapalı */
   .consent-bar, .consent-fab, .consent-view { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+
   .consent-edge::after { animation: none !important; }
   .consent-toggle, .consent-toggle::after { transition: none !important; }
 

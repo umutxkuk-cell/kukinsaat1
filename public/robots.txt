@@ -1,4 +1,16 @@
+# kukinsaat.com — robots.txt
+#
+# Tüm sayfalara izin verilir. Yalnızca API uç noktaları taranmaz: bunlar
+# HTML içerik üretmez, tarama bütçesini boşa harcar ve /api/contact'a
+# yapılan bot istekleri gereksiz yere hız sınırını tüketebilir.
+
 User-agent: *
 Allow: /
+Disallow: /api/
+
+# Yasal metinler ziyaretçiye açıktır ama dizine girmesi istenmez; bu
+# sayfalarda <meta name="robots"> noindex taşır. robots.txt ile
+# engellemiyoruz, çünkü engellenen sayfanın noindex etiketi okunamaz
+# ve Google sayfayı yine de dizine ekleyebilir.
 
 Sitemap: https://kukinsaat.com/sitemap.xml

@@ -1,0 +1,39 @@
+# Cloudflare Pages — Functions yapılandırması
+#
+# Buradaki [vars] değerleri GİZLİ DEĞİLDİR; depoda tutulabilir ve her
+# dağıtımda Function'a otomatik enjekte edilir. Panelde (Settings →
+# Environment variables) aynı adla tanımlanan bir değişken varsa PANEL
+# ÖNCELİKLİDİR — yani geçici olarak panelden üzerine yazabilirsiniz.
+#
+# Gizli anahtarlar (EMAILJS_PRIVATE_KEY, RESEND_API_KEY) buraya YAZILMAZ;
+# ya panelde "Secret" olarak ya da `npx wrangler pages secret put AD` ile
+# eklenir.
+
+name = "kukinsaat"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-01-01"
+
+[vars]
+# EmailJS servis kimliği (gizli değildir — tek başına e-posta göndermeye yetmez).
+EMAILJS_SERVICE_ID = "service_vbcjk3d"
+
+# EmailJS Public Key — zaten tarayıcı tarafında görünmesi tasarlanan bir
+# kimliktir, gizli değildir. Depoda tutulması güvenlidir.
+EMAILJS_PUBLIC_KEY = "245gQkDPKWRYbzMAe"
+
+# Form mesajlarının düşeceği adres.
+CONTACT_TO_EMAIL = "umut@kukinsaat.com"
+
+# ⛔ EMAILJS_PRIVATE_KEY BURAYA YAZILMAZ.
+# Bu depo halka açık; private key commit edilirse herkes sizin adınıza
+# e-posta gönderebilir. EmailJS hesabınız "strict mode"da olduğu için
+# private key ZORUNLUDUR — ama yalnızca şu iki yerden birinde durmalıdır:
+#   1) Cloudflare paneli → Pages → Settings → Environment variables
+#      → EMAILJS_PRIVATE_KEY (türü: Secret / Encrypt)
+#   2) npx wrangler pages secret put EMAILJS_PRIVATE_KEY
+# Yerel geliştirme için ise .dev.vars (git tarafından yok sayılır).
+#
+# EmailJS şablon kimliği — gizli değildir, depoda durmasında sakınca yok.
+# Şablonun "To Email" alanı {{to_email}} ya da sabit umut@kukinsaat.com
+# olmalı; boşsa e-posta kimseye ulaşmaz.
+EMAILJS_TEMPLATE_ID = "template_hitg8vm"

@@ -8,10 +8,10 @@ import { Container } from "@/components/ui/Container";
 import { getService } from "@/data/services";
 import { getProject } from "@/data/projects";
 import {
+  canonicalUrl,
   INDEX_ROBOTS,
   metaFor,
   NOINDEX_ROBOTS,
-  SITE_URL,
 } from "@/lib/metadata";
 import {
   getCurrentPath,
@@ -124,7 +124,9 @@ function Routes() {
         if (element) element.setAttribute("content", value);
       };
 
-      const url = `${SITE_URL}${next === "/" ? "/" : next}`;
+      // Ham HTML'deki canonical ile birebir aynı biçim (eğik çizgili):
+      // SPA geçişlerinde de canonical, 200 dönen URL'yi göstermeli.
+      const url = canonicalUrl(next);
       setMeta('meta[name="description"]', meta.description);
       setMeta('meta[property="og:title"]', meta.title);
       setMeta('meta[property="og:description"]', meta.description);

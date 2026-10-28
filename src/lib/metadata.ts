@@ -15,6 +15,27 @@ import { getProject, projects } from "@/data/projects";
 
 export const SITE_URL = "https://kukinsaat.com";
 
+/**
+ * Kanonik URL üretici — tek kaynak.
+ *
+ * Cloudflare Pages, prerender edilmiş dizin rotalarını "pretty URL"
+ * kuralıyla sona eğik çizgili hâle 308 ile yönlendirir:
+ *   /kurumsal  → 308 →  /kurumsal/  → 200
+ *
+ * Bu yüzden canonical, og:url, JSON-LD ve sitemap **eğik çizgili** biçimi
+ * kullanmalı. Eğik çizgisiz biçim kullanılırsa canonical, yönlendiren bir
+ * URL'ye işaret eder — Google bunu dizine eklemez ve Search Console
+ * "dizine eklenemedi / yinelenen, kullanıcı seçimiyle farklı canonical"
+ * bildirir. Sitemap'te yönlendiren URL listelemek de ayrı bir uyarıdır.
+ *
+ * Kök rota her zaman "/" kalır ("//" üretilmez).
+ */
+export function canonicalUrl(path: string): string {
+  if (path === "/" || path === "") return `${SITE_URL}/`;
+  const clean = path.replace(/\/+$/, "");
+  return `${SITE_URL}${clean}/`;
+}
+
 export const INDEX_ROBOTS =
   "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 export const NOINDEX_ROBOTS = "noindex, follow";
@@ -112,7 +133,7 @@ function breadcrumbLd(crumbs: Crumb[]): object {
       "@type": "ListItem",
       position: i + 1,
       name: c.name,
-      item: `${SITE_URL}${c.path}`,
+      item: canonicalUrl(c.path),
     })),
   };
 }

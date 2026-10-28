@@ -1,9 +1,57 @@
+import { useEffect, useRef } from "react";
 import { Link } from "@/lib/next-shim";
 import { COOKIE_PREF_EVENT } from "@/components/layout/CookieConsent";
 import { site } from "@/data/site";
 import { services } from "@/data/services";
-import { LogoStacked } from "@/components/brand/Logo";
+import { LogoMark, LogoStacked } from "@/components/brand/Logo";
 import { SocialLinks } from "@/components/brand/Social";
+
+function CompanySignature() {
+  const signatureRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const signature = signatureRef.current;
+    if (!signature) return;
+    if (typeof IntersectionObserver === "undefined") {
+      signature.classList.add("is-visible");
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          signature.classList.add("is-visible");
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(signature);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={signatureRef} className="company-signature group border-t border-white/10 py-9 md:py-10">
+      <div className="grid gap-5 md:grid-cols-12 md:items-center md:gap-12">
+        <div className="company-signature-brand flex items-center gap-4 md:col-span-4">
+          <LogoMark
+            variant="light"
+            className="h-12 w-auto shrink-0 opacity-80 group-hover:opacity-100 motion-safe:transition-[transform,translate,opacity] motion-safe:duration-500 motion-safe:group-hover:-translate-y-1"
+          />
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-bg/65">
+              Şirket Ünvanı
+            </p>
+            <span aria-hidden="true" className="line-grow mt-2 block h-px w-10 bg-accent-soft/80" />
+          </div>
+        </div>
+        <p className="company-signature-name pl-[3.75rem] font-display text-[clamp(0.95rem,1.3vw,1.1rem)] font-semibold leading-relaxed tracking-[0.01em] text-bg/90 md:col-span-8 md:pl-0 md:text-right">
+          {site.legalName}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export function Footer() {
   return (
@@ -89,31 +137,20 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Şirket ünvanı — net ve okunur */}
-        <div className="border-t border-white/10 pt-7">
-          <p className="text-xs uppercase tracking-[0.24em] text-bg/45">Şirket Ünvanı</p>
-          <p className="mt-2 text-sm font-medium tracking-wide text-bg/90">
-            {site.legalName}
-          </p>
-        </div>
+        <CompanySignature />
 
-        <div className="border-t border-white/10 pt-7">
-          <p className="text-center font-display text-[clamp(2.2rem,7vw,5.5rem)] font-bold uppercase tracking-[-0.02em] leading-none text-white/[0.06] select-none" aria-hidden="true">
-            Kaliteyle Kurulur
-          </p>
-          <div className="mt-7 flex flex-col gap-3 text-xs text-bg/45 md:flex-row md:items-center md:justify-between">
-            <p>© {new Date().getFullYear()} Kuk İnşaat. Tüm hakları saklıdır.</p>
-            <div className="flex flex-wrap gap-6">
-              <Link href="/gizlilik" className="hover:text-white">Gizlilik &amp; KVKK</Link>
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new Event(COOKIE_PREF_EVENT))}
-                className="hover:text-white"
-              >
-                Çerez Tercihleri
-              </button>
-              <Link href="/iletisim" className="hover:text-white">İletişim</Link>
-            </div>
+        <div className="flex flex-col gap-3 border-t border-white/10 pt-7 text-xs text-bg/45 md:flex-row md:items-center md:justify-between">
+          <p>© {new Date().getFullYear()} Kuk İnşaat. Tüm hakları saklıdır.</p>
+          <div className="flex flex-wrap gap-6">
+            <Link href="/gizlilik" className="hover:text-white">Gizlilik &amp; KVKK</Link>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event(COOKIE_PREF_EVENT))}
+              className="hover:text-white"
+            >
+              Çerez Tercihleri
+            </button>
+            <Link href="/iletisim" className="hover:text-white">İletişim</Link>
           </div>
         </div>
       </div>

@@ -89,12 +89,76 @@ function sendPageView() {
   });
 }
 
+/**
+ * Onayın geçerlilik süresi: 180 gün.
+ *
+ * KVKK ve GDPR uygulamalarında onay süresiz saklanmaz; makul aralıklarla
+ * yeniden teyit istenir. Süre dolduğunda bar ziyaretçiye tekrar gösterilir.
+ * Bu aynı zamanda "bir kez tıkladım, bir daha hiç çıkmıyor" sorununu çözer.
+ */
+const CONSENT_TTL_MS = 180 * 24 * 60 * 60 * 1000;
+
+function isChoice(v: unknown): v is Choice {
+  return v === "accepted" || v === "declined" || v === "analytics";
+}
+
+/**
+ * Saklı kararı okur. İki biçimi de anlar:
+ *  - yeni: {"value":"accepted","at":<ms>}  → süresi dolmuşsa null döner
+ *  - eski: "accepted" (düz metin)          → zaman damgası olmadığı için
+ *    süresi dolmuş kabul edilir ve ziyaretçiye bir kez daha sorulur.
+ */
 function readStored(): Choice | null {
   try {
-    const v = localStorage.getItem(STORAGE_KEY);
-    return v === "accepted" || v === "declined" || v === "analytics" ? v : null;
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    if (isChoice(raw)) return null; // eski biçim → yeniden sor
+    const parsed = JSON.parse(raw) as { value?: unknown; at?: unknown };
+    if (!isChoice(parsed?.value)) return null;
+    const at = Number(parsed.at) || 0;
+    if (Date.now() - at > CONSENT_TTL_MS) return null; // süresi doldu
+    return parsed.value;
   } catch {
     return null;
+  }
+}
+
+/** Kararı zaman damgasıyla yazar. */
+function writeStored(value: Choice) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ value, at: Date.now() }));
+  } catch {
+    /* depolama engellenmişse yoksay */
+  }
+}
+
+/** Saklı kararı siler (test ve "sıfırla" bağlantısı için). */
+function clearStored() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* yoksay */
+  }
+}
+
+/**
+ * `?consent=reset` — saklı kararı siler ve adres çubuğunu temizler.
+ * Site sahibinin barı her zaman ilk ziyaretteki gibi görmesini sağlar.
+ */
+function consumeResetParam(): boolean {
+  try {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("consent") !== "reset") return false;
+    clearStored();
+    url.searchParams.delete("consent");
+    window.history.replaceState(
+      window.history.state,
+      "",
+      url.pathname + (url.searchParams.toString() ? `?${url.searchParams}` : "") + url.hash,
+    );
+    return true;
+  } catch {
+    return false;
   }
 }
 
@@ -176,6 +240,10 @@ export function CookieConsent() {
     // 1. adım: etiketlerden önce consent varsayılanları (denied).
     ensureConsentDefaults();
 
+    // `?consent=reset` varsa saklı karar silinir; bar ilk ziyaretteki gibi
+    // gösterilir. Site sahibinin kurulumu denetlemesi için kaçış yolu.
+    consumeResetParam();
+
     const stored = readStored();
     if (stored) {
       setDecided(true);
@@ -225,11 +293,7 @@ export function CookieConsent() {
   }, []);
 
   function choose(value: Choice) {
-    try {
-      localStorage.setItem(STORAGE_KEY, value);
-    } catch {
-      /* depolama engellenmişse yoksay */
-    }
+    writeStored(value);
     applyConsent(value);
     if (value !== "declined") sendPageView();
     setDecided(true);
@@ -380,9 +444,12 @@ export function CookieConsent() {
           type="button"
           onClick={reopen}
           aria-label="Çerez tercihlerini değiştir"
-          className="consent-fab group fixed bottom-4 left-4 z-[60] flex items-center gap-2.5 border border-white/15 bg-ink py-2.5 pl-3 pr-4 text-white/65 shadow-[0_10px_30px_rgba(8,10,12,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent-soft hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-soft"
+          className="consent-fab group fixed bottom-4 left-4 z-[60] flex items-center gap-2.5 border border-line-2 bg-bg py-2.5 pl-3 pr-4 text-ink shadow-[0_10px_30px_rgba(8,10,12,0.38)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-warm"
         >
-          <CookieHexIcon className="h-[17px] w-[17px] flex-none text-accent-soft transition-colors group-hover:text-white" />
+          {/* Mineral açık zemin: hem koyu footer/hero üstünde hem açık gövde
+              bölümlerinde okunur. Koyu zeminli eski sürüm footer ile
+              birleşip görünmez oluyordu. */}
+          <CookieHexIcon className="h-[17px] w-[17px] flex-none text-accent-warm transition-transform duration-300 group-hover:rotate-12" />
           <span className="text-[0.68rem] font-semibold uppercase tracking-[0.18em]">
             Çerez Tercihleri
           </span>

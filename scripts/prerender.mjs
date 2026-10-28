@@ -94,15 +94,43 @@ function setMeta(out, attr, value) {
 }
 
 let written = 0;
+
+/* ── Sitemap üretimi ──────────────────────────────────────────────
+   sitemap.xml elle tutulmaz: prerender edilen ve `indexable` olan
+   rotalardan otomatik üretilir. Sitemap, canonical ve robots meta
+   etiketi aynı kaynaktan (src/lib/metadata.ts) beslendiği için
+   birbiriyle asla çelişmez. Search Console'daki "dizine eklenemedi"
+   bildirimlerinin en sık nedeni tam olarak bu çelişkidir: sitemap'te
+   listelenen URL'nin ham HTML'inde noindex ya da eksik canonical
+   bulunması.
+
+   lastmod her derlemede değil, içerik değiştiğinde güncellenir —
+   sürekli değişen lastmod'a Google güvenmez ve yok sayar.         */
+const SITE_LASTMOD = "2026-10-28";
+const sitemapEntries = [];
+
 for (const routePath of mod.paths) {
   const meta = mod.getMeta(routePath);
   let rootHtml = mod.render(routePath);
   if (heroDataUri) rootHtml = rootHtml.replaceAll("__KUK_HERO_SRC__", heroDataUri);
 
-  const url = `${SITE_URL}${routePath}`;
+  // Canonical/og:url/sitemap: Pages'in 200 döndürdüğü eğik çizgili biçim.
+  // (Ayrıntı: src/lib/metadata.ts → canonicalUrl())
+  const url = mod.canonicalUrl(routePath);
   const robotsContent = meta.indexable
     ? "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
     : "noindex, follow";
+
+  // Yalnızca dizine eklenebilir rotalar sitemap'e girer. noindex olanlar
+  // (ör. portföy boşken /projeler ve her zaman /gizlilik) listelenmez:
+  // noindex + sitemap birlikte gönderilmek Search Console'da doğrudan
+  // "Hariç bırakıldı: 'noindex' etiketi" uyarısı üretir.
+  if (meta.indexable) {
+    const depth = routePath.split("/").filter(Boolean).length;
+    const priority =
+      routePath === "/" ? "1.0" : routePath === "/hizmetler" ? "0.9" : depth >= 2 ? "0.7" : "0.8";
+    sitemapEntries.push({ url, priority });
+  }
 
   let out = template;
   out = out.replace(/<title>[^<]*<\/title>/, `<title>${esc(meta.title)}</title>`);
@@ -147,6 +175,29 @@ for (const routePath of mod.paths) {
 // Kabuk ana sayfa HTML'idir; istemci router'ı gerçek pathname'e göre Türkçe
 // 404 ekranını çizer. Netlify tarzı `/* /index.html 200` yakalama kuralı
 // Cloudflare'da sonsuz döngü sayılıp yok sayıldığı için bu yöntem kullanılır.
+// ── sitemap.xml: metadata kaynağından üretilir, public/sitemap.xml'in
+// üzerine yazar. Böylece elle tutulan dosya ile gerçek rotalar asla
+// ayrışmaz (yeni bir proje/hizmet eklendiğinde sitemap kendiliğinden güncellenir).
+const sitemapXml =
+  `<?xml version="1.0" encoding="UTF-8"?>\n` +
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  sitemapEntries
+    .map(
+      (entry) =>
+        `  <url>\n` +
+        `    <loc>${esc(entry.url)}</loc>\n` +
+        `    <lastmod>${SITE_LASTMOD}</lastmod>\n` +
+        `    <priority>${entry.priority}</priority>\n` +
+        `  </url>`,
+    )
+    .join("\n") +
+  `\n</urlset>\n`;
+await writeFile(path.join(root, "dist/sitemap.xml"), sitemapXml, "utf8");
+written += 1;
+console.log(
+  `  ✓ sitemap.xml  [${sitemapEntries.length} URL — yalnızca indexlenebilir rotalar]`,
+);
+
 const shell404 = await readFile(path.join(root, "dist/index.html"), "utf8");
 await writeFile(path.join(root, "dist/404.html"), shell404, "utf8");
 written += 1;

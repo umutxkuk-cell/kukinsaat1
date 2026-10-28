@@ -1,8 +1,8 @@
 import { Link } from "@/lib/next-shim";
 import { Image } from "@/lib/next-shim";
 import { Container } from "@/components/ui/Container";
+import { InteriorHero } from "@/components/ui/InteriorHero";
 import { Reveal } from "@/components/ui/Reveal";
-import { LineReveal } from "@/components/ui/LineReveal";
 import { ServiceIcon } from "@/components/services/ServiceIcon";
 import { services } from "@/data/services";
 
@@ -43,50 +43,35 @@ const approach = [
 export default function HizmetlerPage() {
   return (
     <>
-      {/* ---------- Header ---------- */}
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="dot-grid pointer-events-none absolute inset-0 text-ink/[0.05]" aria-hidden="true" />
-        <p
-          className="pointer-events-none absolute -right-6 top-10 select-none font-display text-[10rem] leading-none text-ink/[0.04] md:text-[16rem]"
-          aria-hidden="true"
-        >
-          KUK
-        </p>
-        <Container className="relative">
-          <Reveal variant="left">
-            <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-              <span className="h-px w-10 bg-accent-warm" /> Hizmetlerimiz
-            </p>
-          </Reveal>
-          <LineReveal
-            as="h1"
-            className="mt-6 max-w-4xl text-[clamp(2.5rem,6vw,5rem)] leading-[1.02]"
-            lines={["Fikirden teslime kadar", "uçtan uca çözümler."]}
-          />
-          <Reveal variant="up" delay={200}>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted">
-              Kocaeli ve çevresinde inşaat, projelendirme ve mühendislik hizmetlerini
-              tek çatı altında sunuyoruz. Her çalışma alanımızın kapsamını aşağıda
-              bulabilirsiniz.
-            </p>
-          </Reveal>
+      <InteriorHero
+        page="hizmetler"
+        label="Hizmetlerimiz"
+        title={
+          <>
+            Fikirden teslime kadar<br className="hidden md:block" />{" "}
+            <span className="text-accent-soft">uçtan uca</span> çözümler.
+          </>
+        }
+        description="Kocaeli ve çevresinde inşaat, projelendirme ve mühendislik hizmetlerini tek çatı altında sunuyoruz. Her çalışma alanımızın kapsamını aşağıda bulabilirsiniz."
+      />
 
-          {/* icon quick-nav chips (no numbers) */}
-          <Reveal variant="up" delay={300}>
-            <div className="mt-10 flex flex-wrap gap-3">
+      <section className="border-b border-line bg-bg">
+        <Container>
+          <Reveal variant="up">
+            <nav className="flex flex-wrap gap-x-7 gap-y-4 py-7" aria-label="Hizmetlere hızlı geçiş">
               {services.map((s) => (
                 <a
                   key={s.slug}
                   href={`#${s.slug}`}
-                  className="group inline-flex items-center gap-2.5 border border-ink/15 px-4 py-2.5 text-sm transition-all duration-300 hover:border-ink hover:bg-ink hover:text-white"
+                  className="group inline-flex items-center gap-2.5 border-b border-transparent pb-1 text-sm text-ink/80 transition-colors duration-300 hover:border-accent-warm hover:text-accent"
                 >
-                  <span className="text-accent transition-colors duration-300 group-hover:text-white">
+                  <span className="text-accent transition-colors duration-300 group-hover:text-accent-warm">
                     <ServiceIcon name={s.icon} className="h-[18px] w-[18px]" />
                   </span>
                   {s.shortTitle}
                 </a>
               ))}
-            </div>
+            </nav>
           </Reveal>
         </Container>
       </section>

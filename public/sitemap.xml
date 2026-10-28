@@ -1,12 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  YEDEK sitemap.
+
+  Normal derlemede (npm run build → postbuild: scripts/prerender.mjs) bu
+  dosyanın üzerine, src/lib/metadata.ts kaynağından üretilen sitemap yazılır.
+  Buradaki kopya yalnızca prerender'ın çalışmadığı bir derlemede sunulur;
+  yine de doğru kalması için aynı kurallara uyar:
+
+  1) Yalnızca dizine eklenebilir (index) rotalar listelenir.
+     /projeler (portföy boşken) ve /gizlilik noindex taşıdığı için BURADA
+     YER ALMAZ — noindex bir URL'yi sitemap'e koymak Search Console'da
+     "Hariç bırakıldı: 'noindex' etiketi" uyarısı üretir.
+
+  2) Tüm URL'ler SONDA EĞİK ÇİZGİ ile yazılır. Cloudflare Pages prerender
+     edilmiş dizin rotalarını /kurumsal → 308 → /kurumsal/ biçiminde
+     normalize eder; eğik çizgisiz biçim listelenirse sitemap "yönlendiren
+     URL" içerir ve canonical da yönlendiren bir adresi gösterir. Google
+     bunu dizine eklemez.
+
+  Yeni bir hizmet veya proje eklendiğinde bu dosyayı elle güncellemenize
+  gerek yoktur: prerender adımı listeyi koddan üretir.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kukinsaat.com/</loc><lastmod>2026-10-28</lastmod><priority>1.0</priority></url>
-  <url><loc>https://kukinsaat.com/kurumsal</loc><lastmod>2026-10-28</lastmod><priority>0.8</priority></url>
-  <url><loc>https://kukinsaat.com/hizmetler</loc><lastmod>2026-10-28</lastmod><priority>0.9</priority></url>
-  <url><loc>https://kukinsaat.com/iletisim</loc><lastmod>2026-10-28</lastmod><priority>0.8</priority></url>
-  <url><loc>https://kukinsaat.com/hizmetler/insaat-ve-yapi-uygulamalari</loc><lastmod>2026-10-28</lastmod><priority>0.7</priority></url>
-  <url><loc>https://kukinsaat.com/hizmetler/muhendislik-hizmetleri</loc><lastmod>2026-10-28</lastmod><priority>0.7</priority></url>
-  <url><loc>https://kukinsaat.com/hizmetler/proje-gelistirme-ve-teknik-koordinasyon</loc><lastmod>2026-10-28</lastmod><priority>0.7</priority></url>
-  <url><loc>https://kukinsaat.com/hizmetler/proje-ve-uygulama-sureclerinin-yonetimi</loc><lastmod>2026-10-28</lastmod><priority>0.7</priority></url>
-  <url><loc>https://kukinsaat.com/hizmetler/teknik-danismanlik</loc><lastmod>2026-10-28</lastmod><priority>0.7</priority></url>
+  <url>
+    <loc>https://kukinsaat.com/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/kurumsal/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/hizmetler/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/iletisim/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/hizmetler/insaat-ve-yapi-uygulamalari/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/hizmetler/muhendislik-hizmetleri/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/hizmetler/proje-gelistirme-ve-teknik-koordinasyon/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/hizmetler/proje-ve-uygulama-sureclerinin-yonetimi/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kukinsaat.com/hizmetler/teknik-danismanlik/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

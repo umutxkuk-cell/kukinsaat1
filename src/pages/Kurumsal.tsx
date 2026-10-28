@@ -1,10 +1,10 @@
 import { Image } from "@/lib/next-shim";
 import { Link } from "@/lib/next-shim";
 import { Container } from "@/components/ui/Container";
+import { InteriorHero } from "@/components/ui/InteriorHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { LineReveal } from "@/components/ui/LineReveal";
 import { Counter } from "@/components/ui/Counter";
-import { LogoDraw } from "@/components/brand/LogoDraw";
 import { ValueIcon, type ValueIconKey } from "@/components/kurumsal/ValueIcon";
 import { services } from "@/data/services";
 import { site } from "@/data/site";
@@ -22,38 +22,22 @@ const values: { icon: ValueIconKey; t: string; d: string }[] = [
 export default function KurumsalPage() {
   return (
     <>
-      {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="dot-grid pointer-events-none absolute inset-0 text-ink/[0.05]" aria-hidden="true" />
-        <Container className="relative">
-          <div className="grid items-end gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <Reveal variant="left">
-                <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-                  <span className="h-px w-10 bg-accent-warm" /> Kurumsal
-                </p>
-              </Reveal>
-              <LineReveal
-                as="h1"
-                className="mt-6 max-w-3xl text-[clamp(2.4rem,5.5vw,4.6rem)] leading-[1.02]"
-                lines={["İnşaata mühendislik", "gözüyle bakan bir firma."]}
-              />
-              <Reveal variant="up" delay={220}>
-                <p className="mt-6 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
-                  KUK İnşaat — Kaliteyle Kurulur
-                </p>
-              </Reveal>
-            </div>
-            <Reveal variant="scale" delay={200} className="lg:col-span-4">
-              <div className="float-slow md:ml-auto md:w-fit">
-                <LogoDraw className="h-44 w-auto text-ink" />
-              </div>
-            </Reveal>
-          </div>
+      <InteriorHero
+        page="kurumsal"
+        label="Kurumsal"
+        title={
+          <>
+            İnşaata mühendislik<br className="hidden md:block" />{" "}
+            <span className="text-accent-soft">gözüyle</span> bakan bir firma.
+          </>
+        }
+        description="KUK İnşaat — Kaliteyle Kurulur"
+      />
 
-          {/* factual stat strip */}
+      <section className="pt-10 md:pt-14">
+        <Container>
           <Reveal variant="up" delay={120}>
-            <div className="mt-16 grid grid-cols-2 gap-px border border-line bg-line md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-px border border-line bg-line md:grid-cols-4">
               {[
                 { v: <Counter to={5} />, l: "Hizmet alanı" },
                 { v: "Kocaeli", l: "Hizmet bölgesi" },

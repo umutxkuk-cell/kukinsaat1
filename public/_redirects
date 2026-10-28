@@ -1,8 +1,36 @@
-# Cloudflare Pages'te Netlify tarzı SPA yakalama kuralı (/* /index.html 200)
-# KULLANILMAZ: Pages'in "pretty URL" normalleştirmesi bu kuralda sonsuz döngü
-# algılar ve kuralı yok sayar (wrangler yerel testte de aynı uyarıyı verir).
+# Cloudflare Pages yönlendirmeleri
 #
-# Bu projede yönlendirme stratejisi:
-#  - Tüm gerçek rotalar dist/<rota>/index.html olarak ön üretimlidir → 200.
-#  - Bilinmeyen yollar dist/404.html'e düşer → HTTP 404 + Türkçe 404 ekranı.
-#  - /api/* istekleri public/_routes.json ile Pages Functions'a gider.
+# Netlify tarzı SPA yakalama kuralı (/* /index.html 200) BİLİNÇLİ OLARAK
+# KULLANILMAZ: Pages'in "pretty URL" normalleştirmesi bu kuralda sonsuz döngü
+# algılayıp kuralı yok sayar. Onun yerine:
+#   - Tüm gerçek rotalar dist/<rota>/index.html olarak ön üretimlidir → 200.
+#   - Bilinmeyen yollar dist/404.html'e düşer → HTTP 404 + Türkçe 404 ekranı.
+#   - /api/* istekleri public/_routes.json ile Pages Functions'a gider.
+
+# ── Eski (Next.js döneminden kalma) İngilizce rotalar → Türkçe karşılıkları ──
+# Bu URL'ler Google'da hâlâ taranıyor/dizinde. 404 ekranına düşmek yerine
+# 301 ile doğru sayfaya taşınır; böylece mevcut bağlantı değeri korunur ve
+# Search Console'daki "bulunamadı (404)" kayıtları zamanla temizlenir.
+/home                /                 301
+/index.html          /                 301
+/about               /kurumsal/        301
+/about-us            /kurumsal/        301
+/corporate           /kurumsal/        301
+/hakkimizda          /kurumsal/        301
+/services            /hizmetler/       301
+/service             /hizmetler/       301
+/services/*          /hizmetler/       301
+/projects            /projeler/        301
+/project             /projeler/        301
+/projects/*          /projeler/        301
+/portfolio           /projeler/        301
+/contact             /iletisim/        301
+/contact-us          /iletisim/        301
+/iletisim-bilgileri  /iletisim/        301
+/privacy             /gizlilik/        301
+/privacy-policy      /gizlilik/        301
+/kvkk                /gizlilik/        301
+
+# ── Yazım/çoğul varyantları ──
+/hizmet              /hizmetler/       301
+/proje               /projeler/        301
