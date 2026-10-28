@@ -1,0 +1,20 @@
+# Cloudflare Pages özel başlıkları
+# Sözdizimi: https://developers.cloudflare.com/pages/configuration/headers/
+
+# Tüm yanıtlarda güvenlik başlıkları
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Marka varlıkları — 7 gün önbellek
+/brand/*
+  Cache-Control: public, max-age=604800
+
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+# Font dosyaları (ileride ayrı dosya olarak sunulursa) — değişmez, 1 yıl
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

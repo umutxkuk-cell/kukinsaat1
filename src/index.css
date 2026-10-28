@@ -1,0 +1,542 @@
+@import "tailwindcss";
+
+/* Self-hosted Google Fonts (same font files; avoids a third-party font request). */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("./assets/fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("./assets/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("./assets/fonts/manrope-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("./assets/fonts/manrope-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  /* Mineral palet: kırık beyaz zemin + grafit metin + derin mühendislik mavisi
+     marka rengi + ölçülü mat terracotta vurgu.
+     Roller:
+     - bg/bg-2/surface → zemin hiyerarşisi (kırık beyaz → açık taş → beyaz kart)
+     - ink/ink-2       → grafit metin/koyu yüzey + marka mavisi bölümler
+     - accent          → marka mavisi: başlık vurgusu, bağlantı, seçim durumları
+     - accent-warm     → terracotta: SADECE mikro detay (kicker çizgisi, işaret,
+                          aktif menü, ana form CTA) — maviyle rekabet etmez
+     - muted/line      → ikincil metin ve sıcak açık kenarlıklar              */
+  --color-bg: #eeeae2;          /* ana zemin: mineral kırık beyaz */
+  --color-bg-2: #e5e1d9;        /* açık taş: alternatif yüzey */
+  --color-surface: #ffffff;     /* kart/form yüzeyi: kırık beyaz üstünde beyaz katman */
+  --color-ink: #20262b;         /* grafit: başlık + gövde metni + koyu yüzeyler */
+  --color-ink-2: #1f435c;       /* derin mühendislik mavisi: marka rengi koyu bölümler */
+  --color-muted: #5a636b;       /* çelik grisi: ikincil metin (#626B73'ten bir adım
+                                   koyu — açık taş/kırık beyaz üstünde AA 4.5+) */
+  --color-line: #d8d3ca;        /* sıcak açık kenarlık: dekoratif ayırıcılar */
+  --color-line-2: #9c9384;      /* form kenarlığı: beyaz üstünde 3:1 sınır
+                                   kontrastı (WCAG 1.4.11 bileşen sınırı) */
+  --color-accent: #1f435c;      /* marka mavisi: em başlıklar, bağlantı, seçim */
+  --color-accent-warm: #a34e3a; /* mat terracotta: sınırlı vurgu (beyazla 5.66:1) */
+  --color-accent-warm-hover: #8c4130; /* terracotta hover (beyazla 7.21:1) */
+  --color-accent-soft: #8bb2cc; /* koyu zeminde açık petrol: grafit üstü 6.80:1,
+                                   marka mavisi üstü 4.63:1 (AA) */
+  --color-ink-hover: #31383f;   /* grafit hover */
+  --color-mineral: #e5e1d9;     /* açık taş: yasal metin kutuları / zebra satır */
+  --color-paper: #ffffff;       /* belge zemini: kart ve tablo hücreleri */
+  --color-hivis: #a34e3a;       /* madde işaretleri: terracotta */
+  /* İki font ailesi: Manrope (başlık) + Inter (gövde/arayüz) */
+  --font-display: var(--font-manrope), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+:root {
+  --max-w: 1320px;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+
+  /* ── Görünüm yüksekliği: svh desteklenmiyorsa vh fallback ──
+   Minifier iki min-height'ı birleştirip fallback'i sildiği için
+   @supports bloğu kullanılır — bu biçim korunur. */
+.hero-min-h {
+  min-height: 108svh;
+}
+@supports not (height: 1svh) {
+  .hero-min-h {
+    min-height: 100vh;
+  }
+}
+
+/* ── Hareket sistemi: tek easing + tek zaman skalası ──
+     Küçük etkileşimler hızlı, girişler biraz daha uzun.
+     Değerler ms cinsinden; hepsi aynı yumuşak eğriyi paylaşır. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --t-ink: 180ms;      /* bağlantı / ikon / renk geçişi */
+  --t-ctl: 220ms;      /* buton ve kontrol geri bildirimi */
+  --t-hover: 260ms;    /* kart hover */
+  --t-media: 520ms;    /* görsel zoom — doğal algı için daha uzun */
+  --t-menu: 280ms;     /* menü ve açılır alanlar */
+  --t-reveal: 480ms;   /* scroll reveal */
+  --t-line: 620ms;     /* maskeli başlık satırı */
+  --t-hero: 560ms;     /* hero giriş */
+  --d-step: 70ms;      /* sıralı giriş aralığı */
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* Reveal giriş animasyonları transform ile öğeleri sağa kaydırır; bu
+     documentElement'in scrollWidth'ini büyütür. overflow-x: clip bunu
+     gerçekten kırpar (scroll container oluşturmaz, sticky'yi bozmaz).
+     `hidden` yalnızca clip desteklemeyen tarayıcılar için fallback. */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-x: clip;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv01", "cv11";
+  letter-spacing: -0.006em;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+}
+
+/* Tek sans font ailesinde (Manrope) faux-italic'i önle; dekoratif vurgular
+   ton farkıyla (em = grafit) ayrışır, eğik yazıyla değil. */
+em,
+.italic {
+  font-style: normal;
+}
+
+::selection { background: var(--color-ink); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Container ---------- */
+.container-x {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.hairline { height: 1px; background: var(--color-line); }
+
+/* ---------- Reveal system (diversified) ---------- */
+.reveal {
+  opacity: 0;
+  transition: opacity var(--t-reveal) var(--ease-out), transform var(--t-reveal) var(--ease-out),
+    clip-path 620ms var(--ease-out), filter var(--t-reveal) var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal-up { transform: translateY(24px); }
+.reveal-left { transform: translateX(-28px); }
+.reveal-right { transform: translateX(28px); }
+.reveal-scale { transform: scale(0.97) translateY(16px); }
+.reveal-clip { clip-path: inset(0 0 100% 0); transform: translateY(18px); }
+.reveal-blur { filter: blur(6px); transform: translateY(16px); }
+.reveal-rotate { transform: rotate(-3deg) translateY(30px); transform-origin: left bottom; }
+.reveal-rise { clip-path: inset(0 0 100% 0); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0% 0);
+  filter: none;
+}
+
+/* Line that grows when its parent reveal becomes visible */
+.line-grow {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-line) var(--ease-out) 120ms;
+}
+.is-visible .line-grow, .line-grow.is-visible { transform: scaleX(1); }
+.line-grow-y {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--t-line) var(--ease-out) 160ms;
+}
+.is-visible .line-grow-y, .line-grow-y.is-visible { transform: scaleY(1); }
+
+/* Hero entrance (plays on load, no JS needed) */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ken-burns {
+  from { transform: scale(1.12) translateY(-1.5%); }
+  to { transform: scale(1) translateY(0); }
+}
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+.hero-anim { animation: hero-rise var(--t-hero) var(--ease-out) both; }
+.hero-anim-1 { animation-delay: 60ms; }
+.hero-anim-2 { animation-delay: 170ms; }
+.hero-anim-3 { animation-delay: 260ms; }
+.hero-anim-4 { animation-delay: 350ms; }
+.hero-anim-5 { animation-delay: 440ms; }
+.ken-burns { animation: ken-burns 7s var(--ease-out) both; }
+.scroll-dot { animation: scroll-dot 2.2s ease-in-out infinite; }
+
+/* Line-by-line mask text reveal */
+.line-mask { overflow: hidden; display: block; }
+.line-mask-inner {
+  display: block;
+  transform: translateY(110%);
+  transition: transform var(--t-line) var(--ease-out);
+}
+.is-visible .line-mask-inner { transform: translateY(0); }
+
+/* Filigran ve süslemelerde hafif süzülme */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.float-slow { animation: float-slow 9s ease-in-out infinite; }
+
+/* Button sheen sweep */
+.btn-sheen { position: relative; overflow: hidden; }
+.btn-sheen::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -140%;
+  width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent);
+  transform: skewX(-18deg);
+  transition: transform var(--t-line) var(--ease-out);
+  pointer-events: none;
+}
+.btn-sheen:hover::before { left: 150%; }
+
+/* Intro loader curtain */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--color-ink);
+  transition: transform 760ms var(--ease-inout);
+}
+.intro.done { transform: translateY(-100%); }
+.intro-mark {
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  animation: intro-in 760ms var(--ease-out) 100ms forwards;
+}
+@keyframes intro-in {
+  to { opacity: 1; transform: none; }
+}
+.intro-line {
+  height: 1px;
+  width: 0;
+  background: rgba(255,255,255,0.4);
+  animation: intro-line 1000ms var(--ease-out) 300ms forwards;
+}
+@keyframes intro-line {
+  to { width: 180px; }
+}
+
+/* Reveal hover lift for cards */
+/* SVG logo stroke draw — pathLength=1 ile normalize (gerçek uzunluktan bağımsız).
+   draw-stroke: path'ler dashoffset 1'den (gizli) 0'a (tam çizili) ilerler;
+   bileşendeki nth-child gecikmeleriyle altıgen ve K-U-K harfleri sırayla çizilir. */
+@keyframes draw-stroke {
+  to { stroke-dashoffset: 0; }
+}
+.logo-draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.logo-draw.is-visible path {
+  animation: draw-stroke 1.6s var(--ease-out) forwards;
+}
+.logo-draw.is-visible path:nth-child(1) { animation-delay: 0s; }
+.logo-draw.is-visible path:nth-child(2) { animation-delay: 0.25s; }
+.logo-draw.is-visible path:nth-child(3) { animation-delay: 0.5s; }
+.logo-draw.is-visible path:nth-child(4) { animation-delay: 0.7s; }
+.logo-draw.is-visible path:nth-child(5) { animation-delay: 0.9s; }
+
+/* Kinetic slogan band */
+
+
+/* Magnetic button wrapper */
+.magnetic { transition: transform var(--t-ctl) var(--ease-out); }
+
+/* Section eyebrow kicker reveal */
+/* width yerine scaleX: görsel aynı, layout tetiklenmez */
+.kicker-line { transform-origin: left center; transition: transform var(--t-line) var(--ease-out); }
+
+/* Counter blur-in digits */
+
+/* Nav link underline sweep */
+.link-sweep { position: relative; }
+.link-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  height: 1px; width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 380ms var(--ease-out);
+}
+.link-sweep:hover::after, .link-sweep[data-active="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+/* Aktif menü göstergesi: açık zeminli header'da terracotta (4.72:1).
+   Hero üzerindeki beyaz header'da currentColor (beyaz) kalır — kontrast. */
+header.text-ink .link-sweep[data-active="true"] { color: var(--color-accent-warm); }
+
+/* Image treatments */
+.img-zoom { transition: transform var(--t-media) var(--ease-out), filter var(--t-media) ease; }
+.group:hover .img-zoom { transform: scale(1.06); }
+
+/* Tutarlı mimari görsel dili: tüm fotoğraflar aynı grafit tonunda birleşir.
+   Farklı kaynaklardan gelseler bile tek marka atmosferi oluşur ve grafit+beyaz
+   palete oturur. Hover'da renk hafifçe canlanır. */
+.img-duotone {
+  filter: grayscale(0.85) saturate(0.55) contrast(1.05) brightness(0.98);
+  transition: filter var(--t-hover) var(--ease-out);
+}
+.group:hover .img-duotone {
+  filter: grayscale(0.4) saturate(0.85) contrast(1.04) brightness(1);
+}
+
+/* Card arrow slide */
+.arrow-slide { transition: transform var(--t-media) var(--ease-out); }
+.group:hover .arrow-slide { transform: translate(4px, -4px); }
+
+/* Vertical rotated label */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+.vertical-text-up {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Service row: icon gentle rotate + float on hover */
+.svc-icon { transition: transform 380ms var(--ease-out), color var(--t-ink) ease; }
+.group:hover .svc-icon { transform: rotate(-8deg) scale(1.08); }
+
+/* Watermark number/icon drift on hover */
+.svc-watermark { transition: transform var(--t-media) var(--ease-out), opacity var(--t-hover) ease; }
+.group:hover .svc-watermark { transform: translate(6px, -6px); opacity: 1; }
+
+/* Title underline grow on hover */
+.title-underline { position: relative; display: inline; background-image: linear-gradient(var(--color-accent), var(--color-accent)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; transition: background-size var(--t-hover) var(--ease-out); }
+.group:hover .title-underline { background-size: 100% 2px; }
+
+/* Staggered list item slide-in (used inside .is-visible reveal) */
+.stagger > * { opacity: 0; transform: translateY(14px); transition: opacity var(--t-media) var(--ease-out), transform var(--t-media) var(--ease-out); }
+.is-visible .stagger > * { opacity: 1; transform: none; }
+.is-visible .stagger > *:nth-child(1) { transition-delay: 70ms; }
+.is-visible .stagger > *:nth-child(2) { transition-delay: 140ms; }
+.is-visible .stagger > *:nth-child(3) { transition-delay: 210ms; }
+.is-visible .stagger > *:nth-child(4) { transition-delay: 280ms; }
+.is-visible .stagger > *:nth-child(5) { transition-delay: 350ms; }
+
+/* Diagonal image reveal */
+
+/* Counter digits entrance */
+
+/* Blueprint dot grid background */
+.dot-grid {
+  background-image: radial-gradient(currentColor 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Animated border frame draw (SVG rect) */
+
+/* Horizontal scroll cue */
+@keyframes nudge-x {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+.nudge-x { animation: nudge-x 1.8s ease-in-out infinite; }
+
+
+/* Premium film-grain overlay */
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  padding: 0.75rem 1rem; background: var(--color-ink); color: #fff;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ── Çerez onay merkezi (tam genişlik bar) ──
+   Sayfanın alt kenarına oturur; teknik çizim nokta dokusu + petrol mavisi
+   kenar çizgisinde dolaşan ışık. Sabit konumlu → CLS yoktur. */
+.consent-bar {
+  background-color: var(--color-ink);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  box-shadow: 0 -20px 60px rgba(8, 10, 12, 0.42);
+  animation: consent-bar-in 620ms var(--ease-out) 160ms both;
+}
+.consent-bar.is-leaving { animation: consent-bar-out 320ms var(--ease-inout) forwards; }
+@keyframes consent-bar-in { from { transform: translateY(102%); } }
+@keyframes consent-bar-out { to { transform: translateY(102%); } }
+
+.consent-fab { animation: consent-fab-in 420ms var(--ease-out) 200ms both; }
+@keyframes consent-fab-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* Üst kenar çizgisi: petrol mavisi zemin üzerinde yavaşça dolaşan ışık */
+.consent-edge {
+  position: absolute;
+  inset-inline: 0; top: 0;
+  height: 3px;
+  background: rgba(127, 168, 196, 0.3);
+}
+.consent-edge::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(127, 168, 196, 0.85), transparent);
+  background-size: 30% 100%;
+  background-repeat: no-repeat;
+  animation: consent-edge 7s var(--ease-inout) 1.2s infinite;
+}
+@keyframes consent-edge {
+  0% { background-position: -30% 0; }
+  55%, 100% { background-position: 130% 0; }
+}
+
+/* Özet ↔ tercihler içerik değişimi */
+.consent-view { animation: consent-view-in 420ms var(--ease-out) both; }
+@keyframes consent-view-in { from { opacity: 0; transform: translateY(8px); } }
+
+/* Kare karakterli anahtar (marka dili: keskin köşe) */
+.consent-toggle {
+  position: relative;
+  width: 40px; height: 22px; flex: none;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  transition: background var(--t-ctl) var(--ease-out), border-color var(--t-ctl);
+}
+.consent-toggle::after {
+  content: "";
+  position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: transform var(--t-ctl) var(--ease-out), background var(--t-ctl);
+}
+.consent-toggle[aria-checked="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent-soft);
+}
+.consent-toggle[aria-checked="true"]::after {
+  transform: translateX(18px);
+  background: #fff;
+}
+.consent-toggle:disabled { opacity: 0.55; }
+.consent-toggle:focus-visible {
+  outline: 2px solid var(--color-accent-soft);
+  outline-offset: 2px;
+}
+
+
+
+/* ── Azaltılmış hareket tercihi (WCAG 2.2 — Animation from Interactions) ──
+   Kural: hareket kapanır, içerik ASLA gizlenmez. Tüm öğeler doğrudan görünür
+   durumda olur; menü, form ve bağlantılar aynen çalışır. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .grain-overlay { display: none; }
+
+  /* Giriş ve scroll animasyonları: içerik anında görünür */
+  .reveal, .stagger > *, .hero-anim, .intro-mark {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    filter: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .line-mask-inner, .line-grow, .line-grow-y {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Sürekli hareketler tamamen kapatılır */
+  .ken-burns, .scroll-dot, .float-slow, .intro-line, .nudge-x {
+    animation: none !important;
+  }
+
+  /* Amblem çizim animasyonu: bitmiş hâli gösterilir */
+  .logo-draw path { stroke-dashoffset: 0 !important; animation: none !important; }
+
+  /* Çerez barı: anında görünür; kenar ışığı ve geçişler kapalı */
+  .consent-bar, .consent-fab, .consent-view { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .consent-edge::after { animation: none !important; }
+  .consent-toggle, .consent-toggle::after { transition: none !important; }
+
+  /* Etkileşim geri bildirimleri sadeleştirilir, işlev korunur */
+  .img-zoom, .svc-icon, .svc-watermark, .title-underline, .img-duotone {
+    transition: none !important;
+  }
+  .group:hover .img-zoom { transform: none !important; }
+  .group:hover .svc-icon { transform: none !important; }
+  .magnetic { transform: none !important; }
+  .btn-sheen::before { display: none; }
+
+  /* Hero paralaksı (JS) matchMedia ile zaten atlanır */
+}
+
+/* next/font yerine Google Fonts (index.html içinde yüklenir) */
+:root {
+  --font-manrope: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+}

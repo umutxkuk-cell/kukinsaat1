@@ -1,0 +1,8 @@
+# Cloudflare Pages'te Netlify tarzı SPA yakalama kuralı (/* /index.html 200)
+# KULLANILMAZ: Pages'in "pretty URL" normalleştirmesi bu kuralda sonsuz döngü
+# algılar ve kuralı yok sayar (wrangler yerel testte de aynı uyarıyı verir).
+#
+# Bu projede yönlendirme stratejisi:
+#  - Tüm gerçek rotalar dist/<rota>/index.html olarak ön üretimlidir → 200.
+#  - Bilinmeyen yollar dist/404.html'e düşer → HTTP 404 + Türkçe 404 ekranı.
+#  - /api/* istekleri public/_routes.json ile Pages Functions'a gider.
