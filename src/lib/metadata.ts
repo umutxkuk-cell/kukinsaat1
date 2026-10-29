@@ -41,7 +41,7 @@ export const INDEX_ROBOTS =
 export const NOINDEX_ROBOTS = "noindex, follow";
 
 const DEFAULT_OG_IMAGE =
-  "https://images.pexels.com/photos/3939978/pexels-photo-3939978.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1200&h=630";
+  "https://kukinsaat.com/images/hero-architecture.jpg";
 
 export type Crumb = { name: string; path: string };
 

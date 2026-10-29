@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
-import heroSrc from "@/assets/hero.webp";
 import { Image } from "@/lib/next-shim";
 import { Link } from "@/lib/next-shim";
 import { site } from "@/data/site";
-import { LogoMark } from "@/components/brand/Logo";
 import { SocialLinks } from "@/components/brand/Social";
 import { Magnetic } from "@/components/ui/Magnetic";
+
+/* Ana sayfa görseli markaya özel üretilmiş mimari kompozisyondur.
+   `public/` altından sunulur; böylece derleme ikili dosya bağımlılığı taşımaz. */
+const heroSrc = "/images/hero-architecture.jpg";
 
 export function Hero() {
   const imgRef = useRef<HTMLDivElement>(null);
@@ -43,26 +45,33 @@ export function Hero() {
         <div className="ken-burns relative h-full w-full">
           <Image
             src={heroSrc}
-            alt="Alacakaranlıkta geometrik cepheli çağdaş yapı"
+            alt="Mineral tonlarda geometrik beton cephe ve derin petrol mavisi cam yüzeyler"
             fill
             priority
             width={1920}
             height={1280}
             sizes="100vw"
-            className="img-duotone object-cover"
+            className="object-cover object-[64%_center] saturate-[0.94]"
           />
         </div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-ink/40" />
-      <div className="absolute inset-0 bg-[radial-gradient(130%_90%_at_15%_85%,transparent_35%,rgba(15,17,20,0.55)_100%)]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/92 via-ink/52 to-ink/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/88 via-ink/10 to-ink/50" />
+      <div className="absolute inset-0 bg-[radial-gradient(130%_90%_at_15%_85%,transparent_35%,rgba(15,17,20,0.58)_100%)]" />
 
-      {/* oversized watermark */}
-      <div className="pointer-events-none absolute right-6 top-24 hidden opacity-[0.12] lg:block hero-anim hero-anim-5 xl:right-20" aria-hidden="true">
-        <div className="float-slow">
-          <LogoMark variant="light" className="h-[24rem] w-auto" />
-        </div>
-      </div>
+      {/* Teknik çizim dokusu — fotoğrafı markanın mühendislik diline bağlar. */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.055] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:120px_120px]"
+        aria-hidden="true"
+      />
+
+      {/* Görselin sağındaki mimari formu nefes alacak şekilde açık bırakan ince çerçeve. */}
+      <span className="pointer-events-none absolute bottom-12 right-[var(--gutter)] hidden h-28 w-28 border-b border-r border-white/25 lg:block" aria-hidden="true" />
+      <span className="pointer-events-none absolute right-[calc(var(--gutter)+1.25rem)] top-1/2 hidden -translate-y-1/2 lg:block">
+        <span className="vertical-text-up text-[0.6rem] font-semibold uppercase tracking-[0.42em] text-white/45">
+          Kocaeli · 40.7255° N / 29.9999° E
+        </span>
+      </span>
 
       <div className="container-x relative flex hero-min-h flex-col justify-end pb-14 pt-36">
         <div className="hero-anim hero-anim-1 flex items-center gap-4">

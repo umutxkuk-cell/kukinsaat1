@@ -29,8 +29,8 @@ export const services: Service[] = [
       "Kalite ve süreç takibi",
     ],
     image:
-      "https://images.pexels.com/photos/9370034/pexels-photo-9370034.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
-    imageAlt: "İnşaat halindeki yüksek yapı ve vinç",
+      "/images/abstract-kurumsal.jpg",
+    imageAlt: "Taş kemerler ve grafit kütlelerle soyut mimari kompozisyon",
   },
   {
     slug: "muhendislik-hizmetleri",
@@ -48,8 +48,8 @@ export const services: Service[] = [
       "Performans ve güvenlik odaklı kararlar",
     ],
     image:
-      "https://images.pexels.com/photos/5582585/pexels-photo-5582585.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
-    imageAlt: "Mühendislik çizimleri, ölçü aletleri ve teknik dokümanlar",
+      "/images/abstract-hizmetler.jpg",
+    imageAlt: "Çelik, cam ve beton birleşimini gösteren soyut mühendislik görseli",
   },
   {
     slug: "proje-gelistirme-ve-teknik-koordinasyon",
@@ -67,8 +67,8 @@ export const services: Service[] = [
       "İmalat öncesi teknik onay",
     ],
     image:
-      "https://images.pexels.com/photos/20578678/pexels-photo-20578678.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
-    imageAlt: "Cam ve beton öğeleri olan modern mimari",
+      "/images/abstract-projeler.jpg",
+    imageAlt: "Mimari plan üzerinde yükselen çağdaş yapı kütleleri",
   },
   {
     slug: "proje-ve-uygulama-sureclerinin-yonetimi",
@@ -86,8 +86,8 @@ export const services: Service[] = [
       "Raporlama ve şeffaf iletişim",
     ],
     image:
-      "https://images.pexels.com/photos/28842903/pexels-photo-28842903.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
-    imageAlt: "Gece aerial görünüm inşaat alanı",
+      "/images/hero-architecture.jpg",
+    imageAlt: "Mineral tonlarda geometrik cepheli mimari kompozisyon",
   },
   {
     slug: "teknik-danismanlik",
@@ -105,8 +105,8 @@ export const services: Service[] = [
       "Süreç ve kalite önerileri",
     ],
     image:
-      "https://images.pexels.com/photos/6614786/pexels-photo-6614786.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
-    imageAlt: "İncelenmek üzere düzenlenmiş proje ve uygulama dokümanları",
+      "/images/abstract-iletisim.jpg",
+    imageAlt: "Topoğrafik çizgiler ve bağlantı noktalarıyla soyut iletişim görseli",
   },
 ];
 

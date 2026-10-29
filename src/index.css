@@ -6,7 +6,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url("./assets/fonts/inter-latin-ext.woff2") format("woff2");
+  src: url("/fonts/inter-latin-ext.woff2") format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -14,7 +14,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url("./assets/fonts/inter-latin.woff2") format("woff2");
+  src: url("/fonts/inter-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -22,7 +22,7 @@
   font-style: normal;
   font-weight: 600 800;
   font-display: swap;
-  src: url("./assets/fonts/manrope-latin-ext.woff2") format("woff2");
+  src: url("/fonts/manrope-latin-ext.woff2") format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -30,7 +30,7 @@
   font-style: normal;
   font-weight: 600 800;
   font-display: swap;
-  src: url("./assets/fonts/manrope-latin.woff2") format("woff2");
+  src: url("/fonts/manrope-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -217,18 +217,24 @@ em,
 .ken-burns { animation: ken-burns 7s var(--ease-out) both; }
 .scroll-dot { animation: scroll-dot 2.2s ease-in-out infinite; }
 
-/* Shared treatment for the abstract interior-page backgrounds. */
+/* Shared treatment for the abstract interior-page backgrounds.
+   Görsellerin sol tarafı metin için koyulaştırılır; sağdaki mimari form
+   görünür kalır. Katmanlar tek bir petrol-mavisi atmosfer oluşturur. */
 .interior-hero-scrim {
   background:
-    linear-gradient(90deg, rgba(18, 28, 35, 0.5) 0%, rgba(18, 28, 35, 0.25) 45%, rgba(18, 28, 35, 0.05) 100%),
-    linear-gradient(0deg, rgba(18, 28, 35, 0.18), transparent 70%);
+    linear-gradient(90deg, rgba(12, 22, 29, 0.9) 0%, rgba(12, 22, 29, 0.68) 32%, rgba(12, 22, 29, 0.32) 62%, rgba(12, 22, 29, 0.08) 100%),
+    linear-gradient(0deg, rgba(12, 22, 29, 0.55) 0%, rgba(12, 22, 29, 0.08) 55%, transparent 100%),
+    linear-gradient(180deg, rgba(12, 22, 29, 0.34) 0%, transparent 32%);
 }
 @media (max-width: 767px) {
   .interior-hero-scrim {
     background:
-      linear-gradient(90deg, rgba(18, 28, 35, 0.62) 0%, rgba(18, 28, 35, 0.4) 100%),
-      linear-gradient(0deg, rgba(18, 28, 35, 0.25), transparent 75%);
+      linear-gradient(90deg, rgba(12, 22, 29, 0.86) 0%, rgba(12, 22, 29, 0.68) 100%),
+      linear-gradient(0deg, rgba(12, 22, 29, 0.5) 0%, transparent 70%);
   }
+}
+.interior-hero-art img {
+  filter: saturate(0.94) contrast(1.03);
 }
 @media (prefers-reduced-motion: no-preference) {
   .interior-hero-art { animation: interior-art-enter 1100ms var(--ease-out) both; }
@@ -317,17 +323,39 @@ em,
 .logo-draw.is-visible path:nth-child(4) { animation-delay: 0.7s; }
 .logo-draw.is-visible path:nth-child(5) { animation-delay: 0.9s; }
 
-/* Footer imzası yalnızca görünür alana girdiğinde hareket eder. */
-@media (prefers-reduced-motion: no-preference) {
-  .company-signature.is-visible .company-signature-brand {
-    animation: company-signature-rise 650ms var(--ease-out) both;
-  }
-  .company-signature.is-visible .company-signature-name {
-    animation: company-signature-rise 650ms var(--ease-out) 100ms both;
-  }
-  @keyframes company-signature-rise {
-    from { opacity: 0.35; transform: translateY(10px); }
-    to { opacity: 1; transform: none; }
+/* Footer imzası: içerik her durumda görünür; yumuşak giriş yalnızca
+   görünür alana girince ve transition ile oynar. Animasyonun yarıda kalması
+   metni görünmez bırakmaz (eski `animation ... both` davranışının aksine). */
+.company-signature-brand,
+.company-signature-name,
+.company-signature-meta {
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+}
+.company-signature-brand { transition-delay: 40ms; }
+.company-signature-name { transition-delay: 150ms; }
+.company-signature-meta { transition-delay: 230ms; }
+.company-signature:not(.is-visible) .company-signature-brand,
+.company-signature:not(.is-visible) .company-signature-name,
+.company-signature:not(.is-visible) .company-signature-meta {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.company-signature-rule {
+  transform: scaleX(0);
+  transition: transform 900ms var(--ease-out) 300ms;
+}
+.company-signature.is-visible .company-signature-rule { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .company-signature-brand,
+  .company-signature-name,
+  .company-signature-meta,
+  .company-signature-rule {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 

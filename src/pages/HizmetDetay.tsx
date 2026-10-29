@@ -49,39 +49,56 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* Header */}
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="dot-grid pointer-events-none absolute inset-0 text-ink/[0.05]" aria-hidden="true" />
-        <span
-          className="svc-watermark pointer-events-none absolute -right-6 top-6 text-ink/[0.05]"
-          aria-hidden="true"
-        >
-          <ServiceIcon name={service.icon} className="h-56 w-56 md:h-80 md:w-80" />
-        </span>
-        <Container className="relative">
+      {/* Header — markanın soyut mimari görseliyle uyumlu kapak */}
+      <section className="relative isolate overflow-hidden bg-ink text-white">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <img
+            src={service.image}
+            alt=""
+            className="ken-burns h-full w-full scale-105 object-cover saturate-[0.94]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/72 to-ink/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45" />
+          <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:96px_96px]" />
+        </div>
+
+        <Container className="relative flex min-h-[440px] flex-col justify-center py-20 md:min-h-[500px] md:py-24">
           <Reveal variant="left">
-            <nav className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted">
-              <Link href="/hizmetler" className="hover:text-ink">Hizmetler</Link>
-              <span>/</span>
-              <span className="text-ink">{service.shortTitle}</span>
+            <nav className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60">
+              <Link href="/hizmetler" className="transition-colors hover:text-white">Hizmetler</Link>
+              <span aria-hidden="true">/</span>
+              <span className="text-white/90">{service.shortTitle}</span>
             </nav>
           </Reveal>
           <Reveal variant="up" delay={100}>
             <div className="mt-8 flex items-center gap-5">
-              <span className="flex h-16 w-16 shrink-0 items-center justify-center border border-ink text-ink">
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center border border-white/35 text-white">
                 <ServiceIcon name={service.icon} className="h-8 w-8" />
               </span>
-              <h1 className="max-w-3xl text-[clamp(2.25rem,5vw,4rem)] leading-tight">{service.title}</h1>
+              <h1 className="max-w-3xl text-balance text-[clamp(2.25rem,5vw,4rem)] leading-tight">
+                {service.title}
+              </h1>
             </div>
           </Reveal>
           <Reveal variant="up" delay={200}>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted">{service.summary}</p>
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/80">{service.summary}</p>
+          </Reveal>
+          <Reveal variant="up" delay={280}>
+            <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/20 pt-5 text-[0.62rem] font-semibold uppercase tracking-[0.28em] text-white/55">
+              <span className="text-white/85">Kuk İnşaat</span>
+              <span aria-hidden="true" className="hidden h-3 w-px bg-white/25 sm:block" />
+              <span>Kaliteyle Kurulur</span>
+              <span className="ml-auto hidden items-center gap-3 md:flex">
+                <span className="h-px w-8 bg-accent-soft/60" aria-hidden="true" />
+                Hizmet 0{index + 1} / 0{services.length}
+              </span>
+            </div>
           </Reveal>
         </Container>
       </section>
 
       {/* Content */}
-      <section className="pb-20">
+      <section className="pt-14 pb-20 md:pt-20">
         <Container>
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-7">

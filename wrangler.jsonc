@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kukinsaat",
+  "main": "worker/index.ts",
+  "compatibility_date": "2025-02-20",
+  "rules": [
+    { "type": "Text", "globs": ["**/*.html"], "fallthrough": true }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "none"
+  },
+  "vars": {
+    "EMAILJS_SERVICE_ID": "service_vbcjk3d",
+    "EMAILJS_TEMPLATE_ID": "template_hitg8vm",
+    "EMAILJS_PUBLIC_KEY": "245gQkDPKWRYbzMAe",
+    "CONTACT_TO_EMAIL": "umut@kukinsaat.com"
+  }
+}

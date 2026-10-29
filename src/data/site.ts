@@ -37,6 +37,21 @@ export const site = {
     { label: "Facebook", handle: "kukinsaatt", href: "https://www.facebook.com/kukinsaatt/" },
     { label: "X", handle: "@kukinsaat", href: "https://x.com/kukinsaat" },
   ],
+  /**
+   * Tarayıcıdan doğrudan gönderim yedeği.
+   *
+   * Önce sunucudaki `/api/contact` uç noktası denenir. Uç nokta dağıtık
+   * değilse veya sunucu tarafında sağlayıcı tanımlı değilse form, EmailJS'in
+   * herkese açık anahtarıyla doğrudan göndermeyi dener. Bu anahtarlar zaten
+   * istemcide görünmek üzere tasarlanmıştır; gizli anahtar (private key)
+   * asla istemciye konmaz.
+   */
+  form: {
+    emailjsServiceId: "service_vbcjk3d",
+    emailjsTemplateId: "template_hitg8vm",
+    emailjsPublicKey: "245gQkDPKWRYbzMAe",
+    whatsapp: "https://wa.me/905437410541",
+  },
   nav: [
     { href: "/", label: "Ana Sayfa" },
     { href: "/kurumsal", label: "Kurumsal" },

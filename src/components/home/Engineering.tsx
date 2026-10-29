@@ -37,7 +37,7 @@ export function Engineering() {
             <Reveal variant="clip" delay={200} className="mt-10 hidden lg:block">
               <Parallax speed={0.1} className="aspect-[16/10]">
                 <Image
-                  src="https://images.pexels.com/photos/15060583/pexels-photo-15060583.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1100"
+                  src="/images/abstract-hizmetler.jpg"
                   alt="Dokulu beton yüzey yakın planı"
                   fill
                   sizes="40vw"

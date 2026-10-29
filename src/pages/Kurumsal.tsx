@@ -108,7 +108,7 @@ export default function KurumsalPage() {
               <div className="group relative flex-1">
                 <div className="relative h-full min-h-[340px] overflow-hidden">
                   <Image
-                    src="https://images.pexels.com/photos/9683985/pexels-photo-9683985.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1500&w=1100"
+                    src="/images/hero-architecture.jpg"
                     alt="Beton ve cam detaylı modern yapı cephesi"
                     fill
                     sizes="(max-width:1024px) 100vw, 46vw"
@@ -187,7 +187,7 @@ export default function KurumsalPage() {
             <Reveal variant="left" className="lg:col-span-6">
               <div className="relative aspect-[5/4] overflow-hidden">
                 <Image
-                  src="https://images.pexels.com/photos/8961298/pexels-photo-8961298.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1250"
+                  src="/images/abstract-projeler.jpg"
                   alt="Yapı planı üzerinde teknik değerlendirme"
                   fill
                   sizes="(max-width:1024px) 100vw, 50vw"

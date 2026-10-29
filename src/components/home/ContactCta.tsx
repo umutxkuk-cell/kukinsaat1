@@ -9,7 +9,7 @@ export function ContactCta() {
     <section className="relative overflow-hidden bg-ink text-white">
       <div className="absolute inset-0">
         <Image
-          src="https://images.pexels.com/photos/10410086/pexels-photo-10410086.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1800"
+          src="/images/hero-architecture.jpg"
           alt="Alacakaranlıkta cam ve beton cepheli çağdaş yapı"
           fill
           sizes="100vw"

@@ -25,6 +25,73 @@ function validate(fields: Record<string, string>): FieldErrors {
 const inputClass =
   "mt-2 w-full border border-line-2 bg-surface px-4 py-3 text-sm transition-colors focus:border-ink focus:outline-none";
 
+/** Sunucu uç noktası yoksa EmailJS'e tarayıcıdan doğrudan gönderir. */
+async function sendDirectWithEmailJs(fields: Record<string, string>) {
+  const cfg = site.form;
+  if (!cfg.emailjsServiceId || !cfg.emailjsTemplateId || !cfg.emailjsPublicKey) {
+    throw new Error("EmailJS yapılandırması eksik");
+  }
+
+  const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      service_id: cfg.emailjsServiceId,
+      template_id: cfg.emailjsTemplateId,
+      user_id: cfg.emailjsPublicKey,
+      template_params: {
+        from_name: fields.name,
+        name: fields.name,
+        user_name: fields.name,
+        reply_to: fields.email,
+        email: fields.email,
+        user_email: fields.email,
+        from_email: fields.email,
+        phone: fields.phone || "-",
+        user_phone: fields.phone || "-",
+        subject: fields.subject || "Genel",
+        message: fields.message,
+        to_email: site.contact.email,
+      },
+    }),
+  });
+
+  if (!res.ok) throw new Error(`EmailJS ${res.status}`);
+}
+
+/**
+ * EmailJS hesabı strict mode'da olduğunda private key olmadan gönderim
+ * reddedilir. Bu durumda anahtar gerektirmeyen FormSubmit uç noktası denenir;
+ * ilk kullanımda alıcı adresine bir kez etkinleştirme e-postası gelir.
+ */
+async function sendDirectWithFormSubmit(fields: Record<string, string>) {
+  const res = await fetch(
+    `https://formsubmit.co/ajax/${encodeURIComponent(site.contact.email)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: `Teklif / Bilgi Talebi — ${fields.subject || "Genel"}`,
+        _template: "table",
+        _captcha: "false",
+        _replyto: fields.email,
+        name: fields.name,
+        email: fields.email,
+        phone: fields.phone || "-",
+        subject: fields.subject || "Genel",
+        message: fields.message,
+        page: "kukinsaat.com/iletisim",
+      }),
+    },
+  );
+  const payload = (await res.json().catch(() => null)) as
+    | { success?: boolean | string }
+    | null;
+  if (!res.ok || !(payload?.success === true || payload?.success === "true")) {
+    throw new Error(`FormSubmit ${res.status}`);
+  }
+}
+
 /** Form verisini düz metin e-posta gövdesine çevirir. */
 function buildMailto(fields: Record<string, string>) {
   const subject = `Teklif / Bilgi Talebi — ${fields.subject || "Genel"}`;
@@ -43,6 +110,21 @@ function buildMailto(fields: Record<string, string>) {
   return `${site.contact.emailHref}?subject=${encodeURIComponent(
     subject,
   )}&body=${encodeURIComponent(body)}`;
+}
+
+/** Kullanıcı e-posta servisine erişemiyorsa mesajı WhatsApp ile iletebilir. */
+function buildWhatsApp(fields: Record<string, string>) {
+  const text = [
+    "Teklif / Bilgi Talebi",
+    `Ad Soyad: ${fields.name}`,
+    `E-posta: ${fields.email}`,
+    `Telefon: ${fields.phone || "-"}`,
+    `Konu: ${fields.subject || "-"}`,
+    "",
+    fields.message,
+  ].join("\n");
+
+  return `${site.form.whatsapp}?text=${encodeURIComponent(text)}`;
 }
 
 /**
@@ -96,6 +178,28 @@ export function ContactForm() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [failure, setFailure] = useState<Failure | null>(null);
   const [mailto, setMailto] = useState(site.contact.emailHref);
+  const [whatsapp, setWhatsapp] = useState(site.form.whatsapp);
+  const [lastFields, setLastFields] = useState<Record<string, string> | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  async function copyMessage() {
+    if (!lastFields) return;
+    const text = [
+      `Ad Soyad : ${lastFields.name}`,
+      `E-posta  : ${lastFields.email}`,
+      `Telefon  : ${lastFields.phone || "-"}`,
+      `Konu     : ${lastFields.subject || "-"}`,
+      "",
+      lastFields.message,
+    ].join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2500);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -130,36 +234,62 @@ export function ContactForm() {
 
     setStatus("sending");
     setFailure(null);
+    setLastFields(fields);
 
-    // Cloudflare Pages Function (/api/contact) sunucu tarafında gönderir.
-    // Başarısız olursa e-posta istemcisi OTOMATİK AÇILMAZ: kullanıcıya ne
-    // olduğu anlatılır ve mailto açık bir seçenek olarak sunulur. Böylece
-    // bir yapılandırma hatası "çalışıyor gibi" görünmez.
-    let fail: Failure;
+    // 1) Sunucu uç noktası. Cloudflare Workers/Pages üzerindeki /api/contact
+    //    sağlayıcı anahtarlarını sunucuda tutar ve e-postayı iletir.
+    let fail: Failure = { status: 0, code: "" };
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...fields, "bot-field": "" }),
       });
-      if (res.ok) {
+      const payload = (await res
+        .json()
+        .catch(() => null)) as { ok?: boolean; error?: string } | null;
+
+      if (res.ok && payload?.ok === true) {
         form.reset();
         setStatus("sent");
         return;
       }
-      let code = "";
-      try {
-        const payload = (await res.json()) as { error?: string };
-        code = String(payload?.error ?? "");
-      } catch {
-        /* gövde JSON değilse kod boş kalır */
-      }
-      fail = { status: res.status, code };
+
+      fail = {
+        status: res.status,
+        // Statik sunucu /api/contact yerine uygulama kabuğu döndürürse
+        // bunu başarı sanmıyoruz.
+        code: String(payload?.error ?? "endpoint_unavailable"),
+      };
     } catch {
-      fail = { status: 0, code: "" };
+      fail = { status: 0, code: "network_error" };
+    }
+
+    // 2) Uç nokta yoksa veya sunucuda sağlayıcı tanımlı değilse EmailJS'i
+    //    tarayıcıdan doğrudan dene. Sunucu tarafındaki gizli anahtar asla
+    //    istemciye taşınmaz; yalnızca herkese açık anahtar kullanılır.
+    if (fail.status !== 429 && fail.status !== 422 && fail.status !== 0) {
+      try {
+        await sendDirectWithEmailJs(fields);
+        form.reset();
+        setStatus("sent");
+        return;
+      } catch (emailJsError) {
+        console.warn("EmailJS doğrudan gönderimi başarısız:", emailJsError);
+      }
+
+      try {
+        await sendDirectWithFormSubmit(fields);
+        form.reset();
+        setStatus("sent");
+        return;
+      } catch (formSubmitError) {
+        console.warn("FormSubmit doğrudan gönderimi başarısız:", formSubmitError);
+      }
     }
 
     setMailto(buildMailto(fields));
+    setWhatsapp(buildWhatsApp(fields));
     setFailure(fail);
     setStatus("failed");
   }
@@ -223,11 +353,30 @@ export function ContactForm() {
             E-posta ile gönder
           </a>
           <a
+            href={whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2.5 border border-ink/25 px-5 py-2.5 text-sm font-medium transition-colors hover:border-ink"
+          >
+            <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M3 16.5 4.2 13A7 7 0 1 1 7 15.8L3 16.5Z" strokeLinejoin="round" />
+              <path d="M7.3 6.9c.3 2.6 2.3 4.7 4.9 5.2l1-1.1 1.6 1.4c-.5 1.1-1.7 1.5-2.7 1.2-2.6-.8-4.7-2.9-5.5-5.5-.3-1 .1-2.1 1.2-2.7l1.4 1.5-1.1 1" />
+            </svg>
+            WhatsApp ile ilet
+          </a>
+          <a
             href={site.contact.phoneHref}
             className="inline-flex items-center border border-ink/25 px-5 py-2.5 text-sm font-medium transition-colors hover:border-ink"
           >
             {site.contact.phone}
           </a>
+          <button
+            type="button"
+            onClick={copyMessage}
+            className="inline-flex items-center border border-ink/25 px-5 py-2.5 text-sm font-medium transition-colors hover:border-ink"
+          >
+            {copied ? "Kopyalandı ✓" : "Mesajı kopyala"}
+          </button>
           <button
             type="button"
             onClick={() => { setErrors({}); setFailure(null); setStatus("idle"); }}
@@ -237,8 +386,13 @@ export function ContactForm() {
           </button>
         </div>
 
-        <p className="mt-6 border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-muted/70">
-          Teknik ayrıntı: {info.tech}
+        <p className="mt-6 border-t border-line pt-4 text-xs leading-relaxed text-muted">
+          Forma döndüğünüzde yazdığınız bilgiler korunur. Dilerseniz mesajınızı
+          doğrudan{" "}
+          <a href={site.contact.emailHref} className="text-ink underline underline-offset-2">
+            {site.contact.email}
+          </a>{" "}
+          adresine de iletebilirsiniz.
         </p>
       </div>
     );
@@ -261,6 +415,7 @@ export function ContactForm() {
             name="name"
             required
             minLength={2}
+            defaultValue={lastFields?.name ?? ""}
             autoComplete="name"
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "err-name" : undefined}
@@ -279,6 +434,7 @@ export function ContactForm() {
             name="email"
             type="email"
             required
+            defaultValue={lastFields?.email ?? ""}
             autoComplete="email"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "err-email" : undefined}
@@ -296,11 +452,17 @@ export function ContactForm() {
           <span className="text-xs uppercase tracking-[0.2em] text-muted">
             Telefon (isteğe bağlı)
           </span>
-          <input name="phone" type="tel" autoComplete="tel" className={inputClass} />
+          <input
+            name="phone"
+            type="tel"
+            defaultValue={lastFields?.phone ?? ""}
+            autoComplete="tel"
+            className={inputClass}
+          />
         </label>
         <label className="block">
           <span className="text-xs uppercase tracking-[0.2em] text-muted">Konu (isteğe bağlı)</span>
-          <input name="subject" className={inputClass} />
+          <input name="subject" defaultValue={lastFields?.subject ?? ""} className={inputClass} />
         </label>
       </div>
       <label className="block">
@@ -311,6 +473,7 @@ export function ContactForm() {
           required
           minLength={10}
           rows={6}
+          defaultValue={lastFields?.message ?? ""}
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "err-message" : undefined}
           className={`${inputClass}${errors.message ? " border-red-600 focus:border-red-600" : ""}`}

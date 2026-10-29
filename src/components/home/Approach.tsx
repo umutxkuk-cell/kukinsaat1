@@ -60,7 +60,7 @@ export function Approach() {
             <div className="group relative flex-1">
               <div className="relative h-full min-h-[340px] overflow-hidden">
                 <Image
-                  src="https://images.pexels.com/photos/9683985/pexels-photo-9683985.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1500&w=1100"
+                  src="/images/abstract-kurumsal.jpg"
                   alt="Beton ve cam detaylı modern yapı cephesi"
                   fill
                   sizes="(max-width:1024px) 100vw, 46vw"

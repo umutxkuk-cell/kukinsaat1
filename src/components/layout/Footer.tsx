@@ -31,23 +31,38 @@ function CompanySignature() {
   }, []);
 
   return (
-    <div ref={signatureRef} className="company-signature group border-t border-white/10 py-9 md:py-10">
-      <div className="grid gap-5 md:grid-cols-12 md:items-center md:gap-12">
+    <div ref={signatureRef} className="company-signature border-t border-white/10 py-10 md:py-12">
+      <div className="grid gap-7 md:grid-cols-12 md:items-center md:gap-12">
         <div className="company-signature-brand flex items-center gap-4 md:col-span-4">
-          <LogoMark
-            variant="light"
-            className="h-12 w-auto shrink-0 opacity-80 group-hover:opacity-100 motion-safe:transition-[transform,translate,opacity] motion-safe:duration-500 motion-safe:group-hover:-translate-y-1"
-          />
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center border border-white/15 bg-white/[0.03]">
+            <LogoMark variant="light" className="h-8 w-auto opacity-85" />
+          </span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-bg/65">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-bg/50">
               Şirket Ünvanı
             </p>
-            <span aria-hidden="true" className="line-grow mt-2 block h-px w-10 bg-accent-soft/80" />
+            <p className="mt-2 font-display text-base font-semibold leading-none text-bg">
+              Kuk İnşaat
+            </p>
           </div>
         </div>
-        <p className="company-signature-name pl-[3.75rem] font-display text-[clamp(0.95rem,1.3vw,1.1rem)] font-semibold leading-relaxed tracking-[0.01em] text-bg/90 md:col-span-8 md:pl-0 md:text-right">
-          {site.legalName}
-        </p>
+
+        <div className="md:col-span-8 md:border-l md:border-white/10 md:pl-10">
+          <p className="company-signature-name text-balance break-words font-display text-[clamp(0.95rem,1.35vw,1.15rem)] font-semibold leading-relaxed tracking-[0.005em] text-bg/90">
+            {site.legalName}
+          </p>
+          <div className="company-signature-meta mt-3 flex flex-col gap-1.5 text-[0.66rem] uppercase tracking-[0.16em] text-bg/40 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-1">
+            <span>Mersis No: {site.mersisNo}</span>
+            <span aria-hidden="true" className="hidden h-3 w-px self-center bg-white/15 sm:block" />
+            <span>{site.registry}</span>
+            <span aria-hidden="true" className="hidden h-3 w-px self-center bg-white/15 sm:block" />
+            <span>{site.taxOffice}</span>
+          </div>
+          <span
+            aria-hidden="true"
+            className="company-signature-rule mt-5 block h-px w-full max-w-sm origin-right bg-gradient-to-r from-accent-soft/70 to-transparent md:ml-auto"
+          />
+        </div>
       </div>
     </div>
   );
