@@ -73,24 +73,29 @@ export function SocialLinks({ variant = "footer", className = "" }: Props) {
 
   if (variant === "ghost") {
     return (
-      <div className={`flex gap-5 ${className}`}>
+      <ul className={`flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5 ${className}`}>
         {site.social.map((s) => {
           const Glyph = glyphs[s.label];
           return (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`${site.name} ${s.label}`}
-              className="inline-flex items-center gap-2 text-sm opacity-80 transition-opacity hover:opacity-100"
-            >
-              {Glyph ? <Glyph className="h-[18px] w-[18px]" /> : null}
-              {s.label}
-            </a>
+            <li key={s.label}>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${site.name} ${s.label}`}
+                title={s.label}
+                className="group/social inline-flex items-center gap-2 text-[0.72rem] leading-none opacity-80 transition-opacity hover:opacity-100"
+              >
+                <span className="inline-flex h-6 w-6 items-center justify-center">
+                  {Glyph ? <Glyph className="h-[17px] w-[17px]" /> : null}
+                </span>
+                {/* Mobilde yalnızca ikon: etiketler taşmaya yol açıyordu. */}
+                <span className="hidden sm:inline">{s.label}</span>
+              </a>
+            </li>
           );
         })}
-      </div>
+      </ul>
     );
   }
 

@@ -1,5 +1,5 @@
 import { Link } from "@/lib/next-shim";
-import { Image } from "@/lib/next-shim";
+import { SceneArt } from "@/components/ui/SceneArt";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { LineReveal } from "@/components/ui/LineReveal";
@@ -43,12 +43,10 @@ export function ProjectsPreview() {
               >
                 <Link href={`/projeler/${p.slug}`} className="group block">
                   <div className={`relative overflow-hidden ${i === 0 ? "aspect-[16/10]" : "aspect-[4/3]"}`}>
-                    <Image
-                      src={p.images[0].src}
-                      alt={p.images[0].alt}
-                      fill
-                      sizes={i === 0 ? "60vw" : "40vw"}
-                      className="img-zoom img-duotone object-cover"
+                    <SceneArt
+                      kind="skyline"
+                      alt={`${p.name} — ${p.type}`}
+                      className="img-zoom absolute inset-0 h-full w-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
                     <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 text-white">

@@ -1,4 +1,4 @@
-import { Image } from "@/lib/next-shim";
+import { SceneArt } from "@/components/ui/SceneArt";
 import { Link } from "@/lib/next-shim";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
@@ -59,13 +59,7 @@ export function Approach() {
           <div className="flex flex-col">
             <div className="group relative flex-1">
               <div className="relative h-full min-h-[340px] overflow-hidden">
-                <Image
-                  src="/images/abstract-kurumsal.jpg"
-                  alt="Beton ve cam detaylı modern yapı cephesi"
-                  fill
-                  sizes="(max-width:1024px) 100vw, 46vw"
-                  className="img-zoom img-duotone object-cover"
-                />
+                <SceneArt kind="facade" className="absolute inset-0 h-full w-full" />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
                 <span className="pointer-events-none absolute inset-4 border border-white/15" aria-hidden="true" />
                 <span className="pointer-events-none absolute left-5 top-5 vertical-text text-[0.62rem] font-semibold uppercase tracking-[0.42em] text-white/85">

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" role="img" aria-labelledby="t" fill="none">
+<title id="t">Hafif açılı kat planı paftası, T-cetvel ve teknik çizim pergeli</title>
+<defs>
+ <linearGradient id="vellum" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#fffefa"/><stop offset="1" stop-color="#f4f0e8"/></linearGradient>
+ <linearGradient id="aluminium" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce1df"/><stop offset="1" stop-color="#94a6a9"/></linearGradient>
+ <linearGradient id="slate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4c6b79"/><stop offset="1" stop-color="#1f435c"/></linearGradient>
+ <filter id="cast" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation="10"/></filter>
+</defs>
+<!-- Two sheets have distinct edges; the foremost drawing stays crisp and readable. -->
+<g transform="rotate(-6 555 425)">
+ <rect x="193" y="119" width="728" height="623" rx="4" fill="#a8a59b" opacity=".18" filter="url(#cast)"/>
+ <path d="M180 107h740v623H180z" fill="#e8e4dc" stroke="#c6c3ba" stroke-width="1.4"/>
+ <path d="M168 92h740v623H168z" fill="url(#vellum)" stroke="#c0bcb3" stroke-width="2.3"/>
+ <path d="M190 118h696v571H190z" stroke="#d0cbc2" stroke-width="1.1"/>
+ <!-- Primary plan: two exterior wall lines and measured wall thickness. -->
+ <g stroke="#1f435c" stroke-linejoin="miter"><path d="M255 193h572v415H255z" stroke-width="6"/><path d="M269 207h544v387H269z" stroke-width="2.2"/></g>
+ <!-- Occupied spaces differentiated by material, not labels. -->
+ <path d="M274 213h231v188H274z" fill="#e5e1d9" opacity=".47"/>
+ <path d="M542 417h268v173H542z" fill="#e1e8e5" opacity=".5"/>
+ <!-- Interior partitions: doubled in the cut and intentionally interrupted for doors. -->
+ <g stroke="#2f5367" stroke-width="3.3" stroke-linecap="square"><path d="M510 207v153m0 58v176m12-387v153m0 58v176M269 402h190m57 0h297m-544 12h190m57 0h297M637 414v86m0 53v41m12-180v86m0 53v41M269 508h197m-197 11h197M740 414v180m12-180v180"/></g>
+ <!-- Windows: real gaps through exterior wall with their own glazing double line. -->
+ <g fill="#fdfbf6"><path d="M347 188h105v24H347zm288 0h119v24H635zM249 296h25v99h-25zm573 168h25v106h-25z"/></g>
+ <g stroke="#588296" stroke-width="2.8"><path d="M350 196h100m-100 10h100m187-10h115m-115 10h115M256 299v92m11-92v92m557 76v99m12-99v99"/></g>
+ <g stroke="#a3c5cb" stroke-width="1.3" opacity=".85"><path d="m350 206 38-10m249 10 39-10M268 301l-12 31m580 136-12 34"/></g>
+ <!-- Filled structural columns are legible at a distance. -->
+ <g fill="#1f435c" stroke="#193747" stroke-width="1.3"><path d="M275 225h31v31h-31zM777 225h31v31h-31zM275 559h31v31h-31zM777 559h31v31h-31zM495 389h31v31h-31z"/></g>
+ <!-- True hinged leaves and arcs are aligned with each doorway opening. -->
+ <g stroke="#294b5f" stroke-width="2.3" stroke-linecap="round"><path d="M460 402v-54m0 54a54 54 0 0 1-54-54M522 360h52m-52 0a52 52 0 0 0 52 52M636 500h-48m48 0a48 48 0 0 1-48 48M467 519v-42m0 42a42 42 0 0 1-42-42"/></g>
+ <!-- Stair enclosure with individual treads and one subdued direction arrow. -->
+ <path d="M535 435h101v145H535z" fill="#eef0e9" stroke="#526f7c" stroke-width="2.4"/>
+ <g stroke="#526f7c" stroke-width="1.8"><path d="M539 448h94m-94 11h94m-94 11h94m-94 11h94m-94 11h94m-94 11h94m-94 11h94m-94 11h94m-94 11h94m-94 11h94m-94 11h94"/></g>
+ <path d="M585 564v-95m-7 9 7-9 7 9" stroke="#a34e3a" stroke-width="2.4"/>
+ <!-- Unlabeled structural axes and lower measurement chain. -->
+ <g stroke="#94a9ad" stroke-width="1.3" stroke-dasharray="5 8" opacity=".75"><path d="M290 168v451M516 168v451M792 168v451M236 242h621M236 508h621"/></g>
+ <g fill="#fcfaf5" stroke="#5f8391" stroke-width="1.5"><circle cx="290" cy="171" r="10"/><circle cx="516" cy="171" r="10"/><circle cx="792" cy="171" r="10"/><circle cx="238" cy="242" r="10"/><circle cx="238" cy="508" r="10"/></g>
+ <g stroke="#6e8790" stroke-width="1.45"><path d="M255 617v57m255-57v57m317-57v57M255 652h572m-572 12h572"/><path d="m260 647-5 5 5 5m245-10 5 5-5 5m10-10-5 5 5 5m312-10 5 5-5 5"/></g>
+</g>
+<!-- Precision-ground T-square rests at the sheet's lower edge. -->
+<g transform="rotate(-14 303 680)">
+ <path d="M146 684h347v25H146zM179 607h62v145h-62z" fill="#496575" opacity=".14" filter="url(#cast)"/>
+ <path d="M139 672h347v22H139z" fill="url(#aluminium)" stroke="#496a79" stroke-width="2.6"/>
+ <path d="M174 595h58v145h-58z" fill="#b7c4c3" stroke="#496a79" stroke-width="2.6"/>
+ <path d="M144 677h337m-302-76h48" stroke="#fbfaf5" stroke-width="1.8" opacity=".85"/>
+ <g stroke="#728d96" stroke-width="1.15"><path d="M250 677v13m35-13v9m35-9v13m35-13v9m35-9v13m35-13v9m35-9v13"/></g>
+</g>
+<!-- The compass is slightly lifted off the table, with a functional pivot and pencil leg. -->
+<g transform="translate(1021 510) rotate(13)">
+ <path d="M0-87 70 153M0-87-70 153" stroke="#536a77" stroke-width="16" opacity=".13" filter="url(#cast)"/>
+ <path d="M0-87 70 153" stroke="url(#slate)" stroke-width="10" stroke-linecap="round"/>
+ <path d="M0-87-70 153" stroke="url(#slate)" stroke-width="10" stroke-linecap="round"/>
+ <path d="M0-87V-113" stroke="#28485b" stroke-width="8" stroke-linecap="round"/>
+ <circle cy="-87" r="11" fill="#8ba1a7" stroke="#1f435c" stroke-width="2.8"/>
+ <path d="m66 143 4 23 5-23m-149 0 4 23 5-23" fill="#a34e3a" stroke="#765f54" stroke-width="1.5"/>
+ <path d="M-67 175a139 139 0 0 0 132 0" stroke="#a34e3a" stroke-width="1.6" stroke-dasharray="7 7" opacity=".44"/>
+</g>
+</svg>

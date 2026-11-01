@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Link, subscribePathname } from "@/lib/next-shim";
 import { site } from "@/data/site";
@@ -235,8 +237,20 @@ export function CookieConsent() {
   const [analyticsOn, setAnalyticsOn] = useState(true);
   const [decided, setDecided] = useState(false);
 
+  // Bar açıkken sabit barın sayfa sonundaki içeriği kapatmaması için
+  // body'ye işaret konur; CSS yalnızca bu durumda alt boşluk ekler.
   useEffect(() => {
-    setMounted(true);
+    if (open) document.body.dataset.consentOpen = "1";
+    else delete document.body.dataset.consentOpen;
+    return () => {
+      delete document.body.dataset.consentOpen;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    // Hydration uyumsuzluğunu önlemek için bar yalnızca istemcide çizilir.
+    // (Efekt gövdesinde senkron setState yerine bir sonraki göreve bırakılır.)
+    const mountId = window.setTimeout(() => setMounted(true), 0);
     // 1. adım: etiketlerden önce consent varsayılanları (denied).
     ensureConsentDefaults();
 
@@ -246,12 +260,17 @@ export function CookieConsent() {
 
     const stored = readStored();
     if (stored) {
-      setDecided(true);
-      setAnalyticsOn(stored !== "declined");
+      // Saklı karar bir sonraki göreve bırakılır (efekt gövdesinde senkron
+      // setState yapılmaz; gereksiz zincirleme render önlenir).
+      const storedId = window.setTimeout(() => {
+        setDecided(true);
+        setAnalyticsOn(stored !== "declined");
+      }, 0);
       if (stored !== "declined") {
         applyConsent(stored);
         sendPageView();
       }
+      window.setTimeout(() => window.clearTimeout(storedId), 0);
     }
 
     // Barı, açılış perdesi (intro) kalkar kalkmaz göster — sabit zamanlayıcı
@@ -285,6 +304,7 @@ export function CookieConsent() {
     };
     window.addEventListener(COOKIE_PREF_EVENT, reopen);
     return () => {
+      window.clearTimeout(mountId);
       window.clearTimeout(cap);
       window.clearInterval(poll);
       unsubscribe();

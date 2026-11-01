@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>Yapı kesiti: betonarme karkas, çelik taşıyıcı, taş kaplama ve tesisat — bütünleşik hizmet</title>
+  <defs>
+    <linearGradient id="sky" x1="0.1" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#fbf8f2"/><stop offset="0.45" stop-color="#f3eee5"/><stop offset="1" stop-color="#e2dbcd"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f7e3cd" stop-opacity="0.7"/><stop offset="1" stop-color="#f7e3cd" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="conc" x1="0" y1="0" x2="0.85" y2="0.6">
+      <stop offset="0" stop-color="#d5cec1"/><stop offset="1" stop-color="#aca496"/>
+    </linearGradient>
+    <linearGradient id="concD" x1="0" y1="0" x2="1" y2="0.5">
+      <stop offset="0" stop-color="#b3ab9d"/><stop offset="1" stop-color="#8e877a"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0.9" y2="0.7">
+      <stop offset="0" stop-color="#37596d"/><stop offset="1" stop-color="#1e3a4b"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="0.8" y2="0.6">
+      <stop offset="0" stop-color="#f1e8d7"/><stop offset="1" stop-color="#cdbb9f"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#7b9aa8"/><stop offset="1" stop-color="#3a5866"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#ded6c7"/><stop offset="1" stop-color="#bfb5a2"/>
+    </linearGradient>
+    <filter id="b18" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="hazeV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f2e8" stop-opacity="0.55"/>
+      <stop offset="0.42" stop-color="#f7f2e8" stop-opacity="0.18"/>
+      <stop offset="0.72" stop-color="#f7f2e8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="vignette" x1="0.5" y1="0.4" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#8d8272" stop-opacity="0"/>
+      <stop offset="0.82" stop-color="#8d8272" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#8d8272" stop-opacity="0.16"/>
+    </linearGradient>
+    <radialGradient id="vigX" cx="0.5" cy="0.5" r="0.72">
+      <stop offset="0.55" stop-color="#8d8272" stop-opacity="0"/>
+      <stop offset="1" stop-color="#8d8272" stop-opacity="0.12"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <circle cx="1160" cy="330" r="320" fill="url(#glow)"/>
+
+  <!-- KESİT GÖRÜNÜMÜ: iki kat, malzeme katmanları -->
+  <g>
+    <ellipse cx="900" cy="920" rx="420" ry="20" fill="#a2977f" opacity="0.3" filter="url(#b18)"/>
+
+    <!-- zemin kat: taş kaplı çekirdek -->
+    <rect x="620" y="600" width="660" height="320" fill="url(#stone)"/>
+    <!-- üst kat: betonarme karkas -->
+    <rect x="620" y="300" width="660" height="300" fill="url(#conc)" opacity="0.5"/>
+    <!-- döşeme -->
+    <rect x="592" y="576" width="716" height="26" fill="url(#concD)"/>
+    <rect x="592" y="576" width="716" height="5" fill="#fffdf7" opacity="0.5"/>
+    <rect x="592" y="284" width="716" height="22" fill="url(#concD)"/>
+    <rect x="592" y="284" width="716" height="5" fill="#fffdf7" opacity="0.5"/>
+
+    <!-- çelik kolonlar (üst kat) -->
+    <g fill="url(#steel)">
+      <rect x="660" y="306" width="26" height="270"/>
+      <rect x="890" y="306" width="26" height="270"/>
+      <rect x="1120" y="306" width="26" height="270"/>
+    </g>
+    <g fill="#9dbdcd" opacity="0.35">
+      <rect x="660" y="306" width="4" height="270"/><rect x="890" y="306" width="4" height="270"/><rect x="1120" y="306" width="4" height="270"/>
+    </g>
+    <!-- çelik kiriş: üst kat tavanı -->
+    <rect x="640" y="418" width="540" height="18" fill="url(#steel)"/>
+    <g stroke="#9dbdcd" stroke-width="2" opacity="0.3">
+      <path d="M660 428 H1160"/>
+    </g>
+
+    <!-- üst kat cam cephe -->
+    <g fill="url(#glass)" opacity="0.9">
+      <rect x="700" y="330" width="176" height="80"/><rect x="930" y="330" width="176" height="80"/>
+      <rect x="700" y="452" width="176" height="112"/><rect x="930" y="452" width="176" height="112"/>
+    </g>
+    <g fill="#d3e4ec" opacity="0.4">
+      <rect x="700" y="330" width="176" height="5"/><rect x="930" y="330" width="176" height="5"/>
+    </g>
+
+    <!-- zemin kat: taş kaplama derzleri + giriş -->
+    <g stroke="#c0ad90" stroke-width="2" opacity="0.6">
+      <path d="M620 690 H1280"/><path d="M620 780 H1280"/>
+      <path d="M780 600 V920"/><path d="M950 600 V920"/><path d="M1120 600 V920"/>
+    </g>
+    <rect x="836" y="700" width="230" height="220" fill="#33505f"/>
+    <rect x="848" y="712" width="206" height="208" fill="#456574"/>
+    <rect x="836" y="700" width="230" height="6" fill="#16303d"/>
+    <rect x="760" y="676" width="382" height="20" fill="#f7f0e1"/>
+    <rect x="760" y="676" width="382" height="4" fill="#fffdf7" opacity="0.85"/>
+
+    <!-- tesisat: düşey boru ve kanal (kesitte) -->
+    <g>
+      <rect x="1180" y="306" width="16" height="590" fill="#a8b7bf" opacity="0.9"/>
+      <rect x="1204" y="306" width="26" height="590" fill="#94a5ae" opacity="0.75"/>
+      <g fill="#7f9099" opacity="0.8">
+        <rect x="1176" y="420" width="60" height="10"/>
+        <rect x="1176" y="600" width="60" height="10"/>
+        <rect x="1176" y="780" width="60" height="10"/>
+      </g>
+    </g>
+
+    <!-- ölçü ve aplikasyon çizgileri: teknik -->
+    <g stroke="#1f435c" stroke-width="1.6" opacity="0.28">
+      <path d="M470 300 V920"/>
+      <path d="M458 300 H482"/><path d="M458 920 H482"/>
+      <path d="M458 576 H482"/><path d="M458 284 H482"/>
+    </g>
+  </g>
+
+  <!-- zemin -->
+  <rect x="0" y="920" width="1600" height="80" fill="url(#ground)"/>
+  <path d="M0 920 H1600" stroke="#b7ab96" stroke-width="2" opacity="0.7"/>
+
+  <!-- terracotta vurgu -->
+  <rect x="620" y="600" width="660" height="7" fill="#a34e3a" opacity="0.9"/>
+  <rect x="1280" y="600" width="7" height="320" fill="#a34e3a" opacity="0.55"/>
+
+  <g opacity="0.22">
+    <polygon points="1400,140 1434,160 1434,200 1400,220 1366,200 1366,160" fill="none" stroke="#1f435c" stroke-width="2"/>
+    <polygon points="1400,164 1422,177 1422,197 1400,210 1378,197 1378,177" fill="none" stroke="#a34e3a" stroke-width="2"/>
+  </g>
+  <!-- atmosferik derinlik: uzak düzlemde hafif sis -->
+  <rect x="0" y="0" width="1600" height="1000" fill="url(#hazeV)" opacity="0.55"/>
+  <!-- ön plan gölgesi: zemine yakın koyulaşma -->
+  <rect x="0" y="0" width="1600" height="1000" fill="url(#vignette)"/>
+  <!-- gren -->
+  <rect width="1600" height="1000" filter="url(#grain)" opacity="0.05"/>
+</svg>

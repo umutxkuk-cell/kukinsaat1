@@ -1,5 +1,8 @@
 export type ServiceIcon = "build" | "engineer" | "coordinate" | "manage" | "consult";
 
+/** Hizmet kartlarında kullanılan yeni mimari teknik çizim sahnesi. */
+export type ServiceScene = "site" | "structure" | "levels" | "detail" | "facade";
+
 export type Service = {
   slug: string;
   title: string;
@@ -10,6 +13,7 @@ export type Service = {
   scope: string[];
   image: string;
   imageAlt: string;
+  scene: ServiceScene;
 };
 
 export const services: Service[] = [
@@ -29,8 +33,9 @@ export const services: Service[] = [
       "Kalite ve süreç takibi",
     ],
     image:
-      "/images/abstract-kurumsal.jpg",
-    imageAlt: "Taş kemerler ve grafit kütlelerle soyut mimari kompozisyon",
+      "/images/pagehero-hizmetler-site.svg",
+    imageAlt: "Kule vincin kiriş indirdiği iskeleli betonarme şantiye çizimi",
+    scene: "site",
   },
   {
     slug: "muhendislik-hizmetleri",
@@ -48,8 +53,9 @@ export const services: Service[] = [
       "Performans ve güvenlik odaklı kararlar",
     ],
     image:
-      "/images/abstract-hizmetler.jpg",
-    imageAlt: "Çelik, cam ve beton birleşimini gösteren soyut mühendislik görseli",
+      "/images/hero-section-cut.svg",
+    imageAlt: "Radye temel, kolonlar ve kat döşemeleriyle bina kesiti",
+    scene: "structure",
   },
   {
     slug: "proje-gelistirme-ve-teknik-koordinasyon",
@@ -67,8 +73,9 @@ export const services: Service[] = [
       "İmalat öncesi teknik onay",
     ],
     image:
-      "/images/abstract-projeler.jpg",
-    imageAlt: "Mimari plan üzerinde yükselen çağdaş yapı kütleleri",
+      "/images/pagehero-kurumsal-plan.svg",
+    imageAlt: "Mimari kat planı, T-cetvel ve pergel",
+    scene: "levels",
   },
   {
     slug: "proje-ve-uygulama-sureclerinin-yonetimi",
@@ -86,8 +93,9 @@ export const services: Service[] = [
       "Raporlama ve şeffaf iletişim",
     ],
     image:
-      "/images/hero-architecture.jpg",
-    imageAlt: "Mineral tonlarda geometrik cepheli mimari kompozisyon",
+      "/images/pagehero-projeler-facade.svg",
+    imageAlt: "Üç kademeli cam cepheli tamamlanmış modern yapı çizimi, temsili",
+    scene: "facade",
   },
   {
     slug: "teknik-danismanlik",
@@ -105,8 +113,9 @@ export const services: Service[] = [
       "Süreç ve kalite önerileri",
     ],
     image:
-      "/images/abstract-iletisim.jpg",
-    imageAlt: "Topoğrafik çizgiler ve bağlantı noktalarıyla soyut iletişim görseli",
+      "/images/pagehero-kurumsal-plan.svg",
+    imageAlt: "Mimari kat planında kapı, kolon ve ölçü detayları",
+    scene: "detail",
   },
 ];
 

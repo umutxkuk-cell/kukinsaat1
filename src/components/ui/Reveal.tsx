@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Variant = "up" | "left" | "right" | "scale" | "clip" | "blur";
@@ -48,9 +50,11 @@ export function Reveal({
     };
 
     // IntersectionObserver desteklenmiyorsa içerik doğrudan gösterilir.
+    // (setState efekt gövdesinde değil, bir sonraki görevde çağrılır.)
     if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return;
+      const id = window.setTimeout(() => setVisible(true), 0);
+      timers.current.push(id);
+      return () => timers.current.forEach((t) => window.clearTimeout(t));
     }
 
     // Eşik, eleman yüksekliğine göre ölçeklenir: eleman viewport'tan

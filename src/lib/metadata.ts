@@ -31,17 +31,17 @@ export const SITE_URL = "https://kukinsaat.com";
  * Kök rota her zaman "/" kalır ("//" üretilmez).
  */
 export function canonicalUrl(path: string): string {
+  // Next.js rotaları eğik çizgisiz sunar (/kurumsal → 200, /kurumsal/ → 308).
+  // Canonical, yönlendirmeye uğrayan değil doğrudan 200 dönen adresi göstermeli.
   if (path === "/" || path === "") return `${SITE_URL}/`;
-  const clean = path.replace(/\/+$/, "");
-  return `${SITE_URL}${clean}/`;
+  return `${SITE_URL}/${path.replace(/^\/+|\/+$/g, "")}`;
 }
 
 export const INDEX_ROBOTS =
   "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 export const NOINDEX_ROBOTS = "noindex, follow";
 
-const DEFAULT_OG_IMAGE =
-  "https://kukinsaat.com/images/hero-architecture.jpg";
+const DEFAULT_OG_IMAGE = "https://kukinsaat.com/images/hero-building-sketch-og.jpg";
 
 export type Crumb = { name: string; path: string };
 
@@ -140,6 +140,8 @@ function breadcrumbLd(crumbs: Crumb[]): object {
 
 /** Pexels URL'sini 1200x630 OG kırpımına dönüştürür. */
 function ogCrop(url: string): string {
+  if (url.startsWith("/")) return `${SITE_URL}${url}`;
+  if (url.startsWith("/")) return `https://kukinsaat.com${url}`;
   if (/[?&]fit=crop&h=\d+&w=\d+/.test(url)) {
     return url.replace(/([?&])fit=crop&h=\d+&w=\d+/, "$1fit=crop&w=1200&h=630");
   }

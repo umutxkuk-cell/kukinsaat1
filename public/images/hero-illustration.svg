@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>Alacakaranlıkta kule vinç ve yapım halindeki yapı iskeleti</title>
+  <defs>
+    <linearGradient id="sky" x1="0.2" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#16303f"/><stop offset="0.28" stop-color="#274a5c"/>
+      <stop offset="0.54" stop-color="#5d6a72"/><stop offset="0.74" stop-color="#b08a7a"/>
+      <stop offset="0.88" stop-color="#dd9f76"/><stop offset="1" stop-color="#f0c49a"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffe0b8" stop-opacity="0.95"/><stop offset="0.45" stop-color="#f8c79a" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#f8c79a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="massA" x1="0" y1="0" x2="0.4" y2="0.7">
+      <stop offset="0" stop-color="#1d2f39"/><stop offset="1" stop-color="#101a21"/>
+    </linearGradient>
+    <linearGradient id="massB" x1="0" y1="0" x2="0.5" y2="0.6">
+      <stop offset="0" stop-color="#243a45"/><stop offset="1" stop-color="#131f27"/>
+    </linearGradient>
+    <linearGradient id="massC" x1="0" y1="0" x2="0.4" y2="0.6">
+      <stop offset="0" stop-color="#2b4553"/><stop offset="1" stop-color="#172530"/>
+    </linearGradient>
+    <linearGradient id="litA" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#ffd9a6"/><stop offset="1" stop-color="#e6a572"/>
+    </linearGradient>
+    <linearGradient id="litB" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#f8c992"/><stop offset="1" stop-color="#d99a63"/>
+    </linearGradient>
+    <linearGradient id="terr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c3714f"/><stop offset="1" stop-color="#a34e3a"/>
+    </linearGradient>
+    <linearGradient id="groundG" x1="0" y1="0" x2="0.1" y2="1">
+      <stop offset="0" stop-color="#18262e"/><stop offset="0.5" stop-color="#111c23"/><stop offset="1" stop-color="#0a1217"/>
+    </linearGradient>
+    <linearGradient id="vign" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#061016" stop-opacity="0.42"/><stop offset="0.3" stop-color="#061016" stop-opacity="0"/>
+      <stop offset="0.8" stop-color="#061016" stop-opacity="0"/><stop offset="1" stop-color="#061016" stop-opacity="0.5"/>
+    </linearGradient>
+    <filter id="b40" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="b14" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="b6" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.6"/></feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <circle cx="300" cy="830" r="210" fill="url(#sunGlow)" filter="url(#b40)"/>
+  <circle cx="300" cy="830" r="74" fill="#ffdfb2" opacity="0.2" filter="url(#b14)"/>
+  <circle cx="300" cy="830" r="40" fill="#ffe9c8" opacity="0.62"/>
+  <circle cx="300" cy="830" r="40" fill="#fff6e4" opacity="0.3" filter="url(#b6)"/>
+  <g fill="#ffe3c6" opacity="0.14">
+    <rect x="120" y="392" width="520" height="7" rx="3.5"/>
+    <rect x="260" y="442" width="380" height="5" rx="2.5"/>
+  </g>
+
+  <g opacity="0.2" filter="url(#b6)">
+    <rect x="120" y="610" width="86" height="274" fill="#3c5665"/>
+    <rect x="250" y="660" width="64" height="224" fill="#3c5665"/>
+  </g>
+
+  <!-- YAPI İSKELETİ -->
+  <g>
+    <ellipse cx="1230" cy="890" rx="290" ry="18" fill="#0a1217" opacity="0.5" filter="url(#b14)"/>
+    <rect x="850" y="360" width="600" height="524" fill="#0e1a20" opacity="0.66"/>
+    <g fill="url(#massB)">
+      <rect x="838" y="344" width="612" height="16"/><rect x="838" y="440" width="612" height="16"/>
+      <rect x="838" y="536" width="612" height="16"/><rect x="838" y="632" width="612" height="16"/>
+      <rect x="838" y="728" width="612" height="16"/><rect x="838" y="824" width="612" height="16"/>
+    </g>
+    <g fill="#ffcf9c" opacity="0.5">
+      <rect x="838" y="344" width="612" height="2.5"/><rect x="838" y="440" width="612" height="2.5"/>
+      <rect x="838" y="536" width="612" height="2.5"/><rect x="838" y="632" width="612" height="2.5"/>
+      <rect x="838" y="728" width="612" height="2.5"/><rect x="838" y="824" width="612" height="2.5"/>
+    </g>
+    <g fill="url(#massB)">
+      <rect x="846" y="360" width="18" height="480"/><rect x="1006" y="360" width="18" height="480"/>
+      <rect x="1166" y="360" width="18" height="480"/><rect x="1326" y="360" width="18" height="480"/>
+      <rect x="1424" y="360" width="18" height="480"/>
+    </g>
+    <g fill="#ffcf9c" opacity="0.48">
+      <rect x="846" y="360" width="2.5" height="480"/><rect x="1006" y="360" width="2.5" height="480"/>
+      <rect x="1166" y="360" width="2.5" height="480"/><rect x="1326" y="360" width="2.5" height="480"/>
+    </g>
+    <g fill="#0f1a21" opacity="0.3">
+      <rect x="870" y="366" width="540" height="70"/><rect x="870" y="462" width="540" height="70"/>
+    </g>
+    <g stroke="#ffd3a4" stroke-width="2.2" opacity="0.7" stroke-linecap="round">
+      <path d="M856 344 V296"/><path d="M874 344 V282"/><path d="M892 344 V302"/>
+      <path d="M1016 344 V292"/><path d="M1034 344 V278"/><path d="M1052 344 V296"/>
+      <path d="M1176 344 V300"/><path d="M1194 344 V284"/><path d="M1212 344 V294"/>
+      <path d="M1336 344 V290"/><path d="M1354 344 V302"/><path d="M1434 344 V292"/>
+    </g>
+    <g fill="url(#litA)" opacity="0.9">
+      <rect x="872" y="648" width="122" height="74"/><rect x="1034" y="648" width="122" height="74"/>
+      <rect x="1336" y="648" width="110" height="74"/>
+      <rect x="872" y="744" width="122" height="74"/><rect x="1196" y="744" width="122" height="74"/>
+      
+    </g>
+    <g fill="url(#litB)" opacity="0.55">
+      <rect x="1034" y="744" width="122" height="74"/>
+      
+    </g>
+    <g filter="url(#b14)" opacity="0.35">
+      <rect x="872" y="648" width="122" height="74" fill="#ffcf9c"/>
+      <rect x="1034" y="648" width="122" height="74" fill="#ffcf9c"/>
+      <rect x="872" y="744" width="122" height="74" fill="#ffb87f"/>
+    </g>
+    <g stroke="#0f1a21" stroke-width="3" opacity="0.5">
+      <path d="M933 648 V884"/><path d="M1095 648 V884"/><path d="M1257 648 V884"/><path d="M1391 648 V884"/>
+    </g>
+    <rect x="838" y="824" width="612" height="60" fill="#16242d"/>
+    <rect x="838" y="824" width="612" height="2.5" fill="#ffcf9c" opacity="0.35"/>
+    <!-- iskele -->
+    <g>
+      <g stroke="#3b5260" stroke-width="3.2">
+        <path d="M812 392 V884"/><path d="M830 392 V884"/>
+        <path d="M812 392 H830"/><path d="M812 452 H830"/><path d="M812 512 H830"/>
+        <path d="M812 572 H830"/><path d="M812 632 H830"/><path d="M812 692 H830"/>
+        <path d="M812 752 H830"/><path d="M812 812 H830"/>
+      </g>
+      <g stroke="#57707d" stroke-width="1.7" opacity="0.65">
+        <path d="M812 452 L830 512"/><path d="M830 452 L812 512"/>
+        <path d="M812 572 L830 632"/><path d="M830 572 L812 632"/>
+        <path d="M812 692 L830 752"/><path d="M830 692 L812 752"/>
+        <path d="M812 812 L830 872"/><path d="M830 812 L812 872"/>
+      </g>
+      <rect x="810" y="392" width="2.5" height="492" fill="#ffcf9c" opacity="0.45"/>
+      <g fill="#2c414d">
+        <rect x="808" y="510" width="24" height="5"/><rect x="808" y="630" width="24" height="5"/>
+        <rect x="808" y="750" width="24" height="5"/><rect x="808" y="870" width="24" height="5"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- KULE VİNÇ -->
+  <g>
+    <rect x="596" y="280" width="38" height="604" fill="url(#massC)"/>
+    <g stroke="#ffd3a4" stroke-width="1.7" opacity="0.3">
+      <path d="M596 332 L634 368"/><path d="M634 332 L596 368"/>
+      <path d="M596 404 L634 440"/><path d="M634 404 L596 440"/>
+      <path d="M596 476 L634 512"/><path d="M634 476 L596 512"/>
+      <path d="M596 548 L634 584"/><path d="M634 548 L596 584"/>
+      <path d="M596 620 L634 656"/><path d="M634 620 L596 656"/>
+      <path d="M596 692 L634 728"/><path d="M634 692 L596 728"/>
+      <path d="M596 764 L634 800"/><path d="M634 764 L596 800"/>
+      <path d="M596 836 L634 872"/><path d="M634 836 L596 872"/>
+    </g>
+    <rect x="634" y="280" width="3" height="604" fill="#ffcf9c" opacity="0.33"/>
+    <rect x="594" y="280" width="42" height="14" fill="url(#terr)"/>
+    <path d="M584 280 L646 280 L646 242 L615 216 L584 242 Z" fill="#0f1a21"/>
+    <path d="M646 280 L646 242 L615 216" fill="none" stroke="#ffcf9c" stroke-width="2" opacity="0.45"/>
+    <path d="M615 216 V138" stroke="#0f1a21" stroke-width="5.5"/>
+    <circle cx="615" cy="134" r="4.5" fill="#ff6b4a"/>
+    <path d="M615 236 L1500 244 L1500 258 L615 252 Z" fill="#16262f"/>
+    <path d="M615 236 L1500 244" stroke="#ffcf9c" stroke-width="2.2" opacity="0.6"/>
+    <path d="M615 244 L520 252 L520 266 L615 258 Z" fill="#16262f"/>
+    <rect x="524" y="250" width="48" height="40" fill="#1c2f3a"/>
+    <rect x="524" y="250" width="48" height="3" fill="#ffcf9c" opacity="0.4"/>
+    <g stroke="#16262f" stroke-width="2" opacity="0.72">
+      <path d="M615 138 L615 216"/><path d="M615 154 L1160 248"/><path d="M615 154 L1494 246"/><path d="M615 154 L536 252"/>
+    </g>
+    <path d="M1160 248 V330" stroke="#16262f" stroke-width="2.4"/>
+    <path d="M1148 330 H1172 L1160 350 Z" fill="#16262f"/>
+    <rect x="642" y="374" width="86" height="66" fill="#0f1a21"/>
+    <rect x="650" y="382" width="42" height="28" fill="#ffcf9c" opacity="0.86"/>
+    <rect x="650" y="382" width="42" height="28" fill="#ffe3c2" opacity="0.35" filter="url(#b6)"/>
+    <rect x="642" y="374" width="86" height="2.5" fill="#ffcf9c" opacity="0.45"/>
+  </g>
+
+  <!-- saha -->
+  <g>
+    <rect x="96" y="900" width="150" height="16" fill="#1c2f3a"/>
+    <rect x="88" y="880" width="150" height="16" fill="#22353f"/>
+    <rect x="90" y="918" width="162" height="18" fill="#101d24"/>
+    <rect x="88" y="880" width="150" height="2" fill="#ffcf9c" opacity="0.3"/>
+    <g stroke="#8497a1" stroke-width="2.6" opacity="0.42" stroke-linecap="round">
+      <path d="M300 918 H420"/><path d="M300 926 H420"/><path d="M300 934 H420"/>
+    </g>
+    <g stroke="#54666f" stroke-width="2.4" opacity="0.5">
+      <path d="M520 884 V936"/><path d="M590 884 V936"/><path d="M660 884 V936"/>
+      <path d="M520 898 H660"/><path d="M520 918 H660"/>
+    </g>
+  </g>
+  <rect x="0" y="884" width="1600" height="116" fill="url(#groundG)"/>
+  <rect x="0" y="882" width="1600" height="3" fill="#ffcf9c" opacity="0.2"/>  <rect width="1600" height="1000" fill="url(#vign)"/>
+  <rect width="1600" height="1000" filter="url(#grain)" opacity="0.07"/>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" role="img" aria-labelledby="t" fill="none">
+<title id="t">Radye temelden çatıya yükselen, merdiven çekirdeği görünen aksonometrik bina kesiti</title>
+<defs>
+  <linearGradient id="stone" x1=".12" y1="0" x2=".88" y2="1"><stop stop-color="#eeeae2"/><stop offset="1" stop-color="#cfc9bf"/></linearGradient>
+  <linearGradient id="deep" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#adb6b5"/><stop offset="1" stop-color="#87989b"/></linearGradient>
+  <linearGradient id="glazing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#cfe0e0" stop-opacity=".65"/><stop offset="1" stop-color="#8cacb8" stop-opacity=".85"/></linearGradient>
+  <pattern id="cut" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><rect width="12" height="12" fill="#d7d1c7"/><path d="M0 0v12" stroke="#97a0a0" stroke-opacity=".35" stroke-width="1.25"/></pattern>
+  <pattern id="earth" width="31" height="19" patternUnits="userSpaceOnUse"><path d="M1 5h13m7 9h9M6 17h7" stroke="#aaa297" stroke-width="1.3" stroke-linecap="round"/><circle cx="23" cy="4" r="1.15" fill="#a69d91"/></pattern>
+  <filter id="drop" x="-25%" y="-35%" width="150%" height="190%"><feGaussianBlur stdDeviation="11"/></filter>
+  <!-- A continuous slab, omitted in the stairwell between the middle and right column. -->
+  <g id="intermediate-slab" stroke="#1f435c" stroke-linejoin="round">
+    <path d="M260 0h340v21H260zM725 0h120v21H725z" fill="url(#cut)" stroke-width="3.8"/>
+    <path d="m845 0 78-42v21l-78 42zM600 0l78-42v21l-78 42z" fill="url(#deep)" stroke-width="2.2"/>
+    <path d="M260 0 338-42h340L600 0zM725 0l78-42h120L845 0z" fill="url(#stone)" stroke-width="2"/>
+    <path d="M264 3h332m133 0h112" stroke="#faf8f2" stroke-width="1.8" opacity=".8"/>
+  </g>
+</defs>
+<!-- Foundation shadow and stratified ground are structural context, not a decorative grid. -->
+<ellipse cx="583" cy="733" rx="397" ry="26" fill="#7e8d8e" opacity=".16" filter="url(#drop)"/>
+<path d="M164 702h826v116H164z" fill="#d9d0c1"/>
+<path d="M164 702h826v116H164z" fill="url(#earth)" opacity=".57"/>
+<path d="M166 739c125 10 217-13 356-1 137 12 233-12 464 1m-820 43c136-13 263 12 405 1 128-10 260 7 415-3" stroke="#9e9a8f" stroke-width="1.5" opacity=".62"/>
+<path d="M160 702h828" stroke="#536c73" stroke-width="2.7"/>
+<!-- Three rational structural axes, kept behind the cut model. -->
+<g stroke="#7d979f" stroke-width="1.4" stroke-dasharray="6 10" opacity=".52"><path d="M310 90v640M553 90v640M796 90v640"/></g>
+<g fill="#f1f0e9" stroke="#456b78" stroke-width="1.8"><circle cx="310" cy="101" r="9"/><circle cx="553" cy="101" r="9"/><circle cx="796" cy="101" r="9"/></g>
+<!-- Pale rear plane makes the stair and occupied spaces visible without a heavy render. -->
+<path d="M260 173h585v491H260z" fill="#e5e9e5" opacity=".48"/>
+<path d="M600 173h125v491H600z" fill="#d5dedb" opacity=".46"/>
+<path d="M603 178v480m120-480v480" stroke="#8ea4a8" stroke-width="1.5" opacity=".65"/>
+<!-- The raft is one continuous footing; its top and right faces carry the depth vector. -->
+<g stroke="#1f435c" stroke-linejoin="round">
+ <path d="M219 665h673v43H219z" fill="url(#cut)" stroke-width="4.2"/>
+ <path d="m892 665 78-42v43l-78 42z" fill="url(#deep)" stroke-width="2.5"/>
+ <path d="M219 665 297 623h673l-78 42z" fill="url(#stone)" stroke-width="2.5"/>
+ <path d="M228 679h654m-654 16h654" stroke="#82989c" stroke-width="1.3" opacity=".78"/>
+</g>
+<!-- Three aligned columns: each is continuous from raft to roof. -->
+<g fill="url(#cut)" stroke="#1f435c" stroke-width="3.6"><path d="M297 171h26v494h-26zM540 171h26v494h-26zM783 171h26v494h-26z"/></g>
+<g fill="#aab9b8" stroke="#536d75" stroke-width="1.5"><path d="m323 171 10-6v494l-10 6zM566 171l10-6v494l-10 6zM809 171l10-6v494l-10 6z"/></g>
+<g stroke="#faf7ef" stroke-width="1.8" opacity=".8"><path d="M299 180v481m243-481v481m243-481v481"/></g>
+<!-- Floor openings line up vertically with the stair core. -->
+<use href="#intermediate-slab" transform="translate(0 298)"/>
+<use href="#intermediate-slab" transform="translate(0 418)"/>
+<use href="#intermediate-slab" transform="translate(0 538)"/>
+<!-- Stair flights physically bridge each paired landing; no decorative floating stairs. -->
+<g stroke="#315568" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+ <path d="M603 538h10v-13h12v-13h12v-13h12v-13h12v-13h12v-13h12v-13h12v-13h11v-11h16"/>
+ <path d="M603 418h10v-13h12v-13h12v-13h12v-13h12v-13h12v-13h12v-13h12v-13h11v-11h16"/>
+ <path d="M603 298h10v-13h12v-13h12v-13h12v-13h12v-13h12v-13h12v-13h12v-13h11v-11h16"/>
+ <path d="M610 524 724 406m-114-2 114-118m-114-2 114-118" stroke-width="1.3" opacity=".55"/>
+</g>
+<g stroke="#1f435c" stroke-width="2.4"><path d="M600 542h122m-122-120h122m-122-120h122"/></g>
+<!-- Roof slab, top surface and a believable parapet. -->
+<g stroke="#1f435c" stroke-linejoin="round"><path d="M252 167h601v23H252z" fill="url(#cut)" stroke-width="3.8"/><path d="m853 167 78-42v23l-78 42z" fill="url(#deep)" stroke-width="2.2"/><path d="M252 167 330 125h601l-78 42z" fill="url(#stone)" stroke-width="2.1"/><path d="M252 165v-29h21v29m559 0v-29h21v29" fill="#d3cdc1" stroke-width="3.2"/></g>
+<!-- Exterior wall is interrupted by actual window openings and side glazing. -->
+<g fill="#d9d4c9" stroke="#2a4b5e" stroke-width="2.8"><path d="M252 190h19v64h-19zm0 39h19v25h-19zm0 45h19v88h-19zm0 88h19v36h-19zm0 57h19v75h-19zm0 104h19v142h-19z"/><path d="M830 190h23v54h-23zm0 94h23v74h-23zm0 114h23v86h-23zm0 126h23v141h-23z"/></g>
+<g fill="url(#glazing)" stroke="#4e7585" stroke-width="2.2"><path d="M252 254h19v20h-19zm578-10h23v40h-23zM252 398h19v21h-19zm578-40h23v40h-23zM252 494h19v29h-19zm578-40h23v70h-23z"/></g>
+<!-- Receding right facade with three levels of glazed openings. -->
+<g fill="#b7cacd" fill-opacity=".47" stroke="#547988" stroke-width="2"><path d="m853 206 78-42v83l-78 42zm0 123 78-42v82l-78 42zm0 122 78-42v82l-78 42z"/></g>
+<g stroke="#477182" stroke-width="1.6"><path d="m892 185 1 83m-1 40 1 83m-1 41 1 82m-40-265 78-42m-78 165 78-42m-78 163 78-42"/></g>
+<path d="M326 171v494m247-494v494m243-494v494" stroke="#314e61" stroke-opacity=".16" stroke-width="8"/>
+<!-- A single complete height dimension, with quiet floor datum ticks. -->
+<g stroke="#a34e3a" stroke-width="1.7" stroke-linecap="round" opacity=".83"><path d="M1046 125v583M973 125h88M975 298h86M975 418h86M975 538h86M986 708h75" stroke-width="1.3"/><path d="m1040 137 6-12 6 12m-12 559 6 12 6-12"/><path d="M1040 298h12m-12 120h12m-12 120h12"/></g>
+</svg>

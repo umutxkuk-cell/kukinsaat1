@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>Tamamlanmış proje kartları, onay rozeti ve konum işareti — teslim edilmiş işler</title>
+  <defs>
+    <linearGradient id="p-bg" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#f5f2ec"/>
+      <stop offset="0.55" stop-color="#eeeae2"/>
+      <stop offset="1" stop-color="#e5dfd4"/>
+    </linearGradient>
+    <linearGradient id="p-cover" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c07a5f"/>
+      <stop offset="0.55" stop-color="#a34e3a"/>
+      <stop offset="1" stop-color="#843f2f"/>
+    </linearGradient>
+    <linearGradient id="p-navy" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#2b5471"/>
+      <stop offset="1" stop-color="#1a3950"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#p-bg)"/>
+  <circle cx="1400" cy="500" r="400" fill="#dfe7ec" opacity="0.6"/>
+  <circle cx="1200" cy="860" r="210" fill="#e4d6cb" opacity="0.55"/>
+
+  <!-- arkadaki kartlar -->
+  <g transform="rotate(-14 1300 540)">
+    <rect x="1118" y="312" width="360" height="470" rx="20" fill="#b0aaa0" opacity="0.18"/>
+    <rect x="1116" y="306" width="360" height="470" rx="20" fill="url(#p-navy)" opacity="0.35"/>
+  </g>
+  <g transform="rotate(-7 1300 540)">
+    <rect x="1146" y="304" width="372" height="478" rx="20" fill="#b0aaa0" opacity="0.22"/>
+    <rect x="1144" y="298" width="372" height="478" rx="20" fill="#8bb2cc" opacity="0.6"/>
+  </g>
+
+  <!-- ön kart: tamamlanmış proje -->
+  <g>
+    <rect x="1188" y="300" width="380" height="486" rx="20" fill="#b0aaa0" opacity="0.24" transform="translate(8 10)"/>
+    <rect x="1180" y="292" width="380" height="486" rx="20" fill="#fdfbf7"/>
+    <rect x="1180" y="292" width="380" height="486" rx="20" fill="none" stroke="#e2dbcf" stroke-width="2"/>
+
+    <!-- kapak görseli -->
+    <rect x="1204" y="316" width="332" height="212" rx="12" fill="url(#p-cover)"/>
+    <circle cx="1450" cy="392" r="46" fill="#f7ece5" opacity="0.5"/>
+    <path d="M1204 468 L1318 402 L1420 462 L1536 398 L1536 528 H1204 Z" fill="#8c4130" opacity="0.45"/>
+    <path d="M1204 528 H1536" stroke="#f3ddd3" stroke-width="2" opacity="0.5"/>
+
+    <!-- kart metni -->
+    <rect x="1204" y="556" width="210" height="20" rx="10" fill="#1f435c"/>
+    <rect x="1204" y="592" width="150" height="14" rx="7" fill="#d5cec2"/>
+    <rect x="1204" y="640" width="270" height="12" rx="6" fill="#e2dbcf"/>
+    <rect x="1204" y="666" width="212" height="12" rx="6" fill="#e2dbcf"/>
+    <rect x="1204" y="712" width="112" height="34" rx="17" fill="#eeeae2"/>
+    <rect x="1220" y="725" width="80" height="8" rx="4" fill="#b0aaa0"/>
+
+    <!-- onay rozeti -->
+    <circle cx="1544" cy="318" r="52" fill="#fdfbf7"/>
+    <circle cx="1544" cy="318" r="42" fill="#a34e3a"/>
+    <path d="M1524 318 L1538 333 L1566 302" fill="none" stroke="#fdfbf7" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- konum işareti -->
+  <g transform="translate(1662 826)">
+    <path d="M0 -60 C26 -60 46 -38 46 -12 C46 22 0 62 0 62 C0 62 -46 22 -46 -12 C-46 -38 -26 -60 0 -60 Z" fill="#a34e3a"/>
+    <circle cx="0" cy="-14" r="17" fill="#fdfbf7"/>
+  </g>
+
+  <rect x="1180" y="838" width="380" height="3" rx="2" fill="#cfc8bc"/>
+</svg>

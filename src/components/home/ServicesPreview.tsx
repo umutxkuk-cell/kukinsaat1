@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 import { Link } from "@/lib/next-shim";
-import { Image } from "@/lib/next-shim";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { SceneArt } from "@/components/ui/SceneArt";
 import { ServiceIcon } from "@/components/services/ServiceIcon";
 import { services } from "@/data/services";
 
@@ -95,15 +97,14 @@ export function ServicesPreview() {
             <div className="sticky top-28">
               <div className="relative aspect-[4/5] overflow-hidden">
                 {services.map((s, i) => (
-                  <Image
+                  <SceneArt
                     key={s.slug}
-                    src={s.image}
+                    kind={s.scene}
+                    orient="portrait"
                     alt={s.imageAlt}
-                    width={1200}
-                    height={900}
-                    fill
-                    sizes="38vw"
-                    className={`img-duotone object-cover transition-all duration-[1100ms] ${active === i ? "scale-100 opacity-100" : "scale-110 opacity-0"}`}
+                    className={`absolute inset-0 h-full w-full transition-all duration-[1100ms] ${
+                      active === i ? "scale-100 opacity-100" : "scale-110 opacity-0"
+                    }`}
                   />
                 ))}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />

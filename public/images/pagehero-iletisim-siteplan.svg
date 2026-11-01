@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" role="img" aria-labelledby="t" fill="none">
+<title id="t">Yol bağlantısı, çevre parseller ve işaretli hedef parsel içeren temsili vaziyet planı</title>
+<defs>
+ <linearGradient id="street" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e3e8e4"/><stop offset="1" stop-color="#cdd6d2"/></linearGradient>
+ <linearGradient id="parcel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0f1e9"/><stop offset="1" stop-color="#e4eae1"/></linearGradient>
+ <linearGradient id="highlight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9c7b5"/><stop offset="1" stop-color="#d7a58c"/></linearGradient>
+ <filter id="shadow" x="-35%" y="-35%" width="170%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>
+ <style>
+  @media (prefers-reduced-motion: no-preference) { .location-ring { transform-box: view-box; transform-origin: 917px 386px; animation: location-pulse 3.8s ease-out infinite; } }
+  @keyframes location-pulse { 0% { transform: scale(.94); opacity: .31; } 80%,100% { transform: scale(1.5); opacity: 0; } }
+ </style>
+</defs>
+<!-- Streets are spatially connected; linework stops at the carriageway edges. -->
+<path d="M74 522c241 8 388 13 536 7 175-6 359-27 508-19v119c-162-12-336 9-504 17-170 8-340-3-540-7V522Z" fill="url(#street)" stroke="#82969a" stroke-width="2.8"/>
+<path d="M74 536c238 9 382 14 536 8 183-7 353-27 508-18M74 625c238 5 378 16 538 7 181-10 365-27 506-18" stroke="#fcfbf5" stroke-width="2.2" opacity=".84"/>
+<path d="M74 581c253 10 392 11 539 4 177-8 352-25 505-17" stroke="#fcfbf5" stroke-width="2.8" stroke-dasharray="22 24"/>
+<!-- North-south connection enters the carriageway with a real intersection. -->
+<path d="M602 62c-8 195 3 320 15 466l110 3c-15-154-25-304-18-469H602Z" fill="url(#street)" stroke="#82969a" stroke-width="2.6"/>
+<path d="M615 62c-7 169 3 324 15 466m66-466c-7 169 6 327 18 467" stroke="#fcfbf5" stroke-width="2.2" opacity=".85"/>
+<path d="M657 64c-6 171 4 323 14 464" stroke="#fcfbf5" stroke-width="2.4" stroke-dasharray="17 21"/>
+<path d="M602 514q22 26 51 23m73-21q-23 25-55 25" stroke="#83979a" stroke-width="1.7"/>
+<!-- Parcels above and below the connected roads; neighboring edges subdued. -->
+<g fill="url(#parcel)" stroke="#9fb1a6" stroke-width="2" stroke-opacity=".72" stroke-linejoin="round">
+ <path d="m310 121 263-9 3 206-257 15z"/>
+ <path d="m312 353 262-12 9 153-263 7z"/>
+ <path d="m751 133 315 19-11 132-298-13z"/>
+ <path d="m301 670 292-9 7 128-286 18z"/>
+ <path d="m728 664 335-18-8 140-330 10z"/>
+</g>
+<!-- Building footprints are small double-line masses inside their own lots. -->
+<g fill="#faf9f4" stroke="#3d6272" stroke-linejoin="round">
+ <path d="m354 161 163-6 5 115-168 7z" stroke-width="2.7"/><path d="m369 175 134-6 4 88-138 5z" stroke-width="1.25"/>
+ <path d="m364 388 160-5 3 77-158 4z" stroke-width="2.6"/><path d="m377 400 134-4 2 52-133 3z" stroke-width="1.25"/>
+ <path d="m799 172 199 14-7 61-197-10z" stroke-width="2.6"/><path d="m811 185 173 12-5 38-171-10z" stroke-width="1.25"/>
+ <path d="m352 698 185-9 5 83-187 11z" stroke-width="2.6"/><path d="m365 712 159-8 4 55-161 9z" stroke-width="1.25"/>
+ <path d="m776 691 235-11-5 88-232 10z" stroke-width="2.6"/><path d="m791 706 205-10-4 58-202 9z" stroke-width="1.25"/>
+</g>
+<g stroke="#72919a" stroke-width="1.5" opacity=".8"><path d="M437 158v114m17 113v78m444-280-6 57M446 696l5 77m444-85-3 80"/></g>
+<!-- Trees do not enter streets or overlap any building footprint. -->
+<g fill="#dce8db" stroke="#8ca48d" stroke-width="1.7"><circle cx="340" cy="299" r="15"/><circle cx="549" cy="289" r="16"/><circle cx="342" cy="476" r="13"/><circle cx="535" cy="474" r="14"/><circle cx="771" cy="253" r="13"/><circle cx="1028" cy="252" r="14"/><circle cx="327" cy="773" r="12"/><circle cx="569" cy="767" r="12"/><circle cx="746" cy="753" r="13"/><circle cx="1033" cy="752" r="12"/></g>
+<g stroke="#89a28c" stroke-width="1.1" opacity=".7"><path d="M332 299h16m-8-8v16m201-18h16m-8-8v16m-215 187h16m-8-8v16m187-18h16m-8-8v16m236-221h16m-8-8v16m249-17h16m-8-8v16m-699 521h14m-7-7v14m234-14h14m-7-7v14m176-24h14m-7-7v14m280-16h14m-7-7v14"/></g>
+<!-- One precise target parcel with a short driveway to the road below. -->
+<path d="m763 309 300 8-11 164-115-4m-54-2-125-3 5-163Z" fill="url(#highlight)" fill-opacity=".7" stroke="#a34e3a" stroke-width="3.7" stroke-linejoin="round"/>
+<path d="m783 329 261 6-7 124-255-6z" fill="none" stroke="#f8e6da" stroke-width="1.8"/>
+<path d="m814 358 185 4-4 65-183-3z" fill="#f6ede5" stroke="#a77662" stroke-width="2"/>
+<path d="m876 359-1 65m62-64-1 66" stroke="#a67f6d" stroke-width="1.3"/>
+<path d="M885 475v38m51-36v36" stroke="#a34e3a" stroke-width="1.8"/>
+<path d="M885 505h51" stroke="#f7f4ee" stroke-width="2.2" stroke-dasharray="8 7"/>
+<!-- A single local ring; the marker itself remains still. -->
+<circle class="location-ring" cx="917" cy="386" r="30" stroke="#a34e3a" stroke-width="2" opacity=".27"/>
+<ellipse cx="917" cy="412" rx="31" ry="9" fill="#8e6453" opacity=".18" filter="url(#shadow)"/>
+<path d="M917 404c-23-27-34-42-34-60a34 34 0 1 1 68 0c0 18-11 33-34 60Z" fill="#a34e3a" stroke="#8c4434" stroke-width="2.6"/>
+<circle cx="917" cy="343" r="11" fill="#f9f5ed"/>
+<!-- North arrow is intentionally unlabeled: the SVG contains no fake map names. -->
+<g transform="translate(1081 123)"><path d="m0-33 14 38L0-4-14 5 0-33Z" fill="#1f435c"/><path d="m0 35 14-30L0 5-14-5 0 35Z" fill="#a8b9b7" stroke="#567585" stroke-width="1.2"/><circle r="2.7" fill="#a34e3a"/><path d="M-20 27q20 10 40 0" stroke="#6d888d" stroke-width="1.4"/></g>
+</svg>

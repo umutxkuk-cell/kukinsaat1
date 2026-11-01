@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>Karşılıklı konuşma balonları ve zarf — açık, davetkâr iletişim</title>
+  <defs>
+    <linearGradient id="i-bg" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#f6f3ee"/>
+      <stop offset="0.55" stop-color="#eeeae2"/>
+      <stop offset="1" stop-color="#e6e0d5"/>
+    </linearGradient>
+    <linearGradient id="i-navy" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#2b5471"/>
+      <stop offset="1" stop-color="#1a3950"/>
+    </linearGradient>
+    <linearGradient id="i-terra" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c07a5f"/>
+      <stop offset="1" stop-color="#9c4a37"/>
+    </linearGradient>
+    <linearGradient id="i-paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f4f0e8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#i-bg)"/>
+  <circle cx="1420" cy="470" r="400" fill="#e4d6cb" opacity="0.5"/>
+  <circle cx="1160" cy="820" r="220" fill="#dfe7ec" opacity="0.6"/>
+
+  <!-- gelen mesaj: müşteri -->
+  <g transform="translate(1078 250)">
+    <rect x="8" y="10" width="392" height="248" rx="44" fill="#b0aaa0" opacity="0.2"/>
+    <rect width="392" height="248" rx="44" fill="url(#i-navy)"/>
+    <path d="M60 240 L60 306 L142 248 Z" fill="#1a3950"/>
+    <circle cx="132" cy="124" r="19" fill="#f7f4ee"/>
+    <circle cx="196" cy="124" r="19" fill="#f7f4ee" opacity="0.8"/>
+    <circle cx="260" cy="124" r="19" fill="#f7f4ee" opacity="0.6"/>
+  </g>
+
+  <!-- yanıt: KUK İnşaat -->
+  <g transform="translate(1362 498)">
+    <rect x="8" y="10" width="418" height="238" rx="44" fill="#b0aaa0" opacity="0.22"/>
+    <rect width="418" height="238" rx="44" fill="url(#i-terra)"/>
+    <path d="M356 232 L356 300 L272 240 Z" fill="#8c4130"/>
+    <g fill="#f7f4ee">
+      <rect x="70" y="76" width="280" height="18" rx="9"/>
+      <rect x="70" y="116" width="228" height="18" rx="9" opacity="0.85"/>
+      <rect x="70" y="156" width="150" height="18" rx="9" opacity="0.7"/>
+    </g>
+    <circle cx="330" cy="60" r="16" fill="#f7f4ee" opacity="0.55"/>
+  </g>
+
+  <!-- zarf -->
+  <g transform="translate(1004 742)">
+    <rect x="8" y="12" width="430" height="268" rx="18" fill="#b0aaa0" opacity="0.24"/>
+    <rect width="430" height="268" rx="18" fill="url(#i-paper)"/>
+    <rect width="430" height="268" rx="18" fill="none" stroke="#e2dbcf" stroke-width="2"/>
+    <path d="M0 20 L215 176 L430 20" fill="none" stroke="#1f435c" stroke-width="7" stroke-linejoin="round"/>
+    <circle cx="215" cy="188" r="30" fill="#a34e3a"/>
+    <path d="M203 188 L211 197 L228 179" fill="none" stroke="#fdfbf7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- küçük vurgu: yaklaşan hat -->
+  <rect x="1860" y="180" width="14" height="120" rx="7" fill="#cfc8bc"/>
+  <circle cx="1867" cy="150" r="14" fill="#a34e3a"/>
+</svg>

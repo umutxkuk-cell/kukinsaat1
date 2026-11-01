@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>İnşaat bareti, su terazisi, rulo teknik çizim ve kalem — yapı ustalığı ve ölçü hassasiyeti</title>
+  <defs>
+    <linearGradient id="h-bg" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#f4f1ea"/>
+      <stop offset="0.55" stop-color="#eeeae2"/>
+      <stop offset="1" stop-color="#e7e1d6"/>
+    </linearGradient>
+    <linearGradient id="h-navy" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#2b5471"/>
+      <stop offset="1" stop-color="#1b3a51"/>
+    </linearGradient>
+    <linearGradient id="h-terra" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bb6a52"/>
+      <stop offset="1" stop-color="#a34e3a"/>
+    </linearGradient>
+    <linearGradient id="h-paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fdfbf7"/>
+      <stop offset="1" stop-color="#efeae1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#h-bg)"/>
+  <circle cx="1420" cy="470" r="400" fill="#e4d6cb" opacity="0.55"/>
+  <circle cx="1580" cy="790" r="290" fill="#dbe4ea" opacity="0.5"/>
+  <circle cx="1215" cy="905" r="160" fill="#e8dfd2" opacity="0.7"/>
+
+  <!-- rulo teknik çizimler -->
+  <g transform="translate(1352 646) rotate(-13)">
+    <rect x="0" y="58" width="352" height="86" rx="43" fill="#e3ddd1" stroke="#c9c1b3" stroke-width="3"/>
+    <rect x="0" y="0" width="352" height="86" rx="43" fill="url(#h-paper)" stroke="#1b3a51" stroke-width="4"/>
+    <rect x="112" y="0" width="46" height="86" fill="url(#h-terra)"/>
+    <path d="M18 30 H104" stroke="#d5cec2" stroke-width="4" stroke-linecap="round"/>
+    <path d="M18 56 H104" stroke="#d5cec2" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="332" cy="43" r="17" fill="#eeeae2" stroke="#1b3a51" stroke-width="4"/>
+  </g>
+
+  <!-- baret -->
+  <g>
+    <ellipse cx="1300" cy="494" rx="230" ry="22" fill="#c9c1b3" opacity="0.3"/>
+
+    <!-- gövde (kubbe) -->
+    <path d="M1166 466 C1166 356 1226 300 1300 300 C1374 300 1434 356 1434 466 Z" fill="url(#h-navy)"/>
+
+    <!-- kaburgalar -->
+    <g stroke="#8bb2cc" stroke-width="6" opacity="0.4" fill="none" stroke-linecap="round">
+      <path d="M1300 306 V462"/>
+      <path d="M1246 318 C1226 358 1218 410 1220 462"/>
+      <path d="M1354 318 C1374 358 1382 410 1380 462"/>
+    </g>
+    <path d="M1200 352 C1218 332 1240 320 1262 314" stroke="#e9f2f8" stroke-width="10" opacity="0.35" fill="none" stroke-linecap="round"/>
+
+    <!-- gövde alt bandı -->
+    <path d="M1170 436 H1430 V466 H1170 Z" fill="#173751" opacity="0.85"/>
+
+    <!-- siperlik: kavisli, iki yana taşan -->
+    <path d="M1128 462 H1472 C1486 462 1492 470 1490 478 C1484 502 1440 516 1370 518 H1230 C1160 516 1116 502 1110 478 C1108 470 1114 462 1128 462 Z" fill="#173751"/>
+    <path d="M1128 462 H1472 C1486 462 1492 470 1490 476 H1110 C1108 470 1114 462 1128 462 Z" fill="#2a5b78"/>
+    <!-- siperlik uç vurgusu -->
+    <path d="M1230 512 H1370" stroke="#0f2b3f" stroke-width="5" opacity="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- su terazisi -->
+  <g transform="translate(1064 610)">
+    <rect x="0" y="10" width="470" height="96" rx="16" fill="#b0aaa0" opacity="0.35"/>
+    <rect width="470" height="96" rx="16" fill="url(#h-terra)"/>
+    <rect x="12" y="12" width="446" height="72" rx="12" fill="none" stroke="#e6c3b4" stroke-width="3" opacity="0.6"/>
+    <rect x="172" y="26" width="126" height="44" rx="8" fill="#fdfbf7"/>
+    <ellipse cx="235" cy="48" rx="30" ry="11" fill="#1f435c"/>
+    <rect x="196" y="32" width="3" height="32" fill="#a9a29a"/>
+    <rect x="271" y="32" width="3" height="32" fill="#a9a29a"/>
+  </g>
+
+  <!-- kalem -->
+  <g transform="translate(1128 866) rotate(-7)">
+    <rect x="0" y="6" width="300" height="24" rx="6" fill="#cfc8bc"/>
+    <rect width="300" height="24" rx="6" fill="#e6c3b4"/>
+    <rect width="44" height="24" rx="6" fill="#a34e3a"/>
+    <path d="M300 0 L340 12 L300 24 Z" fill="#f0d9c6"/>
+    <path d="M326 8 L340 12 L326 16 Z" fill="#20262b"/>
+  </g>
+
+  <!-- ölçü notu -->
+  <g transform="translate(1500 936)">
+    <rect width="250" height="10" rx="5" fill="#cfc8bc"/>
+    <rect width="10" height="26" rx="3" fill="#cfc8bc"/>
+    <rect x="240" width="10" height="26" rx="3" fill="#cfc8bc"/>
+  </g>
+</svg>

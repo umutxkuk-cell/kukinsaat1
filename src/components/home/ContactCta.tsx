@@ -1,6 +1,6 @@
 import { Link } from "@/lib/next-shim";
-import { Image } from "@/lib/next-shim";
 import { Container } from "@/components/ui/Container";
+import { SceneArt } from "@/components/ui/SceneArt";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/data/site";
 
@@ -8,13 +8,7 @@ export function ContactCta() {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
       <div className="absolute inset-0">
-        <Image
-          src="/images/hero-architecture.jpg"
-          alt="Alacakaranlıkta cam ve beton cepheli çağdaş yapı"
-          fill
-          sizes="100vw"
-          className="img-duotone object-cover opacity-40"
-        />
+        <SceneArt kind="skyline" className="absolute inset-0 h-full w-full" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/25" />
       </div>
       <Container className="relative py-24 md:py-36">

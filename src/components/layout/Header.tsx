@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Link } from "@/lib/next-shim";
 import { usePathname } from "@/lib/next-shim";
@@ -7,18 +9,11 @@ import { SocialLinks } from "@/components/brand/Social";
 import { ScrollProgress } from "./ScrollProgress";
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
-  const dark = scrolled || open || !isHome;
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // Ana sayfa eskizi de iç sayfalar gibi açık zemindedir. Bu yüzden logo,
+  // menü ve teklif düğmesi her rotada koyu metinli, okunaklı header kullanır.
 
   useEffect(() => {
     // Açılış perdesi hâlâ ekranı kilitliyse kilidi devralmıyoruz; aksi hâlde
@@ -37,15 +32,11 @@ export function Header() {
     <>
       <ScrollProgress />
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          dark
-            ? "border-b border-line bg-bg/92 shadow-[0_1px_0_rgba(20,20,20,0.04)] backdrop-blur-md text-ink"
-            : "border-b border-white/10 bg-gradient-to-b from-black/45 to-transparent text-white"
-        }`}
+        className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/92 text-ink shadow-[0_1px_0_rgba(20,20,20,0.04)] backdrop-blur-md"
       >
         <div className="container-x flex h-20 items-center justify-between gap-6">
           <Link href="/" aria-label="Kuk İnşaat ana sayfa" onClick={() => setOpen(false)} className="shrink-0 transition-opacity hover:opacity-85">
-            <Logo variant={dark ? "dark" : "light"} />
+            <Logo variant="dark" />
           </Link>
 
           <nav className="hidden items-center gap-9 lg:flex" aria-label="Ana navigasyon">
@@ -68,11 +59,7 @@ export function Header() {
           <div className="hidden items-center gap-5 lg:flex">
             <Link
               href="/iletisim"
-              className={`group inline-flex items-center gap-2 border px-5 py-2.5 text-[0.8rem] font-semibold uppercase tracking-[0.14em] transition-all duration-300 ${
-                dark
-                  ? "border-ink bg-ink text-bg hover:bg-transparent hover:text-ink"
-                  : "border-white/70 text-white hover:bg-white hover:text-ink"
-              }`}
+              className="group inline-flex items-center gap-2 border border-ink bg-ink px-5 py-2.5 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-bg transition-all duration-300 hover:bg-transparent hover:text-ink"
             >
               Teklif Alın
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

@@ -1,7 +1,9 @@
+"use client";
+
 import { useMemo, useState } from "react";
 import { Link } from "@/lib/next-shim";
 import { LogoMark } from "@/components/brand/Logo";
-import { Image } from "@/lib/next-shim";
+import { SceneArt } from "@/components/ui/SceneArt";
 import { projects, getProjectTypes, type Project } from "@/data/projects";
 
 function EmptyState() {
@@ -29,12 +31,10 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <Link href={`/projeler/${project.slug}`} className="group block">
       <div className="relative aspect-[4/3] overflow-hidden">
-        <Image
-          src={project.images[0].src}
-          alt={project.images[0].alt}
-          fill
-          sizes="(max-width:768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        <SceneArt
+          kind="skyline"
+          alt={`${project.name} — ${project.type}`}
+          className="absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-105"
         />
         {project.demo && (
           <span className="absolute left-4 top-4 bg-bg/90 px-3 py-1 text-xs text-muted">

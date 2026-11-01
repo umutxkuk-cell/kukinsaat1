@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" role="img" aria-labelledby="t" fill="none">
+<title id="t">Kafes gövdeli vinç, iskele ve yerleştirilen kirişle aksonometrik betonarme şantiye</title>
+<defs>
+ <linearGradient id="concrete" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#e3ddd3"/><stop offset="1" stop-color="#c8c1b6"/></linearGradient>
+ <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#547485"/><stop offset="1" stop-color="#1f435c"/></linearGradient>
+ <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b5bfbd"/><stop offset="1" stop-color="#8da3a6"/></linearGradient>
+ <pattern id="cut" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="11" height="11" fill="#d6d0c6"/><path d="M0 0v11" stroke="#8d9998" stroke-opacity=".35" stroke-width="1.2"/></pattern>
+ <filter id="soft" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="12"/></filter>
+ <g id="floor" stroke="#23475a" stroke-linejoin="round">
+  <path d="M454 0h490v23H454z" fill="url(#cut)" stroke-width="3.8"/>
+  <path d="M454 0 536-42h490L944 0z" fill="url(#concrete)" stroke-width="2.3"/>
+  <path d="m944 0 82-42v23l-82 42z" fill="url(#shade)" stroke-width="2.3"/>
+  <path d="M459 2h480" stroke="#fcfaf5" stroke-width="1.8" opacity=".85"/>
+ </g>
+ <style>
+  @media (prefers-reduced-motion: no-preference) {
+   .load { animation: hoist 12s ease-in-out infinite; }
+   .cable { transform-box: view-box; transform-origin: 784px 188px; animation: length 12s ease-in-out infinite; }
+  }
+  @keyframes hoist { 0%,100% { transform: translateY(-5px); } 50% { transform: translateY(5px); } }
+  @keyframes length { 0%,100% { transform: scaleY(.938); } 50% { transform: scaleY(1.062); } }
+ </style>
+</defs>
+<!-- An organized site platform; no stock site clutter. -->
+<path d="M177 696h892v111H177z" fill="#d9d1c3"/>
+<path d="M177 696h892" stroke="#8d9088" stroke-width="2.8"/>
+<path d="M185 744c125 13 253-8 398 1 132 9 269-4 477 2m-875 38c135-8 222 8 385 2 115-4 245-3 480-4" stroke="#9e988c" stroke-width="1.5" opacity=".5"/>
+<ellipse cx="732" cy="709" rx="317" ry="20" fill="#5f787e" opacity=".13" filter="url(#soft)"/>
+<!-- Structure occupies its own right-hand ground footprint. -->
+<use href="#floor" transform="translate(0 681)"/>
+<use href="#floor" transform="translate(0 550)"/>
+<use href="#floor" transform="translate(0 419)"/>
+<g fill="url(#cut)" stroke="#25485a" stroke-width="3.3">
+ <path d="M484 573h26v108h-26zm190 0h26v108h-26zm190 0h26v108h-26z"/>
+ <path d="M484 442h26v108h-26zm190 0h26v108h-26zm190 0h26v108h-26z"/>
+ <path d="M484 340h26v79h-26zm190 0h26v79h-26zm190 0h26v79h-26z"/>
+</g>
+<!-- Columns and slab edges recede in one consistent axonometric direction. -->
+<g fill="url(#shade)" stroke="#52717d" stroke-width="1.4"><path d="m510 340 11-6v79l-11 6zm190 0 11-6v79l-11 6zm190 0 11-6v79l-11 6zM510 442l11-6v108l-11 6zm190 0 11-6v108l-11 6zm190 0 11-6v108l-11 6z"/></g>
+<g stroke="#f9f7f2" stroke-width="2" opacity=".75"><path d="M486 344v69m190-69v69m190-69v69M486 446v98m190-98v98m190-98v98"/></g>
+<!-- A lightweight, physically tied scaffold: vertical tubes, ledgers, braces. -->
+<g stroke="#355a6a" stroke-width="3" stroke-linecap="square"><path d="M403 322v374m42-374v374M403 322h42m-42 74h42m-42 74h42m-42 74h42m-42 74h42m-42 74h42"/></g>
+<g stroke="#688b96" stroke-width="1.9" opacity=".82"><path d="m403 396 42 74m0-74-42 74m0 74 42 74m0-74-42 74M403 322l42 74m0-74-42 74"/></g>
+<g fill="#637f88" stroke="#355a6a" stroke-width="1.2"><path d="M395 465h58v7h-58zM395 539h58v7h-58zM395 613h58v7h-58zM395 687h58v7h-58z"/></g>
+<path d="M445 387h37m-37 151h37m-37 146h37" stroke="#476879" stroke-width="2.4"/>
+<!-- Incomplete top columns: visible rebar strands are anchored to each member. -->
+<g stroke="#697a77" stroke-width="2.4" stroke-linecap="round"><path d="M489 340v-52m7 52v-65m8 65v-53M679 340v-52m7 52v-65m8 65v-53M869 340v-52m7 52v-65m8 65v-53"/></g>
+<!-- One partial wall and one completed lower glazing bay show construction progress. -->
+<path d="M522 576h138v96H522z" fill="url(#concrete)" stroke="#536c75" stroke-width="2.3"/>
+<path d="M543 598h76v52h-76z" fill="#ebeeea" stroke="#668b98" stroke-width="2.1"/>
+<path d="M711 577h151v94H711z" fill="#c0d5d9" fill-opacity=".53" stroke="#557d8b" stroke-width="2.4"/>
+<path d="M784 579v89" stroke="#5e8792" stroke-width="2.1"/>
+<!-- Crane mast, jib and counter-jib: the lattice belongs to the structural chord. -->
+<g fill="url(#steel)" stroke="#234457" stroke-width="2.3" stroke-linejoin="round"><path d="M229 166h45v525h-45z"/><path d="m216 166 35-36 36 36z"/><path d="M250 170 1087 188v18L250 200z"/><path d="m250 177-134 21v17l134-17z"/><path d="M98 204h54v42H98z"/><path d="M280 247h82v60h-82z"/></g>
+<g stroke="#b0c8cc" stroke-width="1.9" opacity=".68"><path d="M231 169v520m39-520v520M251 200l836 6"/><path d="m230 224 44 52m0-52-44 52m0 21 44 52m0-52-44 52m0 21 44 52m0-52-44 52m0 21 44 52m0-52-44 52m0 21 44 52m0-52-44 52m0 21 44 52m0-52-44 52m0 21 44 52m0-52-44 52"/></g>
+<!-- A few true triangular jib braces rather than an ornamental wireframe. -->
+<g stroke="#a4bec4" stroke-width="1.5" opacity=".67"><path d="m351 173 77 27m0-25-77 24m77-24 79 27m0-25-79 23m79-23 79 28m0-26-79 25m79-25 79 28m0-25-79 25m79-25 79 27m0-24-79 24m79-24 79 27m0-24-79 24"/></g>
+<path d="M250 130V66m0 20 355 99m-355-99 827 103M250 86 122 204" stroke="#345565" stroke-width="2.1"/>
+<path d="M294 253h53v31h-53z" fill="#a6c0c3" stroke="#36596a" stroke-width="2"/>
+<path d="M98 204h54v10H98zM229 166h45v11h-45z" fill="#a34e3a" opacity=".85"/>
+<!-- The cable grows from the fixed trolley while the load follows it exactly. -->
+<path class="cable" d="M784 188v81" stroke="#284a5c" stroke-width="2.4"/>
+<g class="load">
+ <path d="m777 269 7 12 7-12" stroke="#a34e3a" stroke-width="2.5" stroke-linejoin="round"/>
+ <path d="M784 281v9m0 0-82 25m82-25 82 25" stroke="#395d6b" stroke-width="2"/>
+ <path d="M675 315h218v25H675z" fill="url(#cut)" stroke="#26485a" stroke-width="3.2"/>
+ <path d="M679 318h210" stroke="#f9f8f3" stroke-width="1.8" opacity=".78"/>
+</g>
+<!-- A compact stack of controlled material, not stock-site clutter. -->
+<g fill="#d0c8bb" stroke="#6c8588" stroke-width="1.6"><path d="M130 677h180v17H130zM144 656h159v17H144zM163 635h141v17H163z"/></g>
+</svg>

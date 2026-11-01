@@ -1,171 +1,236 @@
-import { useEffect, useRef } from "react";
+"use client";
+
+import type { ReactNode } from "react";
 import { Link } from "@/lib/next-shim";
 import { COOKIE_PREF_EVENT } from "@/components/layout/CookieConsent";
 import { site } from "@/data/site";
 import { services } from "@/data/services";
-import { LogoMark, LogoStacked } from "@/components/brand/Logo";
+import { LogoMark } from "@/components/brand/Logo";
 import { SocialLinks } from "@/components/brand/Social";
 
-function CompanySignature() {
-  const signatureRef = useRef<HTMLDivElement>(null);
+/* ─────────────────────────── kart ─────────────────────────── */
 
-  useEffect(() => {
-    const signature = signatureRef.current;
-    if (!signature) return;
-    if (typeof IntersectionObserver === "undefined") {
-      signature.classList.add("is-visible");
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          signature.classList.add("is-visible");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(signature);
-    return () => observer.disconnect();
-  }, []);
-
+function Card({
+  kicker,
+  title,
+  children,
+  className = "",
+  delay = 0,
+  accent = "cool",
+}: {
+  kicker: string;
+  title: string;
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  accent?: "cool" | "warm";
+}) {
   return (
-    <div ref={signatureRef} className="company-signature border-t border-white/10 py-10 md:py-12">
-      <div className="grid gap-7 md:grid-cols-12 md:items-center md:gap-12">
-        <div className="company-signature-brand flex items-center gap-4 md:col-span-4">
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center border border-white/15 bg-white/[0.03]">
-            <LogoMark variant="light" className="h-8 w-auto opacity-85" />
-          </span>
-          <div>
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-bg/50">
-              Şirket Ünvanı
-            </p>
-            <p className="mt-2 font-display text-base font-semibold leading-none text-bg">
-              Kuk İnşaat
-            </p>
-          </div>
-        </div>
+    <div
+      style={{ animationDelay: `${delay}ms` }}
+      data-accent={accent}
+      className={`footer-card relative flex h-full flex-col overflow-hidden border border-white/[0.09] bg-white/[0.04] p-7 backdrop-blur-xl md:p-8 ${className}`}
+    >
+      <span aria-hidden="true" className="footer-card-glow" />
+      <span aria-hidden="true" className="footer-card-edge" />
 
-        <div className="md:col-span-8 md:border-l md:border-white/10 md:pl-10">
-          <p className="company-signature-name text-balance break-words font-display text-[clamp(0.95rem,1.35vw,1.15rem)] font-semibold leading-relaxed tracking-[0.005em] text-bg/90">
-            {site.legalName}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="footer-kicker">
+            <span aria-hidden="true" className="footer-kicker-dot" />
+            {kicker}
           </p>
-          <div className="company-signature-meta mt-3 flex flex-col gap-1.5 text-[0.66rem] uppercase tracking-[0.16em] text-bg/40 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-1">
-            <span>Mersis No: {site.mersisNo}</span>
-            <span aria-hidden="true" className="hidden h-3 w-px self-center bg-white/15 sm:block" />
-            <span>{site.registry}</span>
-            <span aria-hidden="true" className="hidden h-3 w-px self-center bg-white/15 sm:block" />
-            <span>{site.taxOffice}</span>
-          </div>
-          <span
-            aria-hidden="true"
-            className="company-signature-rule mt-5 block h-px w-full max-w-sm origin-right bg-gradient-to-r from-accent-soft/70 to-transparent md:ml-auto"
-          />
+          <h3 className="mt-2.5 font-display text-[1.08rem] font-semibold tracking-[-0.01em] text-white">
+            {title}
+          </h3>
         </div>
       </div>
+
+      <div className="mt-6 flex-1">{children}</div>
     </div>
   );
 }
 
+function InfoRow({ label, value, href }: { label: string; value: string; href?: string }) {
+  const external = href?.startsWith("http");
+  const inner = (
+    <>
+      <span className="footer-row-label">{label}</span>
+      <span className="footer-row-value">{value}</span>
+    </>
+  );
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noreferrer" : undefined}
+        className="footer-row footer-row-link"
+      >
+        {inner}
+      </a>
+    );
+  }
+  return <div className="footer-row">{inner}</div>;
+}
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/* ─────────────────────────── footer ─────────────────────────── */
+
 export function Footer() {
   return (
-    <footer className="bg-ink text-bg">
-      <div className="container-x pb-10 pt-20">
-        <div className="flex flex-col items-start justify-between gap-10 border-b border-white/10 pb-14 lg:flex-row lg:items-end">
-          <div>
-            <p className="text-xs uppercase tracking-[0.32em] text-bg/50">Bir projeniz mi var?</p>
-            <Link href="/iletisim" className="group mt-4 inline-block">
-              <span className="font-display text-[clamp(2.4rem,5vw,4.5rem)] leading-none">
+    <footer className="relative isolate overflow-hidden bg-ink text-bg">
+      {/* Atmosfer: yumuşak ışık, desen yok */}
+      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div className="footer-glow absolute -top-40 left-[8%] h-[30rem] w-[30rem] rounded-full bg-[#1f435c]/50 blur-[120px]" />
+        <div className="footer-glow footer-glow-slow absolute -bottom-40 right-[4%] h-[26rem] w-[26rem] rounded-full bg-accent-warm/20 blur-[120px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-[#0c1115]" />
+      </div>
+
+      <div className="container-x relative pb-10 pt-20 md:pt-24">
+        {/* ── Çağrı ── */}
+        <div className="footer-cta grid gap-10 border-b border-white/10 pb-14 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <p className="footer-kicker">
+              <span aria-hidden="true" className="footer-kicker-dot" />
+              Bir projeniz mi var?
+            </p>
+            <Link href="/iletisim" className="group mt-5 inline-block">
+              <span className="font-display text-[clamp(2.2rem,4.6vw,4rem)] leading-[1.02] tracking-[-0.03em]">
                 Birlikte inşa edelim
-                <span className="ml-3 inline-block text-accent-soft transition-transform duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2 group-hover:-translate-y-1">↗</span>
+                <span className="ml-3 inline-block text-accent-soft transition-transform duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2 group-hover:-translate-y-1">
+                  ↗
+                </span>
               </span>
+              <span className="mt-4 block h-px w-0 bg-accent-soft/70 transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full" />
             </Link>
           </div>
-          <a href={site.contact.emailHref} className="border border-white/25 px-6 py-3 text-sm tracking-wide transition-colors hover:bg-white hover:text-ink">
-            {site.contact.email}
-          </a>
+
+          <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
+            <a
+              href={site.contact.phoneHref}
+              className="footer-btn footer-btn-ghost"
+            >
+              <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M4 3.5h3l1.3 3.4-1.9 1.3a10 10 0 0 0 5.4 5.4l1.3-1.9 3.4 1.3v3a1.7 1.7 0 0 1-1.9 1.7A14.4 14.4 0 0 1 2.3 5.4 1.7 1.7 0 0 1 4 3.5Z" strokeLinejoin="round" />
+              </svg>
+              {site.contact.phone}
+            </a>
+            <a href={site.contact.emailHref} className="footer-btn footer-btn-solid">
+              <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <rect x="2.4" y="4.4" width="15.2" height="11.2" />
+                <path d="m3 5.2 7 5.3 7-5.3" />
+              </svg>
+              {site.contact.email}
+            </a>
+          </div>
         </div>
 
-        <div className="grid gap-12 py-14 md:grid-cols-12">
-          <div className="md:col-span-4">
-            <LogoStacked variant="light" className="items-start" />
-            <p className="mt-5 text-sm font-semibold uppercase tracking-[0.3em] text-accent-soft">
-              Kaliteyle Kurulur
-            </p>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-bg/65">{site.description}</p>
-            <div className="mt-8">
-              <p className="text-xs uppercase tracking-[0.24em] text-bg/45">Takip edin</p>
-              <div className="mt-4">
-                <SocialLinks variant="footer" />
-              </div>
+        {/* ── Kartlar: 12 kolon, iki eşit satır ── */}
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-12">
+          {/* Satır 1 */}
+          <Card kicker="Kuk İnşaat" title="Kaliteyle Kurulur" className="lg:col-span-4" delay={0}>
+            <div className="flex items-center gap-4">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center border border-white/15 bg-white/[0.05]">
+                <LogoMark variant="light" className="h-8 w-auto opacity-90" />
+              </span>
+              <span className="flex flex-col leading-none">
+                <span className="font-display text-[1.3rem] font-extrabold tracking-[0.16em] text-white">KUK</span>
+                <span className="mt-1.5 text-[0.54rem] font-semibold uppercase tracking-[0.5em] text-bg/55">İnşaat</span>
+              </span>
             </div>
-          </div>
+            <p className="mt-6 text-[0.84rem] leading-[1.75] text-bg/62">
+              Kocaeli merkezli inşaat ve mühendislik firması. Konut, ticari ve karma kullanımlı
+              yapılarda projelendirmeden teslime kadar tek elden hizmet.
+            </p>
+            <div className="mt-auto pt-7">
+              <p className="footer-row-label mb-3">Takip edin</p>
+              <SocialLinks variant="footer" />
+            </div>
+          </Card>
 
-          <div className="md:col-span-2">
-            <p className="text-xs uppercase tracking-[0.24em] text-bg/45">Sayfalar</p>
-            <ul className="mt-5 space-y-3">
-              {site.nav.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-bg/75 transition-colors hover:text-white">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Card kicker="Kurumsal" title="Şirket Bilgileri" className="lg:col-span-4" delay={90}>
+            <div className="footer-rows">
+              <InfoRow label="Ünvan" value={site.legalName} />
+              <InfoRow label="MERSİS" value={site.mersisNo} />
+              <InfoRow label="Vergi No" value={`${site.taxNo} · ${site.taxOffice}`} />
+              <InfoRow label="Sicil" value={site.registry} />
+              <InfoRow label="KEP" value={site.kepAddress} href={`mailto:${site.kepAddress}`} />
+            </div>
+          </Card>
 
-          <div className="md:col-span-3">
-            <p className="text-xs uppercase tracking-[0.24em] text-bg/45">Hizmetler</p>
-            <ul className="mt-5 space-y-3">
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <Link href={`/hizmetler/${s.slug}`} className="text-sm text-bg/75 transition-colors hover:text-white">
-                    {s.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="md:col-span-3">
-            <p className="text-xs uppercase tracking-[0.24em] text-bg/45">İletişim</p>
-            <address className="mt-5 space-y-4 text-sm not-italic leading-relaxed text-bg/75">
-              <p>{site.contact.address}</p>
-              <p>
-                <a href={site.contact.phoneHref} className="text-white underline-offset-4 hover:underline">
-                  {site.contact.phone}
-                </a>
-              </p>
-              <p>
-                <a href={site.contact.emailHref} className="text-white underline-offset-4 hover:underline">
-                  {site.contact.email}
-                </a>
-              </p>
-              <p>{site.contact.hours}</p>
-              <p>
-                <a href={site.contact.mapsUrl} target="_blank" rel="noreferrer" className="underline-offset-4 hover:underline">
-                  Yol tarifi al →
-                </a>
-              </p>
+          <Card kicker="İletişim" title="Bize Ulaşın" className="lg:col-span-4" delay={180} accent="warm">
+            <address className="footer-rows not-italic">
+              <InfoRow label="Adres" value={site.contact.address} />
+              <InfoRow label="Telefon" value={site.contact.phone} href={site.contact.phoneHref} />
+              <InfoRow label="E-posta" value={site.contact.email} href={site.contact.emailHref} />
+              <InfoRow label="Çalışma" value={site.contact.hours} />
             </address>
-          </div>
+            <a
+              href={site.contact.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="footer-inline-link mt-6"
+            >
+              Yol tarifi al <Arrow />
+            </a>
+          </Card>
+
+          {/* Satır 2 */}
+          <Card kicker="Keşfet" title="Sayfalar" className="lg:col-span-4" delay={120}>
+            <ul className="footer-list">
+              {site.nav.map((item, i) => (
+                <li key={item.href} style={{ animationDelay: `${260 + i * 50}ms` }}>
+                  <Link href={item.href} className="footer-list-link">
+                    <span>{item.label}</span>
+                    <Arrow />
+                  </Link>
+                </li>
+              ))}
+              <li style={{ animationDelay: `${260 + site.nav.length * 50}ms` }}>
+                <Link href="/gizlilik" className="footer-list-link">
+                  <span>Gizlilik &amp; KVKK</span>
+                  <Arrow />
+                </Link>
+              </li>
+            </ul>
+          </Card>
+
+          <Card kicker="Uzmanlık" title="Hizmetlerimiz" className="md:col-span-2 lg:col-span-8" delay={210}>
+            <ul className="footer-list footer-list-2col">
+              {services.map((s, i) => (
+                <li key={s.slug} style={{ animationDelay: `${300 + i * 50}ms` }}>
+                  <Link href={`/hizmetler/${s.slug}`} className="footer-list-link">
+                    <span className="footer-list-index">0{i + 1}</span>
+                    <span className="flex-1">{s.title}</span>
+                    <Arrow />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Card>
         </div>
 
-        <CompanySignature />
-
-        <div className="flex flex-col gap-3 border-t border-white/10 pt-7 text-xs text-bg/45 md:flex-row md:items-center md:justify-between">
+        {/* ── Alt şerit ── */}
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-7 text-[0.72rem] text-bg/42 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Kuk İnşaat. Tüm hakları saklıdır.</p>
           <div className="flex flex-wrap gap-6">
-            <Link href="/gizlilik" className="hover:text-white">Gizlilik &amp; KVKK</Link>
+            <Link href="/gizlilik" className="footer-inline-muted">Gizlilik &amp; KVKK</Link>
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event(COOKIE_PREF_EVENT))}
-              className="hover:text-white"
+              className="footer-inline-muted"
             >
               Çerez Tercihleri
             </button>
-            <Link href="/iletisim" className="hover:text-white">İletişim</Link>
+            <Link href="/iletisim" className="footer-inline-muted">İletişim</Link>
           </div>
         </div>
       </div>

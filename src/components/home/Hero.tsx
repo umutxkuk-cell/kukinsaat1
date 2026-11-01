@@ -1,135 +1,108 @@
-import { useEffect, useRef } from "react";
-import { Image } from "@/lib/next-shim";
+"use client";
+
 import { Link } from "@/lib/next-shim";
 import { site } from "@/data/site";
+import { services } from "@/data/services";
+import { Illustration } from "@/components/ui/Illustration";
 import { SocialLinks } from "@/components/brand/Social";
 import { Magnetic } from "@/components/ui/Magnetic";
 
-/* Ana sayfa görseli markaya özel üretilmiş mimari kompozisyondur.
-   `public/` altından sunulur; böylece derleme ikili dosya bağımlılığı taşımaz. */
-const heroSrc = "/images/hero-architecture.jpg";
-
+/** Ana sayfa: radye temelden parapete kadar görülen yapı kesiti. */
 export function Hero() {
-  const imgRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Azaltılmış hareket tercihinde paralaks tamamen devre dışı.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const el = imgRef.current;
-    if (!el) return;
-
-    // transform/opacity dışında hiçbir özellik değişmez; rAF ile sınırlıdır.
-    let raf = 0;
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      el.style.transform = `translate3d(0, ${window.scrollY * 0.22}px, 0) scale(1.18)`;
-    };
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      raf = requestAnimationFrame(update);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
   return (
-    <section className="relative isolate -mt-20 hero-min-h overflow-hidden bg-ink text-white">
-      <div ref={imgRef} className="absolute inset-0 will-change-transform">
-        <div className="ken-burns relative h-full w-full">
-          <Image
-            src={heroSrc}
-            alt="Mineral tonlarda geometrik beton cephe ve derin petrol mavisi cam yüzeyler"
-            fill
-            priority
-            width={1920}
-            height={1280}
-            sizes="100vw"
-            className="object-cover object-[64%_center] saturate-[0.94]"
-          />
-        </div>
+    <section className="hero-surface relative isolate -mt-20 overflow-hidden border-b border-line bg-bg text-ink">
+      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[67%] md:block" aria-hidden="true">
+        <Illustration page="home" className="h-full w-full object-contain" position="50% 50%" priority decorative />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/92 via-ink/52 to-ink/10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/88 via-ink/10 to-ink/50" />
-      <div className="absolute inset-0 bg-[radial-gradient(130%_90%_at_15%_85%,transparent_35%,rgba(15,17,20,0.58)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-bg via-bg/70 to-transparent md:via-bg/45 md:block" aria-hidden="true" />
 
-      {/* Teknik çizim dokusu — fotoğrafı markanın mühendislik diline bağlar. */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.055] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:120px_120px]"
-        aria-hidden="true"
-      />
+      {/* Mobilde kesitin radye temeli ve çatı ölçüsü birlikte görünür. */}
+      <div className="relative h-80 overflow-hidden border-b border-line/60 pt-20 md:hidden" aria-hidden="true">
+        <Illustration page="home" className="h-full w-full object-contain" position="50% 50%" priority decorative />
+      </div>
 
-      {/* Görselin sağındaki mimari formu nefes alacak şekilde açık bırakan ince çerçeve. */}
-      <span className="pointer-events-none absolute bottom-12 right-[var(--gutter)] hidden h-28 w-28 border-b border-r border-white/25 lg:block" aria-hidden="true" />
-      <span className="pointer-events-none absolute right-[calc(var(--gutter)+1.25rem)] top-1/2 hidden -translate-y-1/2 lg:block">
-        <span className="vertical-text-up text-[0.6rem] font-semibold uppercase tracking-[0.42em] text-white/45">
-          Kocaeli · 40.7255° N / 29.9999° E
-        </span>
-      </span>
+      <div className="container-x relative flex flex-col justify-start pb-16 pt-8 md:min-h-[calc(100svh-5rem)] md:justify-center md:pb-20 md:pt-24">
+        <div className="max-w-3xl">
+          <div className="hero-anim hero-anim-1 flex items-center gap-3.5">
+            <span className="h-1.5 w-1.5 bg-accent-warm" aria-hidden="true" />
+            <p className="text-[0.6rem] font-semibold uppercase tracking-[0.26em] text-accent sm:text-[0.64rem] sm:tracking-[0.36em]">
+              {site.name} · {site.locationLabel}
+            </p>
+          </div>
 
-      <div className="container-x relative flex hero-min-h flex-col justify-end pb-14 pt-36">
-        <div className="hero-anim hero-anim-1 flex items-center gap-4">
-          <span className="h-px w-12 bg-accent-soft" />
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.34em] text-white/85">
-            {site.name}
-          </p>
-        </div>
+          <h1
+            aria-label="Sağlam yapılar, doğru mühendislik ile yükselir."
+            className="mt-5 text-[clamp(1.85rem,4.8vw,4.3rem)] font-bold leading-[1.05] tracking-[-0.038em] text-ink md:mt-6"
+          >
+            <span className="hero-anim hero-anim-2 block">Sağlam yapılar,</span>
+            <span className="hero-anim hero-anim-3 block text-accent">doğru mühendislik</span>
+            <span className="hero-anim hero-anim-3 block">ile yükselir.</span>
+          </h1>
 
-        <h1
-          aria-label="Sağlam yapılar, doğru mühendislik ile yükselir."
-          className="mt-8 max-w-4xl text-[clamp(2.6rem,6vw,4.75rem)] font-bold leading-[1.04] tracking-[-0.03em]"
-        >
-          <span className="hero-anim hero-anim-2 block">Sağlam yapılar,</span>{" "}
-          <span className="hero-anim hero-anim-3 block text-accent-soft">doğru mühendislik</span>{" "}
-          <span className="hero-anim hero-anim-3 block">ile yükselir.</span>
-        </h1>
+          <div className="hero-anim hero-anim-4 mt-7 flex items-center gap-4">
+            <span className="h-px w-14 bg-line-2/70" aria-hidden="true" />
+            <span className="text-[0.68rem] font-semibold uppercase tracking-[0.32em] text-muted">
+              Kaliteyle Kurulur
+            </span>
+          </div>
 
-        <div className="hero-anim hero-anim-4 mt-6 flex items-center gap-3">
-          <span className="h-px w-8 bg-white/40" />
-          <span className="text-sm font-semibold uppercase tracking-[0.3em] text-white/90">
-            Kaliteyle Kurulur
-          </span>
-        </div>
-
-        <div className="mt-9 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <p className="hero-anim hero-anim-4 max-w-xl text-base leading-relaxed text-white/82 md:text-lg">
-            Kuk İnşaat, Kocaeli merkezli bir inşaat ve mühendislik firmasıdır.
-            Konut, ticari ve karma kullanımlı yapılarda; projenin değerlendirilmesinden
-            teslimine kadar her aşamayı tek elden, planlı bir biçimde yürütürüz.
+          <p className="hero-anim hero-anim-4 mt-5 max-w-xl text-[0.9rem] leading-[1.75] text-ink/75 md:mt-7 md:text-[1.05rem]">
+            Kuk İnşaat, Kocaeli merkezli bir inşaat ve mühendislik firmasıdır. Konut, ticari ve
+            karma kullanımlı yapılarda projenin değerlendirilmesinden teslimine kadar her aşamayı
+            tek elden yürütürüz.
           </p>
 
-          <div className="hero-anim hero-anim-5 flex flex-wrap items-center gap-4">
+          <div className="hero-anim hero-anim-5 mt-6 flex flex-wrap items-center gap-3 md:mt-8">
             <Magnetic>
-              <Link href="/hizmetler" className="btn-sheen group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-ink hover:text-white">
+              <Link
+                href="/hizmetler"
+                className="btn-sheen group inline-flex items-center gap-3 bg-ink px-7 py-4 text-[0.74rem] font-semibold uppercase tracking-[0.15em] text-bg transition-colors hover:bg-accent"
+              >
                 Hizmetlerimizi Keşfedin
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
             </Magnetic>
             <Magnetic>
-              <Link href="/iletisim" className="group inline-flex items-center gap-3 border border-white/60 px-7 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-ink">
+              <Link
+                href="/iletisim"
+                className="group inline-flex items-center gap-3 border border-ink/25 bg-white/20 px-7 py-4 text-[0.74rem] font-semibold uppercase tracking-[0.15em] text-ink transition-colors hover:border-ink hover:bg-white"
+              >
                 Bize Ulaşın
               </Link>
             </Magnetic>
           </div>
         </div>
 
-        <div className="hero-anim hero-anim-5 mt-14 flex items-center justify-between gap-4 border-t border-white/20 pt-6 text-[0.7rem] uppercase tracking-[0.24em] text-white/65">
-          <div className="flex items-center gap-6">
-            <span className="hidden sm:block">İnşaat · Proje · Mühendislik</span>
-            <SocialLinks variant="ghost" className="text-white/80" />
+        <div className="hero-anim hero-anim-5 mt-8 hidden gap-8 border-t border-line pt-5 sm:grid sm:grid-cols-3 md:mt-10 md:pt-6">
+          <div>
+            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.26em] text-muted/75">Merkez</p>
+            <p className="mt-2 text-[0.82rem] leading-relaxed text-ink/80">Başiskele — Kocaeli</p>
           </div>
-          <span className="flex items-center gap-3">
-            <span className="hidden h-9 w-6 items-start justify-center rounded-full border border-white/35 p-1.5 sm:flex">
-              <span className="scroll-dot h-2 w-1 rounded-full bg-white" />
-            </span>
-            <span className="hidden md:inline">Keşfetmek için kaydırın</span>
-          </span>
+          <div className="sm:border-l sm:border-line sm:pl-8">
+            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.26em] text-muted/75">Uzmanlık</p>
+            <p className="mt-2 text-[0.82rem] leading-relaxed text-ink/80">İnşaat · Proje · Mühendislik</p>
+          </div>
+          <div className="sm:border-l sm:border-line sm:pl-8">
+            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.26em] text-muted/75">Çalışma</p>
+            <p className="mt-2 text-[0.82rem] leading-relaxed text-ink/80">Pazartesi–Cumartesi, 09:00–18:00</p>
+          </div>
+        </div>
+
+        <ul className="hero-anim hero-anim-5 -mx-5 mt-6 flex gap-1.5 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 md:mt-7 md:gap-2" aria-label="Hizmet alanları">
+          {services.map((s, i) => (
+            <li key={s.slug} className="hero-chip shrink-0" style={{ animationDelay: `${520 + i * 70}ms` }}>
+              <Link href={`/hizmetler/${s.slug}`} className="hero-chip-link">
+                <span className="hero-chip-dot" aria-hidden="true" />
+                {s.shortTitle}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="hero-anim hero-anim-5 mt-7 flex flex-col gap-4 border-t border-line pt-5 text-[0.62rem] uppercase tracking-[0.2em] text-muted sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-t-0 sm:pt-0 sm:tracking-[0.24em]">
+          <span className="sm:hidden">İnşaat · Proje · Mühendislik</span>
+          <span className="hidden sm:inline">Kuk İnşaat</span>
+          <SocialLinks variant="ghost" className="text-ink/70" />
         </div>
       </div>
     </section>

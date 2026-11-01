@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>Tamamlanmış yapılar silueti ve alacakaranlıkta aydınlanan cepheler — teslim edilmiş projeler</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#fbf7f0"/><stop offset="0.35" stop-color="#f6ede1"/><stop offset="0.7" stop-color="#e8ddd0"/><stop offset="1" stop-color="#d8cec0"/>
+    </linearGradient>
+    <radialGradient id="sunset" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f3c9a3" stop-opacity="0.85"/><stop offset="0.6" stop-color="#f3d7bd" stop-opacity="0.3"/><stop offset="1" stop-color="#f3d7bd" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="b1" x1="0" y1="0" x2="0.9" y2="0.4">
+      <stop offset="0" stop-color="#d8d2c6"/><stop offset="1" stop-color="#ada695"/>
+    </linearGradient>
+    <linearGradient id="b2" x1="0" y1="0" x2="0.9" y2="0.4">
+      <stop offset="0" stop-color="#c9cdc9"/><stop offset="1" stop-color="#9aa39d"/>
+    </linearGradient>
+    <linearGradient id="b3" x1="0" y1="0" x2="0.9" y2="0.4">
+      <stop offset="0" stop-color="#e6dcc9"/><stop offset="1" stop-color="#b9a88d"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#71929f"/><stop offset="0.5" stop-color="#476676"/><stop offset="1" stop-color="#2f4b5a"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6dcb9"/><stop offset="1" stop-color="#e3b98d"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#dbd2c1"/><stop offset="1" stop-color="#b8ae9a"/>
+    </linearGradient>
+    <filter id="b16" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="b2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="hazeV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f2e8" stop-opacity="0.55"/>
+      <stop offset="0.42" stop-color="#f7f2e8" stop-opacity="0.18"/>
+      <stop offset="0.72" stop-color="#f7f2e8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="vignette" x1="0.5" y1="0.4" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#8d8272" stop-opacity="0"/>
+      <stop offset="0.82" stop-color="#8d8272" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#8d8272" stop-opacity="0.16"/>
+    </linearGradient>
+    <radialGradient id="vigX" cx="0.5" cy="0.5" r="0.72">
+      <stop offset="0.55" stop-color="#8d8272" stop-opacity="0"/>
+      <stop offset="1" stop-color="#8d8272" stop-opacity="0.12"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <circle cx="1120" cy="470" r="360" fill="url(#sunset)"/>
+
+  <!-- uzak siluet -->
+  <g filter="url(#b2)" opacity="0.5">
+    <g fill="#b9c3c4">
+      <rect x="120" y="560" width="120" height="380"/><rect x="268" y="620" width="90" height="320"/>
+      <rect x="1330" y="600" width="110" height="340"/><rect x="1470" y="650" width="90" height="290"/>
+    </g>
+  </g>
+
+  <!-- SOL YAPI: taş cepheli, sıcak ışıklı -->
+  <g>
+    <rect x="250" y="380" width="330" height="560" fill="url(#b3)"/>
+    <rect x="236" y="366" width="358" height="20" fill="#f8f1e2"/>
+    <g fill="url(#warm)" opacity="0.75">
+      <rect x="292" y="440" width="70" height="66"/><rect x="392" y="440" width="70" height="66"/><rect x="492" y="440" width="60" height="66"/>
+      <rect x="292" y="548" width="70" height="66"/><rect x="392" y="548" width="70" height="66"/><rect x="492" y="548" width="60" height="66"/>
+      <rect x="292" y="656" width="70" height="66"/><rect x="392" y="656" width="70" height="66"/><rect x="492" y="656" width="60" height="66"/>
+    </g>
+    <rect x="292" y="772" width="228" height="120" fill="#3d5a68" opacity="0.9"/>
+    <rect x="380" y="772" width="14" height="120" fill="#9db4bf" opacity="0.6"/>
+    <g stroke="#bfae94" stroke-width="2" opacity="0.5"><path d="M250 508 H580"/><path d="M250 618 H580"/><path d="M250 726 H580"/></g>
+  </g>
+
+  <!-- ORTA YAPI: beton + cam, en yüksek -->
+  <g>
+    <rect x="620" y="250" width="330" height="690" fill="url(#b1)"/>
+    <rect x="606" y="234" width="358" height="20" fill="#f8f1e2"/>
+    <g fill="url(#glass)" opacity="0.92">
+      <rect x="652" y="296" width="82" height="94"/><rect x="752" y="296" width="82" height="94"/><rect x="852" y="296" width="82" height="94"/>
+      <rect x="652" y="418" width="82" height="94"/><rect x="752" y="418" width="82" height="94"/><rect x="852" y="418" width="82" height="94"/>
+      <rect x="652" y="540" width="82" height="94"/><rect x="752" y="540" width="82" height="94"/><rect x="852" y="540" width="82" height="94"/>
+      <rect x="652" y="662" width="82" height="94"/><rect x="752" y="662" width="82" height="94"/><rect x="852" y="662" width="82" height="94"/>
+    </g>
+    <g fill="url(#warm)" opacity="0.85">
+      <rect x="752" y="540" width="82" height="94"/><rect x="852" y="662" width="82" height="94"/>
+    </g>
+    <g fill="#d5e4ea" opacity="0.4">
+      <rect x="652" y="296" width="82" height="5"/><rect x="752" y="296" width="82" height="5"/><rect x="852" y="296" width="82" height="5"/>
+    </g>
+    <!-- kule üstü terracotta bant -->
+    <rect x="620" y="250" width="330" height="8" fill="#a34e3a"/>
+  </g>
+
+  <!-- SAĞ YAPI: yatay bantlı -->
+  <g>
+    <rect x="990" y="440" width="300" height="500" fill="url(#b2)"/>
+    <rect x="976" y="424" width="328" height="20" fill="#f8f1e2"/>
+    <g fill="url(#warm)" opacity="0.7">
+      <rect x="1022" y="492" width="236" height="44"/><rect x="1022" y="576" width="236" height="44"/>
+      <rect x="1022" y="660" width="236" height="44"/>
+    </g>
+    <g fill="url(#glass)" opacity="0.7">
+      <rect x="1022" y="744" width="236" height="44"/>
+    </g>
+    <g stroke="#a9b1ac" stroke-width="2" opacity="0.6">
+      <path d="M990 566 H1290"/><path d="M990 650 H1290"/><path d="M990 734 H1290"/>
+    </g>
+  </g>
+
+  <!-- zemin / meydan -->
+  <rect x="0" y="940" width="1600" height="60" fill="url(#ground)"/>
+  <path d="M0 940 H1600" stroke="#b7ab96" stroke-width="2" opacity="0.65"/>
+  <g stroke="#b7ab96" stroke-width="1.2" opacity="0.35"><path d="M0 968 H1600"/></g>
+
+  <!-- ağaç siluetleri: ölçek -->
+  <g fill="#8d977f" opacity="0.4">
+    <circle cx="180" cy="884" r="34"/><circle cx="228" cy="900" r="26"/>
+    <circle cx="1372" cy="888" r="32"/><circle cx="1420" cy="902" r="24"/>
+  </g>
+
+  <g opacity="0.22">
+    <polygon points="1480,150 1514,170 1514,210 1480,230 1446,210 1446,170" fill="none" stroke="#1f435c" stroke-width="2"/>
+    <polygon points="1480,174 1502,187 1502,207 1480,220 1458,207 1458,187" fill="none" stroke="#a34e3a" stroke-width="2"/>
+  </g>
+  <!-- atmosferik derinlik: uzak düzlemde hafif sis -->
+  <rect x="0" y="0" width="1600" height="1000" fill="url(#hazeV)" opacity="0.55"/>
+  <!-- ön plan gölgesi: zemine yakın koyulaşma -->
+  <rect x="0" y="0" width="1600" height="1000" fill="url(#vignette)"/>
+  <!-- gren -->
+  <rect width="1600" height="1000" filter="url(#grain)" opacity="0.05"/>
+</svg>

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>Beş hizmet madalyonu: uygulama, mühendislik, koordinasyon, süreç yönetimi ve danışmanlık</title>
+  <defs>
+    <linearGradient id="s-bg" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#f5f2ec"/>
+      <stop offset="0.55" stop-color="#eeeae2"/>
+      <stop offset="1" stop-color="#e5dfd4"/>
+    </linearGradient>
+    <linearGradient id="s-navy" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#2b5471"/>
+      <stop offset="1" stop-color="#1a3950"/>
+    </linearGradient>
+    <linearGradient id="s-terra" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bd6d55"/>
+      <stop offset="1" stop-color="#9c4a37"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#s-bg)"/>
+  <circle cx="1450" cy="520" r="400" fill="#e4d6cb" opacity="0.5"/>
+  <circle cx="1260" cy="820" r="230" fill="#dbe4ea" opacity="0.6"/>
+
+  <!-- 1 · İnşaat ve yapı uygulamaları: baret -->
+  <g transform="translate(1246 344)">
+    <circle r="98" fill="#ffffff" opacity="0.55" transform="translate(6 8)"/>
+    <circle r="98" fill="#faf8f4" stroke="#e2dbcf" stroke-width="2"/>
+    <g transform="translate(0 4) scale(1.24)">
+      <path d="M-34 6 C-34 -20 -20 -34 0 -34 C20 -34 34 -20 34 6 Z" fill="url(#s-navy)"/>
+      <path d="M-46 6 H46 A11 11 0 0 1 46 28 H-46 A11 11 0 0 1 -46 6 Z" fill="#173751"/>
+    </g>
+  </g>
+
+  <!-- 2 · Mühendislik: pergel ile çizilen yay -->
+  <g transform="translate(1655 366)">
+    <circle r="92" fill="#ffffff" opacity="0.55" transform="translate(6 8)"/>
+    <circle r="92" fill="#faf8f4" stroke="#e2dbcf" stroke-width="2"/>
+    <path d="M-40 26 A 44 44 0 0 0 40 26" fill="none" stroke="#a34e3a" stroke-width="5" opacity="0.55" stroke-linecap="round"/>
+    <g stroke="#1f435c" stroke-width="8" stroke-linecap="round" fill="none">
+      <path d="M0 -30 L-30 22"/>
+      <path d="M0 -30 L30 22"/>
+    </g>
+    <circle cx="0" cy="-30" r="9" fill="#a34e3a"/>
+    <circle cx="0" cy="-30" r="16" fill="none" stroke="#1f435c" stroke-width="5"/>
+    <circle cx="-30" cy="22" r="4" fill="#1f435c"/>
+    <circle cx="30" cy="22" r="4" fill="#1f435c"/>
+  </g>
+
+  <!-- 3 · Proje geliştirme ve koordinasyon: birleşen iki yaprak (vurgulu) -->
+  <g transform="translate(1446 520)">
+    <circle r="122" fill="#b0aaa0" opacity="0.28" transform="translate(7 10)"/>
+    <circle r="122" fill="url(#s-terra)"/>
+    <circle r="122" fill="none" stroke="#f3ddd3" stroke-width="3" opacity="0.4"/>
+    <g>
+      <rect x="-30" y="-38" width="52" height="72" rx="8" fill="#f7ece5" opacity="0.6" transform="rotate(-12)"/>
+      <rect x="-16" y="-32" width="54" height="76" rx="8" fill="#fdfbf7" transform="rotate(8)"/>
+      <g stroke="#a34e3a" stroke-width="5" stroke-linecap="round" opacity="0.55">
+        <path d="M-4 -8 H24" transform="rotate(8)"/>
+        <path d="M-4 8 H20" transform="rotate(8)"/>
+        <path d="M-4 24 H26" transform="rotate(8)"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- 4 · Proje ve uygulama süreçlerinin yönetimi: plan kartı -->
+  <g transform="translate(1262 728)">
+    <circle r="92" fill="#ffffff" opacity="0.55" transform="translate(6 8)"/>
+    <circle r="92" fill="#faf8f4" stroke="#e2dbcf" stroke-width="2"/>
+    <g>
+      <rect x="-40" y="-34" width="80" height="66" rx="9" fill="none" stroke="#1f435c" stroke-width="7"/>
+      <rect x="-28" y="-18" width="32" height="8" rx="4" fill="#1f435c"/>
+      <rect x="-28" y="-2" width="48" height="8" rx="4" fill="#a34e3a"/>
+      <rect x="-28" y="14" width="24" height="8" rx="4" fill="#1f435c" opacity="0.45"/>
+    </g>
+  </g>
+
+  <!-- 5 · Teknik danışmanlık: büyüteç -->
+  <g transform="translate(1690 706)">
+    <circle r="92" fill="#ffffff" opacity="0.55" transform="translate(6 8)"/>
+    <circle r="92" fill="#faf8f4" stroke="#e2dbcf" stroke-width="2"/>
+    <g transform="translate(-6 -6)">
+      <circle cx="0" cy="0" r="26" fill="none" stroke="#1f435c" stroke-width="9"/>
+      <path d="M19 19 L42 42" stroke="#a34e3a" stroke-width="12" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>
