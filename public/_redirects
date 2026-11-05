@@ -34,3 +34,6 @@
 # ── Yazım/çoğul varyantları ──
 /hizmet              /hizmetler/       301
 /proje               /projeler/        301
+
+# SPA fallback for Vite single-file build (client-side router handles all routes)
+/* /index.html 200
