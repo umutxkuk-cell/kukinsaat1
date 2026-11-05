@@ -1,38 +1,9 @@
 @import "tailwindcss";
 
-/* Self-hosted Google Fonts (same font files; avoids a third-party font request). */
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("/fonts/inter-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("/fonts/inter-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 600 800;
-  font-display: swap;
-  src: url("/fonts/manrope-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 600 800;
-  font-display: swap;
-  src: url("/fonts/manrope-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+/* Kendi barındırdığımız değişken fontlar:
+   Archivo (başlık) — endüstriyel, geniş omuzlu grotesk; poster gücünde başlıklar.
+   IBM Plex Sans (gövde) — mühendislik dokümantasyonu geleneğinden gelen, teknik
+   ve son derece okunur bir metin yüzü. İkisi de tek dosyada tam ağırlık aralığı. */
 
 @theme {
   /* Mineral palet: kırık beyaz zemin + grafit metin + derin mühendislik mavisi
@@ -63,9 +34,9 @@
   --color-mineral: #e5e1d9;     /* açık taş: yasal metin kutuları / zebra satır */
   --color-paper: #ffffff;       /* belge zemini: kart ve tablo hücreleri */
   --color-hivis: #a34e3a;       /* madde işaretleri: terracotta */
-  /* İki font ailesi: Manrope (başlık) + Inter (gövde/arayüz) */
-  --font-display: var(--font-manrope), system-ui, sans-serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  /* İki font ailesi: Archivo (başlık) + IBM Plex Sans (gövde/arayüz) */
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+  --font-sans: var(--font-plex), system-ui, sans-serif;
 }
 
 :root {
@@ -122,20 +93,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "ss01", "cv01", "cv11";
-  letter-spacing: -0.006em;
+  letter-spacing: 0.002em;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.028em;
-  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  word-spacing: 0.08em;
+  line-height: 1.12;
 }
 
-/* Tek sans font ailesinde (Manrope) faux-italic'i önle; dekoratif vurgular
-   ton farkıyla (em = grafit) ayrışır, eğik yazıyla değil. */
+/* Yalnızca romen kesimler barındırılıyor; faux-italic üretilmesin. Dekoratif
+   vurgular ton farkıyla (em = grafit) ayrışır, eğik yazıyla değil. */
 em,
 .italic {
   font-style: normal;
@@ -493,6 +464,23 @@ header.text-ink .link-sweep[data-active="true"] { color: var(--color-accent-warm
 
 .consent-fab { animation: consent-fab-in 420ms var(--ease-out) 200ms both; }
 @keyframes consent-fab-in { from { opacity: 0; transform: translateY(10px); } }
+.consent-fab__label {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  transition: max-width 260ms var(--ease-out), margin 260ms var(--ease-out), opacity 180ms ease;
+}
+.consent-fab:hover .consent-fab__label,
+.consent-fab:focus-visible .consent-fab__label {
+  max-width: 10rem;
+  margin-left: .65rem;
+  opacity: 1;
+}
 
 /* Üst kenar çizgisi: petrol mavisi zemin üzerinde yavaşça dolaşan ışık */
 .consent-edge {
@@ -517,6 +505,29 @@ header.text-ink .link-sweep[data-active="true"] { color: var(--color-accent-warm
 /* Özet ↔ tercihler içerik değişimi */
 .consent-view { animation: consent-view-in 420ms var(--ease-out) both; }
 @keyframes consent-view-in { from { opacity: 0; transform: translateY(8px); } }
+
+@media (max-width: 639px) {
+  .consent-summary { gap: .65rem; padding-block: .8rem; }
+  .consent-summary__actions {
+    display: grid;
+    grid-template-columns: 1.12fr 1.18fr .7fr;
+    gap: .4rem;
+  }
+  .consent-summary__actions button {
+    min-height: 44px;
+    padding: .5rem .2rem;
+    font-size: .72rem;
+  }
+  .consent-summary__actions button:last-child { text-decoration: underline; }
+}
+
+@media (max-width: 359px) {
+  .consent-summary__actions button {
+    font-size: .66rem;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+  }
+}
 
 /* Kare karakterli anahtar (marka dili: keskin köşe) */
 .consent-toggle {
@@ -548,6 +559,366 @@ header.text-ink .link-sweep[data-active="true"] { color: var(--color-accent-warm
 }
 
 
+
+/* ─────────────────────────────────────────────────────────────
+   HERO YÜZEYİ VE HİZMET ÇİPLERİ
+   Mineral zeminde ince teknik doku; çipler sıralı girer, hover'da
+   grafit dolgu + terracotta nokta vurgusuyla karşılık verir.
+   ───────────────────────────────────────────────────────────── */
+
+/* Pafta dokusu: çok düşük alfa, illüstrasyonla rekabet etmez */
+.hero-surface {
+  background-image: radial-gradient(rgba(32, 38, 43, 0.055) 1px, transparent 1.3px);
+  background-size: 26px 26px;
+}
+
+/* Çipler: animation-delay satır içi verilir (520ms + i·70ms), bu yüzden
+   kısayol bildiriminde gecikme YAZILMAZ — aksi hâlde satır içi değer ezer. */
+@keyframes hero-chip-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+}
+.hero-chip {
+  list-style: none;
+  animation: hero-chip-in 620ms var(--ease-out) backwards;
+}
+.hero-chip-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.42);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: background-color var(--t-ctl) ease, border-color var(--t-ctl) ease,
+    color var(--t-ctl) ease, transform var(--t-ctl) var(--ease-out);
+}
+.hero-chip-link:hover {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-bg);
+  transform: translateY(-2px);
+}
+.hero-chip-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+.hero-chip-dot {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  background: var(--color-accent-warm);
+  transition: transform var(--t-ctl) var(--ease-out), background-color var(--t-ctl) ease;
+}
+.hero-chip-link:hover .hero-chip-dot {
+  transform: scale(1.6);
+  background: var(--color-accent-soft);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FOOTER — grafit zemin üzerinde cam kartlar
+   Giris: kartlar yükselerek belirir (gecikme satır içi verilir).
+   Yasam: iki isik küresi yavasça süzülür, kart üst kenarinda isik
+   dolasir, nokta nefes alir. Hover: kart kalkar, kenarlik parlaklasir.
+   ───────────────────────────────────────────────────────────── */
+
+/* Atmosfer ışıkları */
+@keyframes footer-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate3d(26px, -20px, 0) scale(1.09); opacity: 0.78; }
+}
+.footer-glow { animation: footer-drift 19s ease-in-out infinite; }
+.footer-glow-slow { animation-duration: 27s; animation-delay: -10s; }
+
+/* Çağrı bandı */
+@keyframes footer-rise { from { opacity: 0; transform: translateY(24px); } }
+.footer-cta { animation: footer-rise 780ms var(--ease-out) backwards; }
+
+/* Kart gövdesi */
+@keyframes footer-card-in {
+  from { opacity: 0; transform: translateY(28px) scale(0.985); }
+}
+.footer-card {
+  animation: footer-card-in 720ms var(--ease-out) backwards;
+  transition: transform var(--t-hover) var(--ease-out), border-color var(--t-hover) ease,
+    background-color var(--t-hover) ease;
+}
+.footer-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Kart içi yumuşak ışık — cool (petrol) / warm (terracotta) */
+.footer-card-glow {
+  position: absolute;
+  top: -34%;
+  right: -18%;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(31, 67, 92, 0.9), transparent 68%);
+  opacity: 0.5;
+  filter: blur(34px);
+  pointer-events: none;
+  transition: opacity var(--t-hover) ease, transform var(--t-hover) var(--ease-out);
+}
+.footer-card[data-accent="warm"] .footer-card-glow {
+  background: radial-gradient(circle, rgba(163, 78, 58, 0.85), transparent 68%);
+}
+.footer-card:hover .footer-card-glow { opacity: 0.8; transform: scale(1.09); }
+
+/* Kart üst kenarında dolaşan ışık — consent-edge ile aynı dil */
+.footer-card-edge {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.footer-card-edge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -42%;
+  width: 42%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent-soft), transparent);
+  animation: footer-edge 7s var(--ease-inout) infinite;
+}
+.footer-card[data-accent="warm"] .footer-card-edge::after {
+  background: linear-gradient(90deg, transparent, #d98b73, transparent);
+  animation-delay: -2.6s;
+}
+@keyframes footer-edge {
+  0% { left: -42%; }
+  58%, 100% { left: 112%; }
+}
+
+/* Mikro etiket + nefes alan terracotta nokta */
+.footer-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(238, 234, 226, 0.52);
+}
+@keyframes footer-dot {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.35); }
+}
+.footer-kicker-dot {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  background: var(--color-accent-warm);
+  animation: footer-dot 3.6s ease-in-out infinite;
+}
+
+/* Bilgi satırları: etiket | değer, aralarında kılcal ayırıcı */
+.footer-rows { display: flex; flex-direction: column; }
+.footer-row {
+  display: grid;
+  grid-template-columns: 6.2rem minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: baseline;
+  padding: 0.62rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+}
+.footer-rows > :last-child { border-bottom: 0; }
+.footer-row-label {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(238, 234, 226, 0.65);
+  transition: color var(--t-ink) ease;
+}
+.footer-row-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: rgba(238, 234, 226, 0.86);
+  transition: color var(--t-ink) ease, transform var(--t-ink) var(--ease-out);
+}
+.footer-row-link:hover .footer-row-value { color: #fff; transform: translateX(3px); }
+.footer-row-link:hover .footer-row-label { color: var(--color-accent-soft); }
+.footer-row-link:focus-visible { outline: 2px solid var(--color-accent-soft); outline-offset: 3px; }
+@media (max-width: 479px) {
+  .footer-row { grid-template-columns: 1fr; gap: 0.2rem; }
+}
+
+/* Bağlantı listeleri — sıralı giriş, hover'da sol terracotta cetveli */
+@keyframes footer-row-in { from { opacity: 0; transform: translateY(10px); } }
+.footer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.footer-list > li { animation: footer-row-in 560ms var(--ease-out) backwards; }
+.footer-list-2col { display: grid; grid-template-columns: 1fr; gap: 0.15rem 2.2rem; }
+@media (min-width: 768px) {
+  .footer-list-2col { grid-template-columns: 1fr 1fr; }
+}
+.footer-list-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.6rem;
+  margin-inline: -0.6rem;
+  border-left: 1px solid transparent;
+  font-size: 0.86rem;
+  color: rgba(238, 234, 226, 0.78);
+  text-decoration: none;
+  transition: color var(--t-ink) ease, background-color var(--t-hover) ease,
+    border-color var(--t-hover) ease, transform var(--t-hover) var(--ease-out);
+}
+.footer-list-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--color-accent-warm);
+  transform: translateX(4px);
+}
+.footer-list-link:focus-visible { outline: 2px solid var(--color-accent-soft); outline-offset: 2px; }
+.footer-list-link svg {
+  flex: none;
+  opacity: 0.38;
+  transition: transform var(--t-ctl) var(--ease-out), opacity var(--t-ink) ease;
+}
+.footer-list-link:hover svg { opacity: 1; transform: translateX(4px); }
+.footer-list-index {
+  flex: none;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent-warm);
+  opacity: 0.72;
+  transition: opacity var(--t-ink) ease;
+}
+.footer-list-link:hover .footer-list-index { opacity: 1; }
+
+/* Eylem düğmeleri — 48px dokunma hedefi (WCAG 2.5.8) */
+.footer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.85rem 1.35rem;
+  border: 1px solid transparent;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-ctl) ease, color var(--t-ctl) ease,
+    border-color var(--t-ctl) ease, transform var(--t-ctl) var(--ease-out);
+}
+.footer-btn svg { flex: none; transition: transform var(--t-ctl) var(--ease-out); }
+.footer-btn:hover { transform: translateY(-2px); }
+.footer-btn:active { transform: translateY(0); }
+.footer-btn:focus-visible { outline: 2px solid var(--color-accent-soft); outline-offset: 3px; }
+.footer-btn-ghost {
+  border-color: rgba(255, 255, 255, 0.28);
+  color: rgba(238, 234, 226, 0.92);
+}
+.footer-btn-ghost:hover {
+  border-color: #fff;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.09);
+}
+.footer-btn-solid { background: var(--color-accent-warm); color: #fff; }
+.footer-btn-solid:hover { background: var(--color-accent-warm-hover); }
+.footer-btn-solid:hover svg { transform: translateX(3px); }
+@media (max-width: 639px) {
+  .footer-btn { width: 100%; }
+}
+
+/* Satır içi bağlantı: "Yol tarifi al" */
+.footer-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent-soft);
+  text-decoration: none;
+  transition: color var(--t-ink) ease, gap var(--t-ctl) var(--ease-out);
+}
+.footer-inline-link:hover { color: #fff; gap: 0.85rem; }
+.footer-inline-link svg { flex: none; transition: transform var(--t-ctl) var(--ease-out); }
+.footer-inline-link:hover svg { transform: translateX(3px); }
+.footer-inline-link:focus-visible { outline: 2px solid var(--color-accent-soft); outline-offset: 3px; }
+
+/* Alt şerit: <a> ve <button> AYNI dili konuşmalı.
+   Tailwind preflight düğmenin kenarlık/arkaplanını sıfırladığı için CSS
+   yazılmadığında bu düğme soluk metin + ok imleci olarak kalıyordu ve
+   tıklanabilir hiç görünmüyordu. Eski text-bg/42 değeri 3.45:1 veriyordu
+   (AA başarısız); buradaki 0.72 alfa 7.29:1 (ink üstü) / 8.47:1 (gradyan
+   alt ucu) verir. İmleç pointer, hover'da link-sweep ile aynı süpürme. */
+.footer-inline-muted {
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: rgba(238, 234, 226, 0.72);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--t-ink) ease;
+}
+.footer-inline-muted::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 380ms var(--ease-out);
+}
+.footer-inline-muted:hover { color: #fff; }
+.footer-inline-muted:hover::after { transform: scaleX(1); transform-origin: left; }
+.footer-inline-muted:focus-visible {
+  outline: 2px solid var(--color-accent-soft);
+  outline-offset: 3px;
+}
+
+/* Yeni footer/hero animasyonları için hareket azaltma: içerik görünür kalır */
+@media (prefers-reduced-motion: reduce) {
+  .footer-cta, .footer-card, .footer-list > li, .hero-chip {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+  .footer-glow, .footer-kicker-dot, .footer-card-edge::after { animation: none !important; }
+  .footer-card:hover { transform: none !important; }
+  .footer-btn:hover, .hero-chip-link:hover { transform: none !important; }
+  .footer-list-link:hover { transform: none !important; }
+  .footer-row-value, .footer-list-link svg, .footer-inline-link svg { transition: none !important; }
+}
 
 /* ── Azaltılmış hareket tercihi (WCAG 2.2 — Animation from Interactions) ──
    Kural: hareket kapanır, içerik ASLA gizlenmez. Tüm öğeler doğrudan görünür
@@ -582,7 +953,7 @@ header.text-ink .link-sweep[data-active="true"] { color: var(--color-accent-warm
   .consent-bar, .consent-fab, .consent-view { animation-duration: 1ms !important; animation-delay: 0ms !important; }
 
   .consent-edge::after { animation: none !important; }
-  .consent-toggle, .consent-toggle::after { transition: none !important; }
+  .consent-toggle, .consent-toggle::after, .consent-fab__label { transition: none !important; }
 
   /* Etkileşim geri bildirimleri sadeleştirilir, işlev korunur */
   .img-zoom, .svc-icon, .svc-watermark, .title-underline, .img-duotone {
@@ -598,6 +969,6 @@ header.text-ink .link-sweep[data-active="true"] { color: var(--color-accent-warm
 
 /* next/font yerine Google Fonts (index.html içinde yüklenir) */
 :root {
-  --font-manrope: "Manrope", system-ui, -apple-system, sans-serif;
-  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+  --font-archivo: "Archivo", system-ui, -apple-system, sans-serif;
+  --font-plex: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
 }

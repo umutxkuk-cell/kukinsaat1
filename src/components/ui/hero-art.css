@@ -1,0 +1,131 @@
+/* ─────────────────────────────────────────────────────────────
+   KUK hero sahneleri — animasyon sistemi
+
+   Taban durum her zaman "tamamlanmış" çizimdir; animasyonlar `backwards`
+   dolgusuyla yalnızca başlangıç karesini uygular. Bu yüzden
+   prefers-reduced-motion açıkken sahne bozulmadan, eksiksiz ve statik kalır.
+
+   KURAL: `hv-draw` yalnızca <path> üzerinde kullanılmalıdır. pathLength
+   özniteliği <path> için SVG 1.1'dir ve her tarayıcıda çalışır; <line> ve
+   <circle> üzerinde SVG 2'dir ve destek evrensel değildir — desteklenmeyen
+   yerde stroke-dasharray:1 çizgiyi noktalı bırakır.
+   ───────────────────────────────────────────────────────────── */
+
+.hv-svg {
+  display: block;
+  overflow: hidden; /* slice: taşmayı SVG kendi kutusunda kırpar */
+  --hv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --hv-soft: cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+/* transform-box yardımcıları */
+.hv-fb { transform-box: fill-box; transform-origin: center; }
+.hv-fb-b { transform-box: fill-box; transform-origin: 50% 100%; }
+
+/* ── Bir kez oynayan girişler ── */
+.hv-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: hv-draw var(--dur, 2.2s) var(--hv-ease) var(--d, 0s) backwards;
+}
+.hv-rise { animation: hv-rise var(--dur, 1.5s) var(--hv-ease) var(--d, 0s) backwards; }
+.hv-fade { animation: hv-fade var(--dur, 1.4s) ease var(--d, 0s) backwards; }
+.hv-pop  { animation: hv-pop var(--dur, 1s) var(--hv-ease) var(--d, 0s) backwards; }
+.hv-drop { animation: hv-drop var(--dur, 1.2s) var(--hv-ease) var(--d, 0s) backwards; }
+.hv-sun  { animation: hv-sun 3.4s var(--hv-ease) var(--d, 0s) backwards; }
+
+@keyframes hv-draw { from { stroke-dashoffset: 1; } }
+@keyframes hv-rise { from { transform: scaleY(0); opacity: 0; } }
+@keyframes hv-fade { from { opacity: 0; } }
+@keyframes hv-pop  { from { opacity: 0; transform: scale(0.6); } }
+@keyframes hv-drop { from { opacity: 0; transform: translateY(-46px); } }
+@keyframes hv-sun  { from { transform: translateY(90px); opacity: 0; } }
+
+/* ── Sürekli, sakin yaşam ── */
+.hv-pulse { animation: hv-pulse 9s ease-in-out infinite; }
+@keyframes hv-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+.hv-tw { animation: hv-twinkle var(--dur, 7s) ease-in-out var(--del, 0s) infinite; }
+@keyframes hv-twinkle {
+  0%, 100% { opacity: 0.16; }
+  40%, 68% { opacity: 0.95; }
+}
+
+.hv-glow { animation: hv-glow 5s ease-in-out infinite; }
+@keyframes hv-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.hv-beacon { animation: hv-beacon 2.4s ease-in-out infinite; }
+@keyframes hv-beacon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.hv-ring { animation: hv-ring 3.6s ease-out var(--del, 0s) infinite; }
+@keyframes hv-ring {
+  from { transform: scale(0.25); opacity: 0.75; }
+  to { transform: scale(1.7); opacity: 0; }
+}
+
+.hv-bob { animation: hv-bob 3.2s ease-in-out infinite alternate; }
+@keyframes hv-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-9px); }
+}
+
+/* Kule vinç kancası rüzgârda salınır */
+.hv-sway { animation: hv-sway var(--dur, 5.5s) ease-in-out infinite alternate; }
+@keyframes hv-sway {
+  from { transform: rotate(-1.1deg); }
+  to { transform: rotate(1.1deg); }
+}
+
+/* Kuşlar — sahnedeki tek organik hareket */
+.hv-bird { animation: hv-bird var(--dur, 38s) linear var(--d, 0s) infinite; }
+@keyframes hv-bird {
+  from { transform: translate(-140px, 0); }
+  to { transform: translate(1340px, -46px); }
+}
+
+/* Cam yüzeyden geçen ışık yansıması */
+.hv-sweep { animation: hv-sweep 12s var(--hv-soft) var(--d, 3s) infinite; }
+@keyframes hv-sweep {
+  0% { transform: translateX(-220px) skewX(-16deg); }
+  55%, 100% { transform: translateX(420px) skewX(-16deg); }
+}
+
+/* Projeler: silüet boyunca geçen galeri ışığı */
+.hv-gallery { animation: hv-gallery 13s var(--hv-soft) var(--d, 4.6s) infinite; }
+@keyframes hv-gallery {
+  0% { transform: translateX(-300px); }
+  58%, 100% { transform: translateX(820px); }
+}
+
+/* Hizmetler: eskizden yapıya uzanan tek çizgi boyunca ilerleyen işaret.
+   Yol eğri olduğu için translateX değil offset-path kullanılır. */
+.hv-grow-x { animation: hv-grow-x var(--dur, 1.2s) var(--hv-ease) var(--d, 0s) backwards; }
+@keyframes hv-grow-x { from { transform: scaleX(0); opacity: 0; } }
+
+.hv-trace {
+  offset-rotate: 0deg;
+  animation: hv-trace var(--dur, 15s) var(--hv-soft) var(--d, 0s) infinite backwards;
+}
+@keyframes hv-trace {
+  0%        { offset-distance: 0%; opacity: 0; }
+  5%        { opacity: 1; }
+  93%       { opacity: 1; }
+  100%      { offset-distance: 100%; opacity: 0; }
+}
+
+/* Hareket azaltma: tüm animasyonlar kapanır, sahne taban (tamamlanmış)
+   durumunda eksiksiz görünür. */
+@media (prefers-reduced-motion: reduce) {
+  .hv-svg *, .hv-svg *::before, .hv-svg *::after {
+    animation: none !important;
+  }
+}

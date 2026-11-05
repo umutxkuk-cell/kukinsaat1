@@ -48,8 +48,7 @@ export default function HizmetlerPage() {
         label="Hizmetlerimiz"
         title={
           <>
-            Fikirden teslime kadar<br className="hidden md:block" />{" "}
-            <span className="text-accent-soft">uçtan uca</span> çözümler.
+            Fikirden teslime kadar <span className="text-accent">uçtan uca</span> çözümler.
           </>
         }
         description="Kocaeli ve çevresinde inşaat, projelendirme ve mühendislik hizmetlerini tek çatı altında sunuyoruz. Her çalışma alanımızın kapsamını aşağıda bulabilirsiniz."
@@ -79,14 +78,14 @@ export default function HizmetlerPage() {
       {/* ---------- Ortak yaklaşım bandı (ikonlu, numarasız) ---------- */}
       <section className="border-y border-line bg-bg-2 py-16 md:py-20">
         <Container>
-          <div className="grid gap-10 md:grid-cols-12 md:items-center">
-            <Reveal variant="left" className="md:col-span-4">
+          <div className="grid gap-10 xl:grid-cols-12 xl:items-center">
+            <Reveal variant="left" className="xl:col-span-4">
               <h2 className="text-[clamp(1.6rem,2.6vw,2.2rem)] leading-tight">
                 Hangi hizmet olursa olsun, <em className="text-accent">yaklaşımımız aynı.</em>
               </h2>
             </Reveal>
-            <div className="md:col-span-8">
-              <div className="grid gap-px bg-line sm:grid-cols-3">
+            <div className="xl:col-span-8">
+              <div className="grid gap-px bg-line md:grid-cols-3">
                 {approach.map((item, i) => (
                   <Reveal key={item.k} variant="up" delay={i * 110}>
                     <div className="group h-full bg-bg-2 p-7 transition-colors duration-500 hover:bg-bg">

@@ -300,6 +300,11 @@ export function CookieConsent() {
     const reopen = () => {
       setLeaving(false);
       setAnalyticsOn(readStored() !== "declined");
+      // Tetikleyici "Çerez Tercihleri" olduğu için doğrudan tercih paneli
+      // açılır; özet görünümde ikinci bir tıklama daha gerektiriyordu.
+      // Bar zaten açıksa setOpen(true) etkisiz kalıyordu — prefs geçişi bu
+      // durumda da görünür bir değişiklik üretir.
+      setPrefs(true);
       setOpen(true);
     };
     window.addEventListener(COOKIE_PREF_EVENT, reopen);
@@ -328,6 +333,7 @@ export function CookieConsent() {
   function reopen() {
     setAnalyticsOn(readStored() !== "declined");
     setLeaving(false);
+    setPrefs(true);
     setOpen(true);
   }
 
@@ -344,7 +350,7 @@ export function CookieConsent() {
           className="fixed inset-x-0 bottom-0 z-[70]"
           role="dialog"
           aria-label="Çerez tercihleri"
-          aria-describedby="consent-desc"
+          aria-describedby={prefs ? "consent-prefs-desc" : "consent-desc"}
         >
           <div className={`consent-bar relative overflow-hidden border-t border-white/10 text-white${leaving ? " is-leaving" : ""}`}>
             <span className="consent-edge" aria-hidden="true" />
@@ -356,6 +362,7 @@ export function CookieConsent() {
             <div className="container-x relative">
               {prefs ? (
                 <div key="prefs" className="consent-view flex flex-col gap-5 py-6 lg:flex-row lg:items-center lg:gap-10">
+                  <p id="consent-prefs-desc" className="sr-only">Çerez kategorileri için tercihlerinizi seçin.</p>
                   <div className="flex items-center gap-4">
                     <IconBox>
                       <CookieHexIcon className="h-5 w-5" />
@@ -401,13 +408,15 @@ export function CookieConsent() {
                   </div>
                 </div>
               ) : (
-                <div key="summary" className="consent-view flex flex-col gap-4 py-5 sm:gap-5 lg:flex-row lg:items-center lg:gap-8 lg:py-6">
+                <div key="summary" className="consent-view consent-summary flex flex-col gap-4 py-5 sm:gap-5 lg:flex-row lg:items-center lg:gap-8 lg:py-6">
                   <div className="flex items-center gap-4">
-                    <IconBox>
-                      <ShieldHexIcon className="h-5 w-5" />
-                    </IconBox>
+                    <div className="hidden sm:flex">
+                      <IconBox>
+                        <ShieldHexIcon className="h-5 w-5" />
+                      </IconBox>
+                    </div>
                     <div>
-                      <p className="text-[0.62rem] font-semibold uppercase tracking-[0.34em] text-white/40">
+                      <p className="hidden text-[0.62rem] font-semibold uppercase tracking-[0.34em] text-white/40 sm:block">
                         KVKK · Çerez Politikası
                       </p>
                       <h2 className="mt-1 font-display text-lg font-bold tracking-tight">
@@ -416,9 +425,8 @@ export function CookieConsent() {
                     </div>
                   </div>
                   <p id="consent-desc" className="max-w-2xl text-[0.82rem] leading-relaxed text-white/60 lg:flex-1">
-                    Deneyimi ölçmek için yalnızca Google Analytics kullanırız; onayınız
-                    olmadan hiçbir izleme çerezi yerleştirilmez. Seçiminizi dilediğiniz an
-                    sol alttaki simgeden değiştirebilirsiniz.{" "}
+                    Google Analytics çerezlerini yalnızca onayınızla kullanırız.
+                    Tercihlerinizi dilediğiniz zaman değiştirebilirsiniz.{" "}
                     <Link
                       href="/gizlilik"
                       className="font-medium text-white underline decoration-accent-soft/60 underline-offset-2 transition-colors hover:decoration-accent-soft"
@@ -426,7 +434,7 @@ export function CookieConsent() {
                       Gizlilik &amp; KVKK metni
                     </Link>
                   </p>
-                  <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+                  <div className="consent-summary__actions flex flex-col gap-2.5 sm:flex-row sm:items-center">
                     <button
                       type="button"
                       onClick={() => choose("accepted")}
@@ -456,23 +464,20 @@ export function CookieConsent() {
         </div>
       )}
 
-      {/* Karar sonrası: tercihleri yeniden açan etiketli rozet.
-          Yalnızca ikon olduğunda gözden kaçıyordu; yazı keşfedilebilirliği
-          garantiler, hover'da petrol mavisine döner. */}
+      {/* Footer bağlantısı da tercihleri açar; küçük düğme içeriği kapatmaz. */}
       {decided && !open && (
         <button
           type="button"
           onClick={reopen}
           aria-label="Çerez tercihlerini değiştir"
-          className="consent-fab group fixed bottom-4 left-4 z-[60] flex items-center gap-2.5 border border-line-2 bg-bg py-2.5 pl-3 pr-4 text-ink shadow-[0_10px_30px_rgba(8,10,12,0.38)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-warm"
+          title="Çerez tercihlerini değiştir"
+          className="consent-fab group fixed bottom-4 right-4 z-[60] flex h-11 min-w-11 items-center justify-center border border-line-2 bg-bg px-3 text-ink shadow-[0_8px_22px_rgba(8,10,12,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-warm"
         >
           {/* Mineral açık zemin: hem koyu footer/hero üstünde hem açık gövde
               bölümlerinde okunur. Koyu zeminli eski sürüm footer ile
               birleşip görünmez oluyordu. */}
           <CookieHexIcon className="h-[17px] w-[17px] flex-none text-accent-warm transition-transform duration-300 group-hover:rotate-12" />
-          <span className="text-[0.68rem] font-semibold uppercase tracking-[0.18em]">
-            Çerez Tercihleri
-          </span>
+          <span className="consent-fab__label">Çerez Tercihleri</span>
         </button>
       )}
     </>

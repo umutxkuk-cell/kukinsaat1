@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Intro } from "@/components/layout/Intro";
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { getService } from "@/data/services";
@@ -193,6 +194,7 @@ export default function App() {
       </main>
       <Footer />
       <CookieConsent />
+      <CustomCursor />
     </>
   );
 }

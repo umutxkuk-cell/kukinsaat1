@@ -12,8 +12,8 @@ export default function IletisimPage() {
       <InteriorHero
         page="iletisim"
         label="İletişim"
-        title={<>Bize <span className="text-accent-soft">ulaşın.</span></>}
-        description="Kocaeli ve çevresindeki inşaat, mühendislik ve proje ihtiyaçlarınız için aşağıdaki formu doldurabilir veya doğrudan e-posta gönderebilirsiniz. En kısa sürede size dönüş yaparız."
+        title={<>Bize <span className="text-accent">ulaşın.</span></>}
+        description={<>Kocaeli ve çevresindeki inşaat, mühendislik ve proje ihtiyaçlarınız için aşağıdaki formu doldurabilir veya doğrudan <span className="whitespace-nowrap">e-posta</span> gönderebilirsiniz. En kısa sürede size dönüş yaparız.</>}
       />
 
       <section className="pb-24 pt-16 md:pt-24">

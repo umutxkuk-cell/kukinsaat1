@@ -96,14 +96,14 @@ export function Footer() {
 
       <div className="container-x relative pb-10 pt-20 md:pt-24">
         {/* ── Çağrı ── */}
-        <div className="footer-cta grid gap-10 border-b border-white/10 pb-14 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
+        <div className="footer-cta grid gap-10 border-b border-white/10 pb-14 xl:grid-cols-12 xl:items-end">
+          <div className="xl:col-span-7">
             <p className="footer-kicker">
               <span aria-hidden="true" className="footer-kicker-dot" />
               Bir projeniz mi var?
             </p>
             <Link href="/iletisim" className="group mt-5 inline-block">
-              <span className="font-display text-[clamp(2.2rem,4.6vw,4rem)] leading-[1.02] tracking-[-0.03em]">
+              <span className="font-display text-[clamp(2.2rem,4.6vw,4rem)] leading-[1.12] tracking-[-0.02em] [word-spacing:0.08em]">
                 Birlikte inşa edelim
                 <span className="ml-3 inline-block text-accent-soft transition-transform duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2 group-hover:-translate-y-1">
                   ↗
@@ -113,7 +113,7 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap xl:col-span-5 xl:justify-end">
             <a
               href={site.contact.phoneHref}
               className="footer-btn footer-btn-ghost"
@@ -134,16 +134,16 @@ export function Footer() {
         </div>
 
         {/* ── Kartlar: 12 kolon, iki eşit satır ── */}
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-12">
+        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-12">
           {/* Satır 1 */}
-          <Card kicker="Kuk İnşaat" title="Kaliteyle Kurulur" className="lg:col-span-4" delay={0}>
+          <Card kicker="Kuk İnşaat" title="Kaliteyle Kurulur" className="xl:col-span-4" delay={0}>
             <div className="flex items-center gap-4">
               <span className="flex h-14 w-14 shrink-0 items-center justify-center border border-white/15 bg-white/[0.05]">
                 <LogoMark variant="light" className="h-8 w-auto opacity-90" />
               </span>
               <span className="flex flex-col leading-none">
                 <span className="font-display text-[1.3rem] font-extrabold tracking-[0.16em] text-white">KUK</span>
-                <span className="mt-1.5 text-[0.54rem] font-semibold uppercase tracking-[0.5em] text-bg/55">İnşaat</span>
+                <span className="mt-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.36em] text-bg/70">İnşaat</span>
               </span>
             </div>
             <p className="mt-6 text-[0.84rem] leading-[1.75] text-bg/62">
@@ -156,7 +156,7 @@ export function Footer() {
             </div>
           </Card>
 
-          <Card kicker="Kurumsal" title="Şirket Bilgileri" className="lg:col-span-4" delay={90}>
+          <Card kicker="Kurumsal" title="Şirket Bilgileri" className="xl:col-span-4" delay={90}>
             <div className="footer-rows">
               <InfoRow label="Ünvan" value={site.legalName} />
               <InfoRow label="MERSİS" value={site.mersisNo} />
@@ -166,7 +166,7 @@ export function Footer() {
             </div>
           </Card>
 
-          <Card kicker="İletişim" title="Bize Ulaşın" className="lg:col-span-4" delay={180} accent="warm">
+          <Card kicker="İletişim" title="Bize Ulaşın" className="xl:col-span-4" delay={180} accent="warm">
             <address className="footer-rows not-italic">
               <InfoRow label="Adres" value={site.contact.address} />
               <InfoRow label="Telefon" value={site.contact.phone} href={site.contact.phoneHref} />
@@ -184,7 +184,7 @@ export function Footer() {
           </Card>
 
           {/* Satır 2 */}
-          <Card kicker="Keşfet" title="Sayfalar" className="lg:col-span-4" delay={120}>
+          <Card kicker="Keşfet" title="Sayfalar" className="xl:col-span-4" delay={120}>
             <ul className="footer-list">
               {site.nav.map((item, i) => (
                 <li key={item.href} style={{ animationDelay: `${260 + i * 50}ms` }}>
@@ -203,7 +203,7 @@ export function Footer() {
             </ul>
           </Card>
 
-          <Card kicker="Uzmanlık" title="Hizmetlerimiz" className="md:col-span-2 lg:col-span-8" delay={210}>
+          <Card kicker="Uzmanlık" title="Hizmetlerimiz" className="md:col-span-2 xl:col-span-8" delay={210}>
             <ul className="footer-list footer-list-2col">
               {services.map((s, i) => (
                 <li key={s.slug} style={{ animationDelay: `${300 + i * 50}ms` }}>
@@ -219,7 +219,7 @@ export function Footer() {
         </div>
 
         {/* ── Alt şerit ── */}
-        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-7 text-[0.72rem] text-bg/42 md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-7 text-[0.72rem] text-bg/65 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Kuk İnşaat. Tüm hakları saklıdır.</p>
           <div className="flex flex-wrap gap-6">
             <Link href="/gizlilik" className="footer-inline-muted">Gizlilik &amp; KVKK</Link>

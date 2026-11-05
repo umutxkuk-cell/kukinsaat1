@@ -10,7 +10,7 @@ function EmptyState() {
   return (
     <div className="border border-ink/15 bg-bg-2 px-8 py-16 text-center md:px-16 md:py-24">
       <LogoMark className="mx-auto h-20 w-auto opacity-25" />
-      <h2 className="mt-8 font-display text-[clamp(1.8rem,3.4vw,2.8rem)]">Proje portföyümüz hazırlanıyor</h2>
+      <h2 className="mt-8 font-display text-[clamp(1.8rem,3.4vw,2.8rem)]">Henüz yayımlanmış proje bulunmuyor.</h2>
       <p className="mx-auto mt-5 max-w-xl leading-relaxed text-muted">
         Şu anda yayımlanmış proje kaydı bulunmuyor. Gerçek proje bilgileri
         paylaşılmaya hazır olduğunda bu bölüm güncellenecektir. Hizmet kapsamımız

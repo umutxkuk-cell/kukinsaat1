@@ -4,8 +4,8 @@ import { Link } from "@/lib/next-shim";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
-import { ServiceIcon } from "@/components/services/ServiceIcon";
 import { services, getService } from "@/data/services";
+import "@/components/ui/page-hero.css";
 
 const siteUrl = "https://kukinsaat.com";
 
@@ -57,43 +57,26 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             alt=""
             className="ken-burns h-full w-full scale-105 object-cover saturate-[0.94]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/72 to-ink/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45" />
+          <div className="service-hero__veil" />
           <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:96px_96px]" />
         </div>
 
-        <Container className="relative flex min-h-[440px] flex-col justify-center py-20 md:min-h-[500px] md:py-24">
-          <Reveal variant="left">
-            <nav className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60">
-              <Link href="/hizmetler" className="transition-colors hover:text-white">Hizmetler</Link>
-              <span aria-hidden="true">/</span>
-              <span className="text-white/90">{service.shortTitle}</span>
-            </nav>
-          </Reveal>
-          <Reveal variant="up" delay={100}>
-            <div className="mt-8 flex items-center gap-5">
-              <span className="flex h-16 w-16 shrink-0 items-center justify-center border border-white/35 text-white">
-                <ServiceIcon name={service.icon} className="h-8 w-8" />
-              </span>
-              <h1 className="max-w-3xl text-balance text-[clamp(2.25rem,5vw,4rem)] leading-tight">
-                {service.title}
-              </h1>
-            </div>
-          </Reveal>
-          <Reveal variant="up" delay={200}>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/80">{service.summary}</p>
-          </Reveal>
-          <Reveal variant="up" delay={280}>
-            <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/20 pt-5 text-[0.62rem] font-semibold uppercase tracking-[0.28em] text-white/55">
-              <span className="text-white/85">Kuk İnşaat</span>
-              <span aria-hidden="true" className="hidden h-3 w-px bg-white/25 sm:block" />
-              <span>Kaliteyle Kurulur</span>
-              <span className="ml-auto hidden items-center gap-3 md:flex">
-                <span className="h-px w-8 bg-accent-soft/60" aria-hidden="true" />
-                Hizmet 0{index + 1} / 0{services.length}
-              </span>
-            </div>
-          </Reveal>
+        <Container className="service-hero__container">
+          <div className="service-hero__copy">
+            <Reveal variant="left">
+              <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.16em] text-white/70" aria-label="İçerik yolu">
+                <Link href="/hizmetler" className="transition-colors hover:text-white">Hizmetler</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-white/90">{service.shortTitle}</span>
+              </nav>
+            </Reveal>
+            <Reveal variant="up" delay={100}>
+              <h1 className="service-hero__title">{service.title}</h1>
+            </Reveal>
+            <Reveal variant="up" delay={200}>
+              <p className="service-hero__description">{service.summary}</p>
+            </Reveal>
+          </div>
         </Container>
       </section>
 

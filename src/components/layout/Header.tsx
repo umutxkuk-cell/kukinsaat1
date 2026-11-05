@@ -12,9 +12,6 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // Ana sayfa eskizi de iç sayfalar gibi açık zemindedir. Bu yüzden logo,
-  // menü ve teklif düğmesi her rotada koyu metinli, okunaklı header kullanır.
-
   useEffect(() => {
     // Açılış perdesi hâlâ ekranı kilitliyse kilidi devralmıyoruz; aksi hâlde
     // menü kapanınca perdenin kilidi de yanlışlıkla kaldırılır.
@@ -39,7 +36,7 @@ export function Header() {
             <Logo variant="dark" />
           </Link>
 
-          <nav className="hidden items-center gap-9 lg:flex" aria-label="Ana navigasyon">
+          <nav className="hidden items-center gap-9 xl:flex" aria-label="Ana navigasyon">
             {site.nav.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               return (
@@ -48,7 +45,7 @@ export function Header() {
                   href={item.href}
                   data-active={active}
                   aria-current={active ? "page" : undefined}
-                  className="link-sweep text-[0.82rem] font-medium uppercase tracking-[0.14em] opacity-90 transition-opacity hover:opacity-100"
+                  className="link-sweep whitespace-nowrap text-[0.82rem] font-medium uppercase tracking-[0.14em] opacity-90 transition-opacity hover:opacity-100"
                 >
                   {item.label}
                 </Link>
@@ -56,10 +53,10 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-5 lg:flex">
+          <div className="hidden items-center gap-5 xl:flex">
             <Link
               href="/iletisim"
-              className="group inline-flex items-center gap-2 border border-ink bg-ink px-5 py-2.5 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-bg transition-all duration-300 hover:bg-transparent hover:text-ink"
+              className="group inline-flex shrink-0 items-center gap-2 whitespace-nowrap border border-ink bg-ink px-5 py-2.5 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-bg transition-all duration-300 hover:bg-transparent hover:text-ink"
             >
               Teklif Alın
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -68,9 +65,10 @@ export function Header() {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center xl:hidden"
             aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
             aria-expanded={open}
+            aria-controls="mobile-navigation"
             onClick={() => setOpen((v) => !v)}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -86,7 +84,9 @@ export function Header() {
         </div>
 
         <div
-          className={`overflow-y-auto overscroll-contain transition-[max-height,opacity] duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+          id="mobile-navigation"
+          inert={!open ? true : undefined}
+          className={`overflow-y-auto overscroll-contain transition-[max-height,opacity] duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)] xl:hidden ${
             open ? "max-h-[85vh] opacity-100" : "max-h-0 overflow-hidden opacity-0"
           }`}
         >

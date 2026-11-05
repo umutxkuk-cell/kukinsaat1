@@ -166,7 +166,7 @@ export function metaFor(path: string): RouteMeta {
       title: titles[path],
       description: descriptions[path],
       indexable,
-      ogImage: DEFAULT_OG_IMAGE,
+      ogImage: path === "/" ? `${SITE_URL}/images/kuk-home-og.jpg` : DEFAULT_OG_IMAGE,
       breadcrumb,
       jsonLd: breadcrumb ? [breadcrumbLd(breadcrumb)] : [],
     };

@@ -1,59 +1,34 @@
+import { HeroScene } from "@/components/ui/HeroScenes";
+
 /**
- * Beş sayfanın anlamsal teknik illüstrasyonları. Yazı içermeyen sahneler,
- * mineral palet + mühendislik mavisi + terracotta vurgusuyla birlikte tasarlandı.
- * Önceki görsel sürümleri ayrı dosyalarda korunur.
+ * Beş sayfanın animasyonlu hero sahneleri. Yazı içermeyen, satır içi SVG
+ * çizimler; mineral palet + mühendislik mavisi + terracotta vurgu.
+ * Sahneler HeroScenes.tsx içinde, animasyonlar hero-art.css içindedir.
  */
 export type IllustrationPage = "home" | "kurumsal" | "hizmetler" | "projeler" | "iletisim";
 
-const sources: Record<IllustrationPage, { src: string; alt: string }> = {
-  home: {
-    src: "/images/hero-section-cut.svg",
-    alt: "Radye temel, kolonlar, kat döşemeleri, merdivenler ve ölçülerle binanın mimari kesiti",
-  },
-  kurumsal: {
-    src: "/images/pagehero-kurumsal-plan.svg",
-    alt: "Kat planı paftası, T-cetvel ve pergelle mimari proje masası",
-  },
-  hizmetler: {
-    src: "/images/pagehero-hizmetler-site.svg",
-    alt: "Kule vincin kiriş indirdiği iskeleli betonarme yapı şantiyesi",
-  },
-  projeler: {
-    src: "/images/pagehero-projeler-facade.svg",
-    alt: "Cam cepheli üç kütleli tamamlanmış modern bina çizimi, temsili",
-  },
-  iletisim: {
-    src: "/images/pagehero-iletisim-siteplan.svg",
-    alt: "Yollar, bina izleri ve hedef parsel üzerinde konum iğnesiyle temsili vaziyet planı",
-  },
-
+const alts: Record<IllustrationPage, string> = {
+  home: "Kademeli cepheleri, terasları ve sıcak ışıklarıyla temsili çağdaş bir yapı",
+  kurumsal: "KUK logosunu taşıyan kurumsal yapı cephesinin temsili illüstrasyonu",
+  hizmetler: "Aynı binanın üç hâli: solda kesikli çizgiyle fikir, ortada vinçle inşaat, sağda ışıkları yanmış teslim",
+  projeler: "Işıkları yanan bitmiş yapıların silueti ve aralarında kazıkları çakılmış boş bir parsel",
+  iletisim: "Alt kenardan gelip kapısında sıcak ışık yanan binaya varan yol, üzerinde konum iğnesi",
 };
 
 export function Illustration({
   page,
-  className = "h-full w-full object-cover",
-  position = "70% 50%",
-  priority = false,
+  className = "h-full w-full",
+  fit = "slice",
   decorative = false,
 }: {
   page: IllustrationPage;
   className?: string;
+  /** "slice" → hero'yu tamamen kaplar (masaüstü); "meet" → tümü görünür (mobil bant). */
+  fit?: "slice" | "meet";
+  /** Eski API uyumluluğu için korunur; sahneler kendi hizalamasını yapar. */
   position?: string;
   priority?: boolean;
   decorative?: boolean;
 }) {
-  const art = sources[page];
-  return (
-    /* eslint-disable-next-line @next/next/no-img-element */
-    <img
-      src={art.src}
-      alt={decorative ? "" : art.alt}
-      aria-hidden={decorative ? true : undefined}
-      className={className}
-      style={{ objectPosition: position }}
-      loading={priority ? "eager" : "lazy"}
-      decoding="async"
-      fetchPriority={priority ? "high" : undefined}
-    />
-  );
+  return <HeroScene page={page} className={className} fit={fit} decorative={decorative} alt={alts[page]} />;
 }

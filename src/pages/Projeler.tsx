@@ -9,7 +9,7 @@ export default function ProjelerPage() {
       <InteriorHero
         page="projeler"
         label="Projelerimiz"
-        title={<>Proje portföyümüz <span className="text-accent-soft">hazırlanıyor.</span></>}
+        title={<>Proje portföyümüz <span className="text-accent">hazırlanıyor.</span></>}
         description="Proje portföyümüz hazırlanıyor; şu anda yayımlanmış proje kaydı bulunmuyor. Kuk İnşaat'ın hizmet kapsamı ve projenize uygun çalışma alanları hakkında bilgi almak için bizimle iletişime geçin."
       />
 

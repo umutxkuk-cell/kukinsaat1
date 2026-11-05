@@ -27,8 +27,7 @@ export default function KurumsalPage() {
         label="Kurumsal"
         title={
           <>
-            İnşaata mühendislik<br className="hidden md:block" />{" "}
-            <span className="text-accent-soft">gözüyle</span> bakan bir firma.
+            İnşaata mühendislik <span className="text-accent">gözüyle</span> bakan bir firma.
           </>
         }
         description="KUK İnşaat — Kaliteyle Kurulur"
@@ -37,7 +36,7 @@ export default function KurumsalPage() {
       <section className="pt-10 md:pt-14">
         <Container>
           <Reveal variant="up" delay={120}>
-            <div className="grid grid-cols-2 gap-px border border-line bg-line md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-px border border-line bg-line lg:grid-cols-4">
               {[
                 { v: <Counter to={5} />, l: "Hizmet alanı" },
                 { v: "Kocaeli", l: "Hizmet bölgesi" },

@@ -1,11 +1,12 @@
 "use client";
 
-import NextLink from "next/link";
-import { usePathname as useNextPathname, notFound as nextNotFound } from "next/navigation";
 import {
   type AnchorHTMLAttributes,
   type ImgHTMLAttributes,
   type ReactNode,
+  useEffect,
+  useState,
+  createElement,
 } from "react";
 
 export function normalizePath(pathname: string) {
@@ -23,25 +24,27 @@ export function getCurrentPath() {
   return getPathname();
 }
 
-export function setPathname(_next: string) {
-  // Managed by Next.js router
+// Simple pub-sub for path changes
+type PathListener = (path: string) => void;
+const listeners = new Set<PathListener>();
+
+export function setPathname(next: string) {
+  // Called by App.tsx after applying route; no-op here (navigation is handled via navigate())
 }
 
-export function usePathname() {
-  const p = useNextPathname();
-  return p ? normalizePath(p) : "/";
-}
-
-export function subscribePathname(fn: (path: string) => void): () => void {
+export function subscribePathname(fn: PathListener): () => void {
   if (typeof window === "undefined") return () => {};
-  const handler = () => fn(getPathname());
-  window.addEventListener("popstate", handler);
-  return () => window.removeEventListener("popstate", handler);
+  listeners.add(fn);
+  return () => {
+    listeners.delete(fn);
+  };
 }
 
 export function navigate(href: string): boolean {
   if (typeof window === "undefined") return false;
-  window.location.href = href;
+  window.history.pushState({}, "", href);
+  const next = getPathname();
+  listeners.forEach((l) => l(next));
   return true;
 }
 
@@ -53,7 +56,22 @@ export class NotFoundError extends Error {
 }
 
 export function notFound(): never {
-  nextNotFound();
+  throw new NotFoundError();
+}
+
+// usePathname hook for header active state
+export function usePathname() {
+  const [path, setPath] = useState(() => getPathname());
+  useEffect(() => {
+    const handler = () => setPath(getPathname());
+    window.addEventListener("popstate", handler);
+    const unsub = subscribePathname(() => handler());
+    return () => {
+      window.removeEventListener("popstate", handler);
+      unsub();
+    };
+  }, []);
+  return path;
 }
 
 type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
@@ -74,19 +92,16 @@ export function Image({
   style,
   ...rest
 }: ImageProps) {
-  return (
-    /* eslint-disable-next-line @next/next/no-img-element */
-    <img
-      src={src}
-      alt={alt ?? ""}
-      loading={priority ? "eager" : "lazy"}
-      decoding={priority ? "sync" : "async"}
-      fetchPriority={priority ? "high" : undefined}
-      className={`${fill ? "absolute inset-0 h-full w-full " : ""}${className ?? ""}`}
-      style={fill ? { objectFit: "cover", ...style } : style}
-      {...rest}
-    />
-  );
+  return createElement("img", {
+    src,
+    alt: alt ?? "",
+    loading: priority ? "eager" : "lazy",
+    decoding: priority ? "sync" : "async",
+    fetchPriority: priority ? "high" : undefined,
+    className: `${fill ? "absolute inset-0 h-full w-full " : ""}${className ?? ""}`,
+    style: fill ? { objectFit: "cover", ...style } : style,
+    ...rest,
+  });
 }
 
 type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
@@ -98,8 +113,8 @@ type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
 
 export function Link({
   href,
-  prefetch,
-  scroll,
+  prefetch: _prefetch,
+  scroll: _scroll,
   onClick,
   target,
   download,
@@ -122,9 +137,25 @@ export function Link({
     );
   }
   return (
-    <NextLink href={href} prefetch={prefetch} scroll={scroll} className={className} onClick={onClick} {...rest}>
+    <a
+      href={href}
+      className={className}
+      onClick={(e) => {
+        if (onClick) onClick(e);
+        if (e.defaultPrevented) return;
+        // Let browser handle modified clicks
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        window.history.pushState({}, "", href);
+        const next = getPathname();
+        listeners.forEach((l) => l(next));
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+      }}
+      {...rest}
+    >
       {children}
-    </NextLink>
+    </a>
   );
 }
 
